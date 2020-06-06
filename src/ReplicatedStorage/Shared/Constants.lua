@@ -1,0 +1,12 @@
+local Constants = {}
+
+Constants.MATCH_START_COUNTDOWN = 5001
+Constants.PRE_START_TIME_MS_MAX = 3000
+Constants.POST_TIME_PLAYING_MS_MAX = 300
+Constants.VOTEPICK_TIMEOUT_MS = 10000
+Constants.PRELOAD_TIMEOUT_MS = 20000
+Constants.DAY_UPDATE_FREQ_SEC = 300
+
+Constants.MMV3_INITIAL_MATCH_WAIT_TIME_MS = 5000
+
+return Constants
