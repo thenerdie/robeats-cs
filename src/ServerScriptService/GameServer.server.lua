@@ -1,3 +1,4 @@
+--[[
 local r = game.ReplicatedStorage
 
 local function connectRemoteFunction(inst, call)
@@ -157,6 +158,6 @@ game.Players.PlayerRemoving:Connect(function(plr)
 	end
 	for i, room in pairs(games) do
 		dereg_serv(plr, room.plr)
-	end
+	en
 end)
-
+]]--

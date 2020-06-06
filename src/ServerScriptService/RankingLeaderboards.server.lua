@@ -182,8 +182,6 @@ end
 
 local songs = game:GetService("ReplicatedStorage").Songs
 local override = false
---//players that can unlock epic secret songs (please add ur id now lol)
-local AdminPlayers = {36304080, 33607300, 45616186, 167327389,35585415,77833049,58107975,77183382,526993347}
 local DataStoreService = game:GetService("DataStoreService")
 --------------------------------------------------------------------------------------------------------------------
 local hint = Instance.new("Hint")
@@ -352,7 +350,6 @@ end
 --//1 is for the scores, 2 is for the ratings.
 local scriptstats = {}
 local cloned = false
-local AdminSongs = game.ReplicatedStorage.AdminSongs:GetChildren()
 
 local function valStat(stat)
 	if stat ~= nil then
@@ -423,19 +420,7 @@ local function sendWebhook(play_slot, map)
 end
 
 game.Players.PlayerAdded:Connect(function(p)
-	-- throttle
-	repeat wait() until grist_loaded
-	print("Player added to game.")
-	local p_ID = "P" .. tostring(p.UserId)
-	-- clone admin songs, if the user is an admin
-	if AdminPlayers[p.UserId] and not cloned then
-		cloned = true
-		local copy = AdminSongs
-		for i=1, #copy do
-			copy[i]:Clone().Parent = game.ReplicatedStorage.Songs
-		end
-	end
-	-- init leaderstats
+	local p_ID = p.UserId
 	local leaderstats = Instance.new("IntValue")
 	leaderstats.Parent = p
 	leaderstats.Name = "leaderstats"
@@ -477,7 +462,7 @@ game.ReplicatedStorage.GetTopPlays.OnServerInvoke = function(player)
 	return getPlays(p_ID)
 end
 
-game.ReplicatedStorage.GetGlobalLeaderboard.OnServerInvoke = function(player, map, maxToReturn)
+game.ReplicatedStorage.GetGlobalLeaderboard.OnServerInvoke = function(player)
 	return getGlobalLeaderboard()
 end
 

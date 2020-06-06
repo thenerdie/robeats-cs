@@ -2,11 +2,6 @@
   "name": "robeats-cs",
   "tree": {
     "$className": "DataModel",
-    "Chat": {
-      "$className": "Chat",
-      "$ignoreUnknownInstances": true,
-      "$path": "src/Chat"
-    },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
       "$ignoreUnknownInstances": false,
@@ -14,36 +9,36 @@
     },
     "ServerScriptService": {
       "$className": "ServerScriptService",
-      "$ignoreUnknownInstances": true,
+      "$ignoreUnknownInstances": false,
       "$path": "src/ServerScriptService"
     },
     "ServerStorage": {
       "$className": "ServerStorage",
-      "$ignoreUnknownInstances": true,
+      "$ignoreUnknownInstances": false,
       "$path": "src/ServerStorage"
     },
     "StarterGui": {
       "$className": "StarterGui",
-      "$ignoreUnknownInstances": true,
+      "$ignoreUnknownInstances": false,
       "$path": "src/StarterGui"
     },
     "StarterPlayer": {
       "$className": "StarterPlayer",
       "StarterCharacterScripts": {
         "$className": "StarterCharacterScripts",
-        "$ignoreUnknownInstances": true,
+        "$ignoreUnknownInstances": false,
         "$path": "src/StarterPlayer/StarterCharacterScripts"
       },
       "StarterPlayerScripts": {
         "$className": "StarterPlayerScripts",
-        "$ignoreUnknownInstances": true,
+        "$ignoreUnknownInstances": false,
         "$path": "src/StarterPlayer/StarterPlayerScripts"
       },
-      "$ignoreUnknownInstances": true
+      "$ignoreUnknownInstances": false
     },
     "Workspace": {
       "$className": "Workspace",
-      "$ignoreUnknownInstances": true,
+      "$ignoreUnknownInstances": false,
       "$path": "src/Workspace"
     }
   }

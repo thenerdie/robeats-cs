@@ -1,17 +1,93 @@
+local Math = require(script.Parent.Math)
+
 local calc = {}
+
+-- LEGEND: Time, Type, Track, Duration
+
+local function getStream(hits)
+    return 0.25
+end
+
+local function getChord(hits)
+    return 0.5
+end
+
+local function getJS(hits)
+    return 0.2
+end
+
+local function getHS(hits)
+    return 0.8
+end
+
+local function getJack(hits)
+    return 0.85
+end
+
+local function genDataset()
+    return {
+        jack=0;
+        chord=0;
+        stream=0;
+        handstream=0;
+        jumpstream=0;
+    }
+end
+
+local function timespanData(hits, startAtMs, timespanMs)
+    if timespanMs == nil then
+        timespanMs = 1000
+    end
+    local self = genDataset()
+
+    local endAtMs = startAtMs + timespanMs
+    local index = 0
+    for i, v in pairs(hits) do
+        if v.Time >= startAtMs then
+            index = i
+            break
+        end
+    end
+    for i = index, #hits do
+        print(i)
+        local curOb = hits[i]
+        if curOb ~= nil then
+            if curOb.Time <= endAtMs then
+                local lastNotes = {}
+                for n = i, i-4, -1 do
+                    local pHit = hits[n]
+                    if pHit ~= nil then
+                        lastNotes[#lastNotes+1] = pHit
+                    end
+                end
+                self.jack = self.jack + getJack(lastNotes)
+                self.handstream = self.handstream + getHS(lastNotes)
+                self.jumpstream = self.jumpstream + getJS(lastNotes)
+                self.stream = self.stream + getStream(lastNotes)
+                self.chord = self.chord + getChord(lastNotes)
+            else
+                break
+            end
+        end
+    end
+    return self
+end
 
 function calc:DoRating(song)
     local data = song:GetData()
     local rating = 0;
-    if data.totalNotes < 20 or data.maxNps > 53 then
+    if data.totalNotes < 20 then
         return 0
     end
-    local total = 0
-    for i, kps in pairs(data.NpsGraph) do
-        total = i
-        rating = rating + kps
+    local tsData = timespanData(data.HitObjects, 0, data.songLength)
+
+    local i = 0
+
+    for k, v in pairs(tsData) do
+        i = i + 1
+        rating = rating + v
     end
-    rating = rating / total
+    rating = rating / i
     return rating
 end
 

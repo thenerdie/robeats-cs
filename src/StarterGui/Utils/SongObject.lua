@@ -54,7 +54,7 @@ function SongObject:new(instance)
 	end
 	
 	function self:GetButtonColor()
-		return Color3.new(1,1,1)
+		return Color3.new(0.3,0.3,0.3)
 	end
 	
 	function self:GetDifficulty()
