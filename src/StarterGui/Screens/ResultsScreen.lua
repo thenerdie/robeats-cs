@@ -132,13 +132,13 @@ function self:DoResults(props, rate, song)
 			});
 			Spread=Roact.createElement(UI.new("Frame"),{
 				Anchor=Vector2.new(1,1);
-				Position=UDim2.new(0.7,0,0.8,0);
+				Position=UDim2.new(0.85,0,0.92,0);
 				Size=UDim2.new(0.475,0,0.42,0);
 				Children={
 					Data=Roact.createFragment({
 						Marvs=Roact.createElement(UI.new("Frame"), {
 							Anchor=Vector2.new(0,0);
-							BColor3=Color3.fromRGB(247, 237, 171);
+							BColor3=Color3.fromRGB(212, 202, 133);
 							BTransparency=0.7;
 							Size=UDim2.new(1,0,1/6,0);
 							Position=UDim2.new(0,0,0/6,0);
@@ -147,7 +147,7 @@ function self:DoResults(props, rate, song)
 									Position=UDim2.new(0,0,0,0);
 									Anchor=Vector2.new(0,0);
 									BorderSize=0;
-									BColor3=Color3.fromRGB(247, 237, 171);
+									BColor3=Color3.fromRGB(212, 202, 133);
 									BTransparency=0.15;
 									Size=UDim2.new(marvs/total,0,1,0)
 								});
@@ -299,10 +299,10 @@ function self:DoResults(props, rate, song)
 			NoteDevianceGraph=Roact.createElement(graph.component, {
 				Anchor=Vector2.new(0,1);
 				Position=UDim2.new(0.01,0,0.99,0);
-				Size=UDim2.new(0.98,0,0.52,0);
+				Size=UDim2.new(0.98,0,0.47,0);
 			});
 			BackButton=Roact.createElement("TextButton", {
-				BackgroundColor3=Color3.fromRGB(232, 49, 49);
+				BackgroundColor3=Color3.fromRGB(224, 72, 34);
 				AnchorPoint=Vector2.new(1,0);
 				Text="BACK";
 				Position=UDim2.new(1,-5,0,5);
