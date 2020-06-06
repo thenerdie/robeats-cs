@@ -25,6 +25,8 @@ local Settings = require(Utils.Settings)
 local Graph = require(Frameworks.Graph)
 local UI = require(Frameworks.UI)
 
+print("bruh")
+
 for i, screen in pairs(PlayerGui:WaitForChild("Screens"):GetChildren()) do
 	ScreenUtil:NewScreen(screen.Name, require(screen))
 end
