@@ -5,23 +5,33 @@ local calc = {}
 -- LEGEND: Time, Type, Track, Duration
 
 local function getStream(hits)
-    return 0.25
+    return 0
 end
 
 local function getChord(hits)
-    return 0.5
+    return 0
 end
 
 local function getJS(hits)
-    return 0.2
+    return 0
 end
 
 local function getHS(hits)
-    return 0.8
+    return 0
 end
 
 local function getJack(hits)
-    return 0.85
+    local r = 0
+    for i = #hits, 1, -1 do
+        local hit = hits[i]
+        if i > 2 then
+            if hits[i-1].Track == hit.Track then
+                print("JACC FOUND!")
+                r = r + 0.19
+            end
+        end
+    end
+    return r
 end
 
 local function genDataset()
@@ -49,7 +59,6 @@ local function timespanData(hits, startAtMs, timespanMs)
         end
     end
     for i = index, #hits do
-        print(i)
         local curOb = hits[i]
         if curOb ~= nil then
             if curOb.Time <= endAtMs then
@@ -79,6 +88,7 @@ function calc:DoRating(song)
     if data.totalNotes < 20 then
         return 0
     end
+
     local tsData = timespanData(data.HitObjects, 0, data.songLength)
 
     local i = 0
