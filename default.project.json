@@ -1,5 +1,5 @@
 {
-  "name": "project",
+  "name": "robeats-cs",
   "tree": {
     "$className": "DataModel",
     "Chat": {
@@ -9,7 +9,7 @@
     },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
-      "$ignoreUnknownInstances": true,
+      "$ignoreUnknownInstances": false,
       "$path": "src/ReplicatedStorage"
     },
     "ServerScriptService": {

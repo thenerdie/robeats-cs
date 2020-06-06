@@ -19,7 +19,7 @@ local PowerBarState = require(game.ReplicatedStorage.Shared.PowerBarState)
 local _game_protos = nil
 local _game_element = nil
 
-local Spectating = game.ReplicatedStorage.Spectating
+--local Spectating = game.ReplicatedStorage.Spectating
 
 local GameLocal = {}
 GameLocal.Mode = {

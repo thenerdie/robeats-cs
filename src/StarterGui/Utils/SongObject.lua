@@ -1,4 +1,5 @@
 local Metrics = require(script.Parent.Metrics)
+local CSCalc = require(script.Parent.CSCalc)
 
 local SongObject = {}
 
@@ -53,15 +54,15 @@ function SongObject:new(instance)
 	end
 	
 	function self:GetButtonColor()
-		return self.instance.ButtonColor and self.instance.ButtonColor.Value or Color3.new(1,1,1)
+		return Color3.new(1,1,1)
 	end
 	
 	function self:GetDifficulty()
-		return self.instance.SongDiff and self.instance.SongDiff.Value or 0
+		return CSCalc:DoRating(self)
 	end
 	
 	function self:GetSongVersion()
-		return self.instance.SongVersion and self.instance.SongVersion.Value or 0
+		return 1
 	end
 	
 	function self:GetId()

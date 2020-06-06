@@ -11,7 +11,7 @@ local HitSFXGroup = require(game.ReplicatedStorage.Local.HitSFXGroup)
 local SongDatabase = require(game.ReplicatedStorage.AudioData.SongDatabase)
 
 local ModManager = require(game.ReplicatedStorage.ModManager)
-local Spectating = game.ReplicatedStorage.Spectating
+--local Spectating = game.ReplicatedStorage.Spectating
 
 local AudioManager = {}
 AudioManager.Mode = {
@@ -483,9 +483,9 @@ function AudioManager:new(game_element, specOffset, amods)
 				_current_mode = AudioManager.Mode.PostPlaying
 			end
 			
-			Spectating.UpdateGame:FireServer({
+			--[[Spectating.UpdateGame:FireServer({
 				bgmTime = self._bgm_time_position*1000
-			})
+			})]]--
 
 		elseif _current_mode == AudioManager.Mode.PostPlaying then
 			_post_playing_time_ms = _post_playing_time_ms + CurveUtil:TimescaleToDeltaTime(dt_scale) * 1000

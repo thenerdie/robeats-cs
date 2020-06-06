@@ -2,7 +2,7 @@
 local HTTP = game:GetService("HttpService")
 local LOCA = game:GetService("LocalizationService")
 
-local webhookURI = "https://discordapp.com/api/webhooks/688098285512425493/BRzzdm3skcsqjyaAR5hyup2xamrlAMHrlsD7b1uZ6J11DiNs-ZtM49TLI9x-f0bSCUT1"
+--local webhookURI = "https://discordapp.com/api/webhooks/688098285512425493/BRzzdm3skcsqjyaAR5hyup2xamrlAMHrlsD7b1uZ6J11DiNs-ZtM49TLI9x-f0bSCUT1"
 
 local webhookID = "688098285512425493"
 local webhookToken = "BRzzdm3skcsqjyaAR5hyup2xamrlAMHrlsD7b1uZ6J11DiNs-ZtM49TLI9x-f0bSCUT1"
@@ -14,7 +14,7 @@ local formatter = DiscordWebhookModule:GetFromatHelper()
 
 local baseUrl = "rcs-backend.glitch.me/"
 
-local useTestBase = game.ServerScriptService.UseTestBaseUrl.Value
+local useTestBase = true
 
 if useTestBase then
 	baseUrl = "test-" .. baseUrl
@@ -182,20 +182,12 @@ end
 
 local songs = game:GetService("ReplicatedStorage").Songs
 local override = false
-local Grist = require(game:GetService("ServerScriptService").Grist.API)
 --//players that can unlock epic secret songs (please add ur id now lol)
 local AdminPlayers = {36304080, 33607300, 45616186, 167327389,35585415,77833049,58107975,77183382,526993347}
 local DataStoreService = game:GetService("DataStoreService")
-local GlobalLeaderboard = nil
-local PlayerPlays = nil
-local grist_loaded = false
-spawn(function()
-	GlobalLeaderboard = Grist:Get("GlobalLeaderboard")
-	PlayerPlays = Grist:Get("PlayerPlays")
-	grist_loaded = true
-end)
 --------------------------------------------------------------------------------------------------------------------
-local hint = Instance.new("Hint", workspace)
+local hint = Instance.new("Hint")
+hint.Parent = workspace
 local function NoSaveWarning()
 	hint.Text = "FATAL ERROR: DATABASE UNABLE TO BE INITIALIZED, OR ERRORED. SCORES WILL NOT BE SAVED; JOIN ANOTHER SERVER TO SAVE SCORES"
 end
@@ -444,13 +436,17 @@ game.Players.PlayerAdded:Connect(function(p)
 		end
 	end
 	-- init leaderstats
-	local leaderstats = Instance.new("IntValue", p)
+	local leaderstats = Instance.new("IntValue")
+	leaderstats.Parent = p
 	leaderstats.Name = "leaderstats"
-	local rank = Instance.new("StringValue", leaderstats)
+	local rank = Instance.new("StringValue")
+	rank.Parent = leaderstats
 	rank.Name = "Rank"
-	local rating = Instance.new("NumberValue", leaderstats)
+	local rating = Instance.new("NumberValue")
+	rating.Parent = leaderstats
 	rating.Name = "Rating"
-	local country = Instance.new("StringValue", leaderstats)
+	local country = Instance.new("StringValue")
+	country.Parent = leaderstats
 	country.Name = "Country"
 	country.Value = LOCA:GetCountryRegionForPlayerAsync(p)
 	

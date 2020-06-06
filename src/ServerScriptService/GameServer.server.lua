@@ -37,9 +37,9 @@ end
 
 local ip_info = getServerLocation()
 
-game.ReplicatedStorage.GetServerLocation.OnServerInvoke = function(player)
-	return ip_info
-end
+--game.ReplicatedStorage.GetServerLocation.OnServerInvoke = function(player)
+	--return ip_info
+--end
 
 -----------------------------------------------------------------------------
 local games = {}
