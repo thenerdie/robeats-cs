@@ -2,6 +2,20 @@
   "name": "robeats-cs",
   "tree": {
     "$className": "DataModel",
+    "HttpService": {
+      "$className": "HttpService",
+      "$properties": {
+          "HttpEnabled": true
+      }
+    },
+    "Lighting": {
+      "$className": "Lighting",
+      "$ignoreUnknownInstances": true,
+      "$path": "src/Lighting",
+      "$properties": {
+        "ClockTime": 20.767
+      }
+    },
     "ReplicatedStorage": {
       "$className": "ReplicatedStorage",
       "$ignoreUnknownInstances": false,

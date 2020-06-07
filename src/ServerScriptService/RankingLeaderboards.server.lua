@@ -2,6 +2,9 @@
 local HTTP = game:GetService("HttpService")
 local LOCA = game:GetService("LocalizationService")
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Misc = ReplicatedStorage:WaitForChild("Misc")
+
 --local webhookURI = "https://discordapp.com/api/webhooks/688098285512425493/BRzzdm3skcsqjyaAR5hyup2xamrlAMHrlsD7b1uZ6J11DiNs-ZtM49TLI9x-f0bSCUT1"
 
 local webhookID = "688098285512425493"
@@ -347,20 +350,20 @@ game.Players.PlayerRemoving:Connect(function(p)
 	-- idk bye i guess
 end)
 
-game.ReplicatedStorage.Misc.GetSongLeaderboard.OnServerInvoke = function(player, m_ID)
+Misc.GetSongLeaderboard.OnServerInvoke = function(player, m_ID)
 	return getMapLeaderboard(m_ID)
 end
 
-game.ReplicatedStorage.Misc.GetTopPlays.OnServerInvoke = function(player)
+Misc.GetTopPlays.OnServerInvoke = function(player)
 	local p_ID = "P" .. tostring(player.UserId)
 	return getPlays(p_ID)
 end
 
-game.ReplicatedStorage.Misc.GetGlobalLeaderboard.OnServerInvoke = function()
+Misc.GetGlobalLeaderboard.OnServerInvoke = function()
 	return getGlobalLeaderboard()
 end
 
-game.ReplicatedStorage.Misc.SubmitScore.OnServerInvoke = function(player, map, score, accuracy, rate, spread, tierColor, hitData) --plr, inst, num, num, bool
+Misc.SubmitScore.OnServerInvoke = function(player, map, score, accuracy, rate, spread, tierColor, hitData) --plr, inst, num, num, string, color, [array]
 	print("// Score Submission Started...")
 	local cheated = DidCheat(player, map, score, accuracy, rate, spread)
 	local leaderstats = player:WaitForChild("leaderstats")
