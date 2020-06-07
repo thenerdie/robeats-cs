@@ -1,18 +1,18 @@
 local r = game.ReplicatedStorage
-
+local m = r:WaitForChild("Misc")
 
 local Online = {}
 
 function Online:GetMapLeaderboard(m_ID)
-	return r.GetSongLeaderboard:InvokeServer(m_ID)
+	return m.GetSongLeaderboard:InvokeServer(m_ID)
 end
 
 function Online:GetPlayerPlays(p_ID)
-	return r.GetTopPlays:InvokeServer()
+	return m.GetTopPlays:InvokeServer()
 end
 
 function Online:GetGlobalLeaderboard()
-	return r.GetGlobalLeaderboard:InvokeServer()
+	return m.GetGlobalLeaderboard:InvokeServer()
 end
 
 return Online

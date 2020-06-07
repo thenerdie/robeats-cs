@@ -179,49 +179,9 @@ local function getStats(p_ID)
 		return ret
 	end
 end
-
-local songs = game:GetService("ReplicatedStorage").Songs
-local override = false
-local DataStoreService = game:GetService("DataStoreService")
 --------------------------------------------------------------------------------------------------------------------
 local hint = Instance.new("Hint")
 hint.Parent = workspace
-local function NoSaveWarning()
-	hint.Text = "FATAL ERROR: DATABASE UNABLE TO BE INITIALIZED, OR ERRORED. SCORES WILL NOT BE SAVED; JOIN ANOTHER SERVER TO SAVE SCORES"
-end
-local function IssueServerWarning()
-	hint.Text = "SCORES AT THIS TIME WILL OR MAY NOT BE SUBMITTED, DUE TO THROTTLING OR BANDWIDTH ISSUES. CONSIDER MOVING OUT OF THE SERVER."
-end
-local function UnissueServerWarning()
-	hint.Text = ""
-end
-function getAlphabet()
-    local letters = {}
-    for ascii = 97, 122 do table.insert(letters, string.char(ascii)) end
-    return letters
-end
-local function URLify(str)
-	local finStr = ""
-	local allowedChars = getAlphabet()
-	for char in string.gmatch(str,".") do
-		local allowed = false
-		for itr, itr_char in pairs(allowedChars) do
-			if itr_char == string.lower(char) then
-				allowed = true
-			end
-		end
-		if allowed then
-			finStr = finStr .. char
-		end
-	end
-	return finStr
-end
-function tabempty(tab)
-    for _, _ in pairs(tab) do
-        return false
-    end
-    return true
-end
 --------------------------------------------------------------------------------------------------------------------
 
 --HttpWrapper:GetAsync("5dfc1fd5c9734b7cbb9cdaeb", false)
@@ -233,43 +193,11 @@ end
 -- TP SLOT ->>> same as PLAY SLOT
 ------------------------------------------------------------------------------------------------------------------------------------
 --//players who are banned from the game
-local toxicPlayers = {
-	544802279, --Lord_Believe
-	328239043, --Main Acc of Lord_Believe
-}
---//players who are shadowbanned
-local bannedPlayers = {
-	544802279, --Lord_Believe
-	328239043, --Main Acc of Lord_Believe
-}
-
-local function gen_gl_slot(r, pn, tmp, ud)
-	return {Rating=r; PlayerName=pn; TotalMapsPlayed=tmp; UserId=ud}
-end
 
 local function gen_play_slot(s, r, acc, rate, pn, ud, spd)
 	return {Score=s; Rating=r; Accuracy=acc; Rate=rate; PlayerName=pn; UserId=ud; Spread=spd}
 end
 
----------------------
-function encodeChar(chr)
-	return string.format("%%%X",string.byte(chr))
-end
- 
-function encodeString(str)
-	local output, t = string.gsub(str,"[^%w]",encodeChar)
-	return output
-end
-
-function decodeChar(hex)
-	return string.char(tonumber(hex,16))
-end
- 
-function decodeString(str)
-	local output, t = string.gsub(str,"%%(%x%x)",decodeChar)
-	return output
-end
----------------------
 function getIdFromMap(map_name)
 	local retString = ""
 	for char in string.gmatch(map_name, ".") do
@@ -325,46 +253,12 @@ local function DidCheat(player, map, score, accuracy, rate, spread)
 	return cheated
 end
 
-local function CalculatePlayerRating(p_ID)
-	local maps = game.ReplicatedStorage:WaitForChild("Songs")
-	local ratings = {}
-	local names = {}
-	local rating = 0
-	local maxNumOfScores = 25
-	table.sort(ratings, function(a,b)
-		return a > b
-	end)
-	for i, r in pairs(ratings) do
-		if (not (i > maxNumOfScores)) then
-			if i <= 10 then
-				rating = rating + r * 1.5
-			else
-				rating = rating + r
-			end
-		end
-	end
-	local plr_rating = math.floor(100 * rating / 30) / 100
-	return plr_rating
-end
-
---//1 is for the scores, 2 is for the ratings.
-local scriptstats = {}
-local cloned = false
-
 local function valStat(stat)
 	if stat ~= nil then
 		return (stat.Rank ~= nil and stat.Data ~= nil)
 	else
 		return false
 	end
-end
-
-local function randomColor()
-	return Color3.fromRGB(
-		math.random(0,255),
-		math.random(0,255),
-		math.random(0,255)
-	)
 end
 
 local function getAvatarUrl(p_ID)
@@ -377,7 +271,7 @@ function round(num, numDecimalPlaces)
 	return math.floor(num * mult + 0.5) / mult
 end
 
-local function sendWebhook(play_slot, map)
+local function sendWebhook(play_slot)
 	local avatarUrl = getAvatarUrl(play_slot.RawUserId)
 	local msg = DiscordWebhook:NewMessage()
 	msg:SetUsername("Score Watchdog")
@@ -453,20 +347,20 @@ game.Players.PlayerRemoving:Connect(function(p)
 	-- idk bye i guess
 end)
 
-game.ReplicatedStorage.GetSongLeaderboard.OnServerInvoke = function(player, m_ID)
+game.ReplicatedStorage.Misc.GetSongLeaderboard.OnServerInvoke = function(player, m_ID)
 	return getMapLeaderboard(m_ID)
 end
 
-game.ReplicatedStorage.GetTopPlays.OnServerInvoke = function(player)
+game.ReplicatedStorage.Misc.GetTopPlays.OnServerInvoke = function(player)
 	local p_ID = "P" .. tostring(player.UserId)
 	return getPlays(p_ID)
 end
 
-game.ReplicatedStorage.GetGlobalLeaderboard.OnServerInvoke = function(player)
+game.ReplicatedStorage.Misc.GetGlobalLeaderboard.OnServerInvoke = function()
 	return getGlobalLeaderboard()
 end
 
-game.ReplicatedStorage.SubmitScore.OnServerInvoke = function(player, map, score, accuracy, rate, spread, tierColor, hitData) --plr, inst, num, num, bool
+game.ReplicatedStorage.Misc.SubmitScore.OnServerInvoke = function(player, map, score, accuracy, rate, spread, tierColor, hitData) --plr, inst, num, num, bool
 	print("// Score Submission Started...")
 	local cheated = DidCheat(player, map, score, accuracy, rate, spread)
 	local leaderstats = player:WaitForChild("leaderstats")
@@ -475,7 +369,9 @@ game.ReplicatedStorage.SubmitScore.OnServerInvoke = function(player, map, score,
 	local p_ID = "P" .. tostring(player.UserId)
 	local play_slot = gen_play_slot(score, rating, accuracy, rate, player.Name, p_ID, spread)
 	local submit = true
-	if cheated then submit = false end
+	if cheated then
+		submit = false
+	end
 	if submit then
 		local data = {}
 		local gl_data = {}
@@ -499,7 +395,7 @@ game.ReplicatedStorage.SubmitScore.OnServerInvoke = function(player, map, score,
 			data_res.Data.Rating = 0
 			data_res.Rank = -1
 		else -- update leaderstats based on what the server returned
-			local plr_stats = player:FindFirstChild("leaderstats")
+			local plr_stats = leaderstats
 			if plr_stats then
 				plr_stats.Rating.Value = data_res.Data.Rating
 				plr_stats.Rank.Value = "#" .. tostring(tonumber(data_res.Rank) + 1)
@@ -511,8 +407,25 @@ game.ReplicatedStorage.SubmitScore.OnServerInvoke = function(player, map, score,
 		return "#" .. data_res.Rank+1, data_res.Data.Rating
 	end
 end
-print("Got past")
-	
-game.ReplicatedStorage.CalculatePlayerRating.OnServerEvent:Connect(function(player)
-	CalculatePlayerRating(player)
-end)
+
+--[[local function CalculatePlayerRating(p_ID)
+	local maps = game.ReplicatedStorage:WaitForChild("Songs")
+	local ratings = {}
+	local names = {}
+	local rating = 0
+	local maxNumOfScores = 25
+	table.sort(ratings, function(a,b)
+		return a > b
+	end)
+	for i, r in pairs(ratings) do
+		if (not (i > maxNumOfScores)) then
+			if i <= 10 then
+				rating = rating + r * 1.5
+			else
+				rating = rating + r
+			end
+		end
+	end
+	local plr_rating = math.floor(100 * rating / 30) / 100
+	return plr_rating
+end]]--
