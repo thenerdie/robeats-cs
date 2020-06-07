@@ -5,6 +5,9 @@ local SongObject = {}
 
 function SongObject:new(instance)
 	local self = {}
+	local cachedRating = 0
+	local hasCalced = false
+
 	self.instance = instance
 	
 	local function itrString(str, clb)
@@ -58,7 +61,12 @@ function SongObject:new(instance)
 	end
 	
 	function self:GetDifficulty()
-		return CSCalc:DoRating(self)
+		local ret = 0
+		if not hasCalced then
+			hasCalced = true
+			cachedRating = CSCalc:DoRating(self)
+		end
+		return cachedRating
 	end
 	
 	function self:GetSongVersion()

@@ -18,6 +18,8 @@ local Frameworks = script.Parent.Frameworks
 local Game = require(Utils.Game)
 local ScreenUtil = require(Utils.ScreenUtil) 
 local SongLibrary = require(Utils.Songs)
+local SongObject = require(Utils.SongObject)
+local Calc = require(Utils.CSCalc)
 local Online = require(Utils.Online)
 local Metrics = require(Utils.Metrics)
 local Math = require(Utils.Math)
@@ -30,3 +32,5 @@ for i, screen in pairs(PlayerGui:WaitForChild("Screens"):GetChildren()) do
 end
 
 ScreenUtil:FindScreen("MainMenuScreen"):DoOptions()
+
+--local Utils = game:GetService("StarterGui").Utils  local SongObject = require(Utils.SongObject)  local song = SongObject:new(game.ReplicatedStorage:WaitForChild("Songs"):WaitForChild("[396] Camellia - PLANET SHAPER (Evening)"))  print(require(Utils.CSCalc):DoRating(song))

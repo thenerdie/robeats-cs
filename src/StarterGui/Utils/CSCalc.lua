@@ -5,7 +5,18 @@ local calc = {}
 -- LEGEND: Time, Type, Track, Duration
 
 local function getStream(hits)
-    return 0
+    local r = 0
+    for i = 1, #hits do
+        local hit = hits[i]
+        if i > 2 then
+            local prevHit = hits[i-1]
+            local difference = math.abs(hit.Time - prevHit.Time)
+            if prevHit.Track ~= hit.Track and difference <= 200 then
+                r = r + (difference/20000)
+            end
+        end
+    end
+    return r
 end
 
 local function getChord(hits)
@@ -21,13 +32,19 @@ local function getHS(hits)
 end
 
 local function getJack(hits)
+    local jacksInARow = 0
     local r = 0
-    for i = #hits, 1, -1 do
+    for i = 1, #hits do
         local hit = hits[i]
         if i > 2 then
-            if hits[i-1].Track == hit.Track then
-                print("JACC FOUND!")
-                r = r + 0.19
+            jacksInARow = jacksInARow + 1
+            local prevHit = hits[i-1]
+            local difference = math.abs(hit.Time - prevHit.Time)
+            if prevHit.Track == hit.Track and difference <= 400 then
+                local cJks = math.clamp(jacksInARow, 1, 12)
+                r = r + (cJks*difference/17000)
+            else
+                jacksInARow = 0
             end
         end
     end
@@ -58,6 +75,7 @@ local function timespanData(hits, startAtMs, timespanMs)
             break
         end
     end
+
     for i = index, #hits do
         local curOb = hits[i]
         if curOb ~= nil then
@@ -69,6 +87,11 @@ local function timespanData(hits, startAtMs, timespanMs)
                         lastNotes[#lastNotes+1] = pHit
                     end
                 end
+
+                table.sort(lastNotes, function(a, b)
+                    return a.Time > b.Time
+                end)
+
                 self.jack = self.jack + getJack(lastNotes)
                 self.handstream = self.handstream + getHS(lastNotes)
                 self.jumpstream = self.jumpstream + getJS(lastNotes)
@@ -89,7 +112,7 @@ function calc:DoRating(song)
         return 0
     end
 
-    local tsData = timespanData(data.HitObjects, 0, data.songLength)
+    local tsData = timespanData(data.HitObjects, 0, data.songLength*1000)
 
     local i = 0
 
@@ -97,7 +120,9 @@ function calc:DoRating(song)
         i = i + 1
         rating = rating + v
     end
-    rating = rating / i
+    rating = rating / 2
+    
+    print(rating, song:GetDisplayName())
     return rating
 end
 
