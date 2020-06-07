@@ -121,9 +121,7 @@ function calc:DoRating(song)
         rating = rating + v
     end
     rating = rating / 2
-    
-    print(rating, song:GetDisplayName())
-    return rating
+    return 0 -- this isnt even a real calculator xd
 end
 
 return calc
