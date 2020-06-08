@@ -63,7 +63,7 @@ local function DoBase(props)
 	local chain = playdata[10]
     local maxcombo = playdata[11]
 
-    local rating = Metrics:CalculateSR(rate or 1, 35, acc) --35 is the rating
+    local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc) --35 is the rating
 
     local gradedata = Metrics:GetGradeData(acc)
 	local tierdata = Metrics:GetTierData(rating)
@@ -118,9 +118,9 @@ local function DoBase(props)
 			SliceScale = 1,
 			ImageColor3 = Color3.fromRGB(232, 49, 49),
 			[Roact.Event.MouseButton1Click] = function(rbx)
-                self:Unmount()
-                game_.force_quit = true
-            end;
+            self:Unmount()
+            game_.force_quit = true
+      end;
 		}, {
 			Label = Roact.createElement("TextLabel", {
             	TextColor3 = Color3.fromRGB(255,255,255);
