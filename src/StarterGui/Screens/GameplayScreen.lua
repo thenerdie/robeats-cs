@@ -69,47 +69,71 @@ local function DoBase(props)
 	local tierdata = Metrics:GetTierData(rating)
 
     return Roact.createElement("ScreenGui", {}, {
-        Score=Roact.createElement("TextLabel", {
-            BackgroundColor3 = Color3.new(0.1,0.1,0.1);
-            TextColor3 = Color3.fromRGB(163, 163, 163);
-            TextStrokeTransparency = 0;
+        Score = Roact.createElement("TextLabel", {
+            BackgroundColor3 = Color3.fromRGB(25,25,25);
+            TextColor3 = Color3.fromRGB(255,255,255);
+			BackgroundTransparency = 1;
             TextXAlignment = Enum.TextXAlignment.Right;
             Text = Math.round(score);
-            TextSize=35;
+            TextScaled = true;
+			TextWrapped = true;
+			Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(1,0);
-            Position = UDim2.new(0.95,0,0.05,0);
+            Position = UDim2.new(0.98,0,0.035,0);
+			Size = UDim2.new(0.15,0,0.06,0);
         });
-        Accuracy=Roact.createElement("TextLabel", {
-            BackgroundColor3 = Color3.new(0.1,0.1,0.1);
-            TextColor3 = gradedata.Color;
-            TextStrokeTransparency = 0;
+        Accuracy = Roact.createElement("TextLabel", {
+            BackgroundColor3 = Color3.fromRGB(25,25,25);
+            TextColor3 = Color3.fromRGB(255,255,255);
             TextXAlignment = Enum.TextXAlignment.Right;
+			BackgroundTransparency = 1;
             Text = Math.round(acc, 2) .. "% (" .. gradedata.Title .. ")";
-            TextSize=24;
+            TextScaled = true;
+			TextWrapped = true;
+			Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(1,0);
-            Position = UDim2.new(0.95,0,0.14,0);
+            Position = UDim2.new(0.98,0,0.1,0);
+			Size = UDim2.new(0.15,0,0.03,0);
         });
-        Rating=Roact.createElement("TextLabel", {
-            BackgroundColor3 = Color3.new(0.1,0.1,0.1);
-            TextColor3 = tierdata.Color;
-            TextStrokeTransparency = 0;
-            TextXAlignment = Enum.TextXAlignment.Right;
+        Rating = Roact.createElement("TextLabel", {
+            BackgroundColor3 = Color3.fromRGB(25,25,25);
+            TextColor3 = Color3.fromRGB(255,255,255);
+			BackgroundTransparency = 1;
             Text = Math.round(rating, 2) .. " SR";
-            TextSize = 24;
-            AnchorPoint = Vector2.new(1,1);
-            Position = UDim2.new(0.95,0,0.95,0);
+            TextScaled = true;
+			TextWrapped = true;
+			Font = Enum.Font.GothamBlack;
+            Position = UDim2.new(0.02,0,0.035,0);
+			Size = UDim2.new(0.125,0,0.05,0);
         });
-        BackButton=Roact.createElement("TextButton", {
-            BackgroundColor3=Color3.fromRGB(232, 49, 49);
-            AnchorPoint=Vector2.new(1,1);
-            Text="BACK";
-            Position=UDim2.new(0.95,0,0.87,0);
-            Size=UDim2.new(0.14,0,0.08,0);
-            [Roact.Event.MouseButton1Click] = function(rbx)
+		BackButton = Roact.createElement("ImageButton", {
+			Size = UDim2.new(0.14, 0, 0.06, 0),
+			AnchorPoint = Vector2.new(1,1);
+			Position = UDim2.new(0.975, 0, 0.955, 0),
+			BorderSizePixel = 0,
+			BackgroundTransparency = 1,
+			ScaleType = Enum.ScaleType.Slice,
+			Image = "rbxassetid://2790382281",
+			SliceCenter = Rect.new(4, 4, 252, 252),
+			SliceScale = 1,
+			ImageColor3 = Color3.fromRGB(232, 49, 49),
+			[Roact.Event.MouseButton1Click] = function(rbx)
                 self:Unmount()
                 game_.force_quit = true
             end;
-        });
+		}, {
+			Label = Roact.createElement("TextLabel", {
+            	TextColor3 = Color3.fromRGB(255,255,255);
+				BackgroundTransparency = 1;
+            	Text = "BACK";
+            	TextScaled = true;
+				TextWrapped = true;
+				Font = Enum.Font.GothamBlack;
+            	AnchorPoint = Vector2.new(0.5,0.5);
+           		Position = UDim2.new(0.5,0,0.5,0);
+				Size = UDim2.new(0.9,0,0.6,0);
+        	});
+		});
     })
 end
 
