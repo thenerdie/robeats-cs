@@ -72,12 +72,12 @@ end
 
 function self:Initialize(props)
     DoBase(props)
-    handle = Roact.mount(tree, {}, "GameplayScreen")
+    handle = Roact.mount(tree, PlayerGui, "GameplayScreen")
 end
 
 function self:Update(props)
     DoBase(props)
-    Roact.update(tree, handle)
+    Roact.update(handle, tree)
 end
 
 return self
