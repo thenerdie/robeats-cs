@@ -101,10 +101,10 @@ local function DoBase(props)
         });
         BackButton=Roact.createElement("TextButton", {
             BackgroundColor3=Color3.fromRGB(232, 49, 49);
-            AnchorPoint=Vector2.new(1,1);
+            AnchorPoint=Vector2.new(0,1);
             Text="BACK";
-            Position=UDim2.new(0.95,0,0.87,0);
-            Size=UDim2.new(0.14,0,0.08,0);
+            Position=UDim2.new(0.02,0,0.98,0);
+            Size=UDim2.new(0.09,0,0.05,0);
             [Roact.Event.MouseButton1Click] = function(rbx)
                 self:Unmount()
                 game_.force_quit = true

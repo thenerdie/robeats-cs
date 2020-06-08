@@ -3,14 +3,6 @@
 -- AVERAGE NPS: 14.4807692307692
 -- MAX NPS: 22
 -- SONG LENGTH: 102.669
-
-
-
-
-
-
-
-print("dfnjnjdfjn")
  
 local rtv = {}
 rtv.totalNotes = 1506
@@ -33,7 +25,7 @@ rtv.AudioAssetId = "rbxassetid://1065908427"
 rtv.AudioFilename = "DaDaDaDaDaDaDaDaDaDa (INF FX)"
 rtv.AudioDescription = ""
 rtv.AudioCoverImageAssetId = ""
-rtv.AudioArtist = ""
+rtv.AudioArtist = "Hige Driver join SELEN"
 rtv.AudioDifficulty = 1
 rtv.AudioTimeOffset = -80
 rtv.AudioVolume = 0.5
