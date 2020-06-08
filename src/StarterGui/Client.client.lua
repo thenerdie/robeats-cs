@@ -9,6 +9,7 @@ CLIENT SIDE LOGIC FOR ROBEATS CS
 repeat wait() until game.Players.LocalPlayer.Character ~= nil
 local LocalPlayer = game.Players.LocalPlayer
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+repeat wait() until script.Parent.Utils ~= nil
 local Utils = script.Parent.Utils
 local ScreenUtil = require(Utils.ScreenUtil) 
 

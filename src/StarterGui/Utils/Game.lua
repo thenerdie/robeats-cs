@@ -12,6 +12,9 @@ local EnqueueFn = require(game.ReplicatedStorage.Shared.EnqueueFn)
 local HitCache = require(game.ReplicatedStorage.Local.HitCache)
 local ModManager = require(game.ReplicatedStorage.ModManager)
 
+local Utils = script.Parent
+local Screens = require(Utils.ScreenUtil) 
+
 local RunService = game:GetService("RunService")
 local s = game.ReplicatedStorage.Spectating
 
@@ -24,7 +27,7 @@ function Game:new()
 	g._local_services = {}
 	g.local_game = {}
 	function g:StartGame(song, rate, keys, note_color, scroll_speed)
-		print(song:GetDisplayName())
+		local GameplayScreen = Screens:FindScreen("GameplayScreen")
 		local _local_services = {}
 		_local_services = {
 			_spui = SPUISystem:new(5);
@@ -107,30 +110,53 @@ function Game:new()
 				end
 			end--]]
 		end
-		
+
+		local hasInit = false
+
+		local function getProperties()
+			return {
+				Data=localGame:get_data();
+			}
+		end
+
+		local function UpdateScreen()
+			local props = getProperties()
+			if not hasInit then
+				hasInit = true
+				GameplayScreen:Initialize(props)
+				return
+			end
+			GameplayScreen:Update(props)
+		end
 		
 		local checkCount = 1
 		local songTime = 0
+		local rawTime = 0
 		local songLength = _local_services._game_join:get_songLength()/1000
 		local timeLeft = 0
 		local timeText = ""
 		local prevTimeLeft = 0
+
+		local timeSince = 0
+
 		while isDone == false and game_force_end == false do
 			local tickDelta = RunService.Heartbeat:wait()
 			local dt_scale = CurveUtil:DeltaTimeToTimescale(tickDelta)
-					
+
 			_local_services._game_join:update(dt_scale)
 			_local_services._spui:layout()
 			_local_services._update_enqueue_fn:update(dt_scale)
 	
 			_local_services._sfx_manager:update(dt_scale,_local_services)
 			_local_services._input:post_update()
-			songTime = _local_services._game_join:get_songTime()/1000
+			rawTime = _local_services._game_join:get_songTime()
+			songTime = rawTime/1000
 			isDone = _local_services._game_join:check_songDone()
-			spawn(function()
-				local suc, err = pcall(handleSpectators)
-				if not suc then warn(err) end
-			end)
+
+			if rawTime - timeSince >= 500 then
+				timeSince = rawTime
+				UpdateScreen()
+			end
 		end
 	end
 	function g:DestroyStage()
