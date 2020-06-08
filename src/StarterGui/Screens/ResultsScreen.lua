@@ -46,6 +46,8 @@ function self:DoResults(props, rate, song)
 	local score = data[9]
 	local chain = data[10]
 	local maxcombo = data[11]
+	local ranking = "?"
+	local rankingcolor = Color3.fromRGB(255,255,255)
 	
 	local ratio = 0
 	
@@ -102,6 +104,45 @@ function self:DoResults(props, rate, song)
 				ImageTransparency = 1
 				--Image = "http://www.roblox.com/asset/?id=2404285030"
 			}, {
+				Rating = Roact.createElement("ImageLabel", {
+					AnchorPoint = Vector2.new(0.5, 0.5),
+					Size = UDim2.new(0.8, 0, 0.9, 0),
+					Position = UDim2.new(0.5, 0, 0.5, 0),
+					ZIndex = 4,
+					BorderSizePixel = 0,
+					BackgroundTransparency = 1,
+					ScaleType = Enum.ScaleType.Fit,
+					Image = "http://www.roblox.com/asset/?id=4873211876",
+					ImageColor3 = Color3.fromRGB(35, 35, 35)
+				}, {
+					Scale = Roact.createElement("UIAspectRatioConstraint", {
+						DominantAxis = Enum.DominantAxis.Width,
+					}),
+					Data = Roact.createElement("TextLabel", {
+						AnchorPoint = Vector2.new(0.5, 0.5),
+						Size = UDim2.new(1, 0, 1, 0),
+						Position = UDim2.new(0.5, 0, 0.5, 0),
+						ZIndex = 5,
+						BorderSizePixel = 0,
+						BackgroundTransparency = 1,
+						Text = ranking,
+						Font = Enum.Font.GothamBlack,
+						TextScaled = true,
+						TextWrapped = true,
+						TextColor3 = Color3.fromRGB(rankingcolor)
+					}),
+					RatingBG = Roact.createElement("ImageLabel", {
+						AnchorPoint = Vector2.new(0.5, 0.5),
+						Size = UDim2.new(0.95, 0, 0.95, 0),
+						Position = UDim2.new(0.5, 0, 0.5, 0),
+						ZIndex = 3,
+						BorderSizePixel = 0,
+						BackgroundTransparency = 1,
+						ScaleType = Enum.ScaleType.Fit,
+						Image = "http://www.roblox.com/asset/?id=4512064807",
+						ImageColor3 = Color3.fromRGB(rankingcolor)
+					}),
+				}), 
 				User = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(0, 0.5),
 					Size = UDim2.new(0.15, 0, 0.8, 0),
@@ -688,6 +729,20 @@ function self:DoResults(props, rate, song)
 								SliceScale = 1,
 								ImageColor3 = Color3.fromRGB(50, 21, 21)
 							}, {
+								Ratio = Roact.createElement("TextLabel", {
+									AnchorPoint = Vector2.new(0, 0.5),
+									Size = UDim2.new(0.25, 0, 0.6, 0),
+									Position = UDim2.new(0.74, 0, 0.5, 0),
+									ZIndex = 11,
+									BorderSizePixel = 0,
+									BackgroundTransparency = 1,
+									Text = ratio..":1",
+									Font = Enum.Font.GothamBlack,
+									TextScaled = true,
+									TextWrapped = true,
+									TextColor3 = Color3.fromRGB(255, 255, 255),
+									TextStrokeTransparency = 0.5
+								}),
 								RemoveRoundCorner = Roact.createElement("Frame",{
 									Size = UDim2.new(1, 0, 0.5, 0),
 									Position = UDim2.new(0, 0, 0, 0),
