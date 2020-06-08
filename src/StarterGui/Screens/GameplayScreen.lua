@@ -66,7 +66,7 @@ local function DoBase(props)
     local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc) --35 is the rating
 
     local gradedata = Metrics:GetGradeData(acc)
-	local tierdata = Metrics:GetTierData(rating)
+    local tierdata = Metrics:GetTierData(rating)
 
     return Roact.createElement("ScreenGui", {}, {
         Score = Roact.createElement("TextLabel", {
@@ -84,7 +84,7 @@ local function DoBase(props)
         });
         Accuracy = Roact.createElement("TextLabel", {
             BackgroundColor3 = Color3.fromRGB(25,25,25);
-            TextColor3 = Color3.fromRGB(255,255,255);
+            TextColor3 = gradedata.Color;
             TextXAlignment = Enum.TextXAlignment.Right;
 			BackgroundTransparency = 1;
             Text = Math.round(acc, 2) .. "% (" .. gradedata.Title .. ")";
@@ -97,7 +97,7 @@ local function DoBase(props)
         });
         Rating = Roact.createElement("TextLabel", {
             BackgroundColor3 = Color3.fromRGB(25,25,25);
-            TextColor3 = Color3.fromRGB(255,255,255);
+            TextColor3 = tierdata.Color;
 			BackgroundTransparency = 1;
             Text = Math.round(rating, 2) .. " SR";
             TextScaled = true;
