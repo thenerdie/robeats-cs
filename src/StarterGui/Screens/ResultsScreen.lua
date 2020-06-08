@@ -46,8 +46,6 @@ function self:DoResults(props, rate, song)
 	local score = data[9]
 	local chain = data[10]
 	local maxcombo = data[11]
-	local ranking = "?"
-	local rankingcolor = Color3.fromRGB(255,255,255)
 	
 	local ratio = 0
 	
@@ -125,11 +123,11 @@ function self:DoResults(props, rate, song)
 						ZIndex = 5,
 						BorderSizePixel = 0,
 						BackgroundTransparency = 1,
-						Text = ranking,
+						Text = gradedata.Title,
 						Font = Enum.Font.GothamBlack,
 						TextScaled = true,
 						TextWrapped = true,
-						TextColor3 = Color3.fromRGB(rankingcolor)
+						TextColor3 = gradedata.Color
 					}),
 					RatingBG = Roact.createElement("ImageLabel", {
 						AnchorPoint = Vector2.new(0.5, 0.5),
@@ -140,7 +138,7 @@ function self:DoResults(props, rate, song)
 						BackgroundTransparency = 1,
 						ScaleType = Enum.ScaleType.Fit,
 						Image = "http://www.roblox.com/asset/?id=4512064807",
-						ImageColor3 = Color3.fromRGB(rankingcolor)
+						ImageColor3 = gradedata.Color
 					}),
 				}), 
 				User = Roact.createElement("ImageLabel", {
