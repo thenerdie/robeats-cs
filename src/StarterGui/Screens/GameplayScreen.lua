@@ -24,6 +24,8 @@ local tree = {}
 
 local GPlayers = {}
 
+local game_ = nil
+
 local function GetPlayers()
     local ret = {}
 
@@ -46,6 +48,8 @@ end
 
 local function DoBase(props)
     local playdata = props.Data
+    local rate = props.Rate
+    local song = props.Song
 
     local marvs = playdata[1]
 	local perfs = playdata[2]
@@ -57,27 +61,71 @@ local function DoBase(props)
 	local acc = playdata[8]
 	local score = playdata[9]
 	local chain = playdata[10]
-	local maxcombo = playdata[11]
+    local maxcombo = playdata[11]
 
-    tree = Roact.createElement("ScreenGui", {}, {
+    local rating = Metrics:CalculateSR(rate or 1, 35, acc) --35 is the rating
+
+    local gradedata = Metrics:GetGradeData(acc)
+	local tierdata = Metrics:GetTierData(rating)
+
+    return Roact.createElement("ScreenGui", {}, {
         Score=Roact.createElement("TextLabel", {
             BackgroundColor3 = Color3.new(0.1,0.1,0.1);
-            Text = score;
-            TextSize=18;
+            TextColor3 = Color3.fromRGB(163, 163, 163);
+            TextStrokeTransparency = 0;
+            TextXAlignment = Enum.TextXAlignment.Right;
+            Text = Math.round(score);
+            TextSize=35;
             AnchorPoint = Vector2.new(1,0);
-            Position = UDim2.new(1,-5,0,5);
-        })
+            Position = UDim2.new(0.95,0,0.05,0);
+        });
+        Accuracy=Roact.createElement("TextLabel", {
+            BackgroundColor3 = Color3.new(0.1,0.1,0.1);
+            TextColor3 = gradedata.Color;
+            TextStrokeTransparency = 0;
+            TextXAlignment = Enum.TextXAlignment.Right;
+            Text = Math.round(acc, 2) .. "% (" .. gradedata.Title .. ")";
+            TextSize=24;
+            AnchorPoint = Vector2.new(1,0);
+            Position = UDim2.new(0.95,0,0.14,0);
+        });
+        Rating=Roact.createElement("TextLabel", {
+            BackgroundColor3 = Color3.new(0.1,0.1,0.1);
+            TextColor3 = tierdata.Color;
+            TextStrokeTransparency = 0;
+            TextXAlignment = Enum.TextXAlignment.Right;
+            Text = Math.round(rating, 2) .. " SR";
+            TextSize = 24;
+            AnchorPoint = Vector2.new(1,1);
+            Position = UDim2.new(0.95,0,0.95,0);
+        });
+        BackButton=Roact.createElement("TextButton", {
+            BackgroundColor3=Color3.fromRGB(232, 49, 49);
+            AnchorPoint=Vector2.new(1,1);
+            Text="BACK";
+            Position=UDim2.new(0.95,0,0.87,0);
+            Size=UDim2.new(0.14,0,0.08,0);
+            [Roact.Event.MouseButton1Click] = function(rbx)
+                self:Unmount()
+                game_.force_quit = true
+            end;
+        });
     })
 end
 
-function self:Initialize(props)
-    DoBase(props)
+function self:Initialize(props, g)
+    game_ = g
+    tree = DoBase(props)
     handle = Roact.mount(tree, PlayerGui, "GameplayScreen")
 end
 
 function self:Update(props)
-    DoBase(props)
+    tree = DoBase(props)
     Roact.update(handle, tree)
+end
+
+function self:Unmount()
+    Roact.unmount(handle)
 end
 
 return self

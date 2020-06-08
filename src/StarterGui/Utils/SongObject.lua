@@ -64,7 +64,7 @@ function SongObject:new(instance)
 		local ret = 0
 		if not hasCalced then
 			hasCalced = true
-			cachedRating = CSCalc:DoRating(self)
+			cachedRating = self:GetData().AudioDifficulty or 0
 		end
 		return cachedRating
 	end

@@ -26,6 +26,7 @@ function Game:new()
 	local g = {}
 	g._local_services = {}
 	g.local_game = {}
+	g.force_quit = false
 	function g:StartGame(song, rate, keys, note_color, scroll_speed)
 		local GameplayScreen = Screens:FindScreen("GameplayScreen")
 		local _local_services = {}
@@ -82,7 +83,6 @@ function Game:new()
 		print(localGame:is_ready(), _local_services._game_join:is_game_audio_loaded())
 		
 		_local_services._game_join:start_game(EnvironmentSetup:get_protos())
-		local game_force_end = false
 		local isDone = false
 		
 		local tries = 0	
@@ -116,6 +116,8 @@ function Game:new()
 		local function getProperties()
 			return {
 				Data=localGame:get_data();
+				Song=song;
+				Rate=rate;
 			}
 		end
 
@@ -123,10 +125,14 @@ function Game:new()
 			local props = getProperties()
 			if not hasInit then
 				hasInit = true
-				GameplayScreen:Initialize(props)
+				GameplayScreen:Initialize(props, g)
 				return
 			end
 			GameplayScreen:Update(props)
+		end
+
+		local function Unmount()
+			GameplayScreen:Unmount()
 		end
 		
 		local checkCount = 1
@@ -139,7 +145,7 @@ function Game:new()
 
 		local timeSince = 0
 
-		while isDone == false and game_force_end == false do
+		while isDone == false and g.force_quit == false do
 			local tickDelta = RunService.Heartbeat:wait()
 			local dt_scale = CurveUtil:DeltaTimeToTimescale(tickDelta)
 
@@ -153,11 +159,12 @@ function Game:new()
 			songTime = rawTime/1000
 			isDone = _local_services._game_join:check_songDone()
 
-			if rawTime - timeSince >= 500 then
+			if rawTime - timeSince >= 200 then
 				timeSince = rawTime
 				UpdateScreen()
 			end
 		end
+		Unmount()
 	end
 	function g:DestroyStage()
 		g._local_services._game_join:finishGame()
