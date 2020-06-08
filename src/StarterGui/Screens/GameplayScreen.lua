@@ -74,7 +74,7 @@ local function DoBase(props)
             TextColor3 = Color3.fromRGB(255,255,255);
 			BackgroundTransparency = 1;
             TextXAlignment = Enum.TextXAlignment.Right;
-            Text = Math.round(score);
+            Text = Math.format(Math.round(score));
             TextScaled = true;
 			TextWrapped = true;
 			Font = Enum.Font.GothamBlack;
