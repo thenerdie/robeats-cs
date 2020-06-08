@@ -236,7 +236,7 @@ function self:DoResults(props, rate, song)
 				}),
 				Back = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(1, 0),
-					Size = UDim2.new(0.2, 0, 0.2, 0),
+					Size = UDim2.new(0.125, 0, 0.2, 0),
 					Position = UDim2.new(0.98, 0, 0.7, 0),
 					ZIndex = 3,
 					BorderSizePixel = 0,
@@ -245,12 +245,12 @@ function self:DoResults(props, rate, song)
 					Image = "rbxassetid://2790382281",
 					SliceCenter = Rect.new(4, 4, 252, 252),
 					SliceScale = 1,
-					ImageColor3 = Color3.fromRGB(16, 102, 34)
+					ImageColor3 = Color3.fromRGB(35, 35, 35)
 				},{
 					Data = Roact.createElement("TextButton", {
 						AnchorPoint = Vector2.new(0.5, 0.5),
-						Size = UDim2.new(0.85, 0, 0.7, 0),
-						Position = UDim2.new(0.5, 0, 0.6, 0),
+						Size = UDim2.new(1, 0, 0.7, 0),
+						Position = UDim2.new(0.5, 0, 0.5, 0),
 						ZIndex = 4,
 						BorderSizePixel = 0,
 						BackgroundTransparency = 1,
@@ -258,7 +258,7 @@ function self:DoResults(props, rate, song)
 						Font = Enum.Font.GothamBlack,
 						TextScaled = true,
 						TextWrapped = true,
-						TextColor3 = Color3.fromRGB(192, 192, 192),
+						TextColor3 = Color3.fromRGB(255,255,255),
 						[Roact.Event.MouseButton1Click] = function()
 							self:Unmount()
 							Screens:FindScreen("SongSelectScreen"):DoSongSelect()
@@ -300,7 +300,7 @@ function self:DoResults(props, rate, song)
 							ZIndex = 5,
 							BorderSizePixel = 0,
 							BackgroundTransparency = 1,
-							Text = "#1",
+							Text = "#??",
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
@@ -338,7 +338,7 @@ function self:DoResults(props, rate, song)
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
-							TextColor3 = gradedata.Color
+							TextColor3 = Color3.fromRGB(255, 255, 255)
 						}),
 						Label = Roact.createElement("TextLabel", {
 							AnchorPoint = Vector2.new(0.5, 0),
@@ -440,7 +440,7 @@ function self:DoResults(props, rate, song)
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
-							TextColor3 = tierdata.Color
+							TextColor3 = gradedata.Color
 						}),
 						Label = Roact.createElement("TextLabel", {
 							AnchorPoint = Vector2.new(0.5, 0),
