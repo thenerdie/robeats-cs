@@ -159,7 +159,7 @@ function Game:new()
 			songTime = rawTime/1000
 			isDone = _local_services._game_join:check_songDone()
 
-			if rawTime - timeSince >= 200 then
+			if rawTime - timeSince >= 50 then
 				timeSince = rawTime
 				UpdateScreen()
 			end
