@@ -12,7 +12,7 @@
       "$className": "Lighting",
       "$ignoreUnknownInstances": true,
       "$properties": {
-        "ClockTime": 20.767
+        "ClockTime": 0
       }
     },
     "ReplicatedStorage": {
