@@ -12,7 +12,7 @@ local function frag(c)
 	return Roact.createFragment(c)
 end
 
-local function genProps(self)
+local function GenOption(self)
 	
 	local other = {}
 	
@@ -22,7 +22,7 @@ local function genProps(self)
 				Size=UDim2.new(0.25,0,1,0);
 				Position=UDim2.new(1/4,0,0,0);
 				BTransparency=0.7;
-				Text=self.state[self.props.Setting]
+				Text=self.optionValue:getValue()
 			});
 			Plus=Roact.createElement(c("TextButton"), {
 				Text="+";
@@ -30,8 +30,8 @@ local function genProps(self)
 				Position=UDim2.new(2/4,0,0,0);
 				BTransparency=0.7;
 				OnClick = function(rbx)
-					Settings:Increment(self.props.Setting, 1)
-					self:setState(Settings.Options)
+					local new_v = Settings:Increment(self.props.Setting, 1)
+					self.modOption(new_v)
 				end
 			});
 			Minus=Roact.createElement(c("TextButton"), {
@@ -50,12 +50,13 @@ local function genProps(self)
 	if self.props.type == "string" then
 		other = frag({
 			Text=Roact.createElement(c("TextBox"), {
-				Text="";
+				Text=self.optionValue:getValue();
 				Size=UDim2.new(0.75,0,1,0);
 				Position=UDim2.new(1/4,0,0,0);
 				BTransparency=0.7;
 				OnChange = function(rbx)
-					Settings:ChangeOption(self.props.Setting, rbx.Text)
+					local new_v = Settings:ChangeOption(self.props.Setting, rbx.Text)
+					self.modOption(new_v)
 				end
 			})
 		})
@@ -64,29 +65,30 @@ local function genProps(self)
 	if self.props.type == "color" then
 		other = frag({
 			Text=Roact.createElement(c("TextBox"), {
-				Text="nil,nil,nil";
+				Text="";
 				Size=UDim2.new(0.75,0,1,0);
 				Position=UDim2.new(1/4,0,0,0);
 				BTransparency=0.7;
 				OnChange = function(rbx)
-					Settings:ParseStringColor3(self.props.Setting, rbx.Text)
+					local new_v = Settings:ParseStringColor3(self.props.Setting, rbx.Text)
+					self.modOption(new_v)
 				end
 			})
 		})
 	end
 	
 	return frag({
-		OptionName=Roact.createElement(c("TextLabel"),{
+		OptionName=Roact.createElement("TextLabel",{
 			Text=self.props.Name .. ":";
 			Size=UDim2.new(0.25,0,1,0);
-			BTransparency=1;
+			BackgroundTransparency=1;
 		});
 		Other=other;
 	})
 end
 
 function Element:init()
-	self:setState(Settings.Options)
+	self.optionValue, self.modOption = Roact.createBinding(0)
 end
 
 function Element:render()	
@@ -96,7 +98,7 @@ function Element:render()
 		Size=UDim2.new(1,0,1/self.props.max_opt,0);
 		Position=UDim2.new(0,0,(self.props.opt_num-1)/self.props.max_opt,0);
 	}, {
-		Props=genProps(self)
+		Options=GenOption(self)
 	})
 end
 

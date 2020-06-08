@@ -14,6 +14,7 @@ Settings.Options = {
 
 function Settings:ChangeOption(key, value)
 	Settings.Options[key] = value
+	return value
 end
 
 function Settings:BindToSetting(name, call)
@@ -44,18 +45,20 @@ end
 function Settings:ParseStringColor3(option, str)
 	local pse = string.split(str, ",")
 	local c3 = Color3.fromRGB(pse[1] or 0, pse[2] or 0, pse[3] or 0)
-	Settings:ChangeOption(option, c3)
+	return Settings:ChangeOption(option, c3)
 end
 
 function Settings:ParseStringNumber(option, str)
 	local num = tonumber(str) or 0
-	Settings:ChangeOption(option, num)
+	return Settings:ChangeOption(option, num)
 end
 
 function Settings:Increment(key, value)
 	if typeof(Settings.Options[key]) == "number" then
 		Settings.Options[key] = Settings.Options[key] + value
+		return Settings.Options[key]
 	end
+	return 0
 end
 
 function Settings:LoadFromDatabaseSave()

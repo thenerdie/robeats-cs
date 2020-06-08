@@ -96,7 +96,7 @@ function self:DoResults(props, rate, song)
 				Position = UDim2.new(0.5, 0, 0, 0),
 				ZIndex = 2,
 				BorderSizePixel = 0,
-				BackgroundColor3 = Color3.fromRGB(223, 179, 179)9, 19),
+				BackgroundColor3 = Color3.fromRGB(223, 179, 179),
 				BackgroundTransparency = 0,
 				ScaleType = Enum.ScaleType.Crop,
 				ImageTransparency = 1
@@ -338,7 +338,7 @@ function self:DoResults(props, rate, song)
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
-							TextColor3 = Color3.fromRGB(255, 255, 255)
+							TextColor3 = gradedata.Color
 						}),
 						Label = Roact.createElement("TextLabel", {
 							AnchorPoint = Vector2.new(0.5, 0),
@@ -440,7 +440,7 @@ function self:DoResults(props, rate, song)
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
-							TextColor3 = gradedata.Color
+							TextColor3 = tierdata.Color
 						}),
 						Label = Roact.createElement("TextLabel", {
 							AnchorPoint = Vector2.new(0.5, 0),

@@ -38,7 +38,12 @@ local function Base()
 					Position=UDim2.new(0,0,0,0);
 					BTransparency=1;
 					Children={
-						O=Roact.createElement()
+						ScrollSpeed=Roact.createElement(UI.new("Option"), {
+							max_opt=6;
+							opt_num=1;
+							Name="Scroll Speed";
+							Setting="ScrollSpeed";
+						})
 					}
 				});
 				BackButton=Roact.createElement("TextButton", {
