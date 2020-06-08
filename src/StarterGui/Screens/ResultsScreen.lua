@@ -373,7 +373,7 @@ function self:DoResults(props, rate, song)
 							ZIndex = 5,
 							BorderSizePixel = 0,
 							BackgroundTransparency = 1,
-							Text = Math.round(acc, 2),
+							Text = Math.round(acc, 2) .. "%",
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
