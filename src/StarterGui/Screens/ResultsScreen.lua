@@ -102,6 +102,45 @@ function self:DoResults(props, rate, song)
 				ImageTransparency = 1
 				--Image = "http://www.roblox.com/asset/?id=2404285030"
 			}, {
+				Rating = Roact.createElement("ImageLabel", {
+					AnchorPoint = Vector2.new(0.5, 0.5),
+					Size = UDim2.new(0.8, 0, 0.9, 0),
+					Position = UDim2.new(0.5, 0, 0.5, 0),
+					ZIndex = 4,
+					BorderSizePixel = 0,
+					BackgroundTransparency = 1,
+					ScaleType = Enum.ScaleType.Fit,
+					Image = "http://www.roblox.com/asset/?id=4873211876",
+					ImageColor3 = Color3.fromRGB(35, 35, 35)
+				}, {
+					Scale = Roact.createElement("UIAspectRatioConstraint", {
+						DominantAxis = Enum.DominantAxis.Width,
+					}),
+					Data = Roact.createElement("TextLabel", {
+						AnchorPoint = Vector2.new(0.5, 0.5),
+						Size = UDim2.new(1, 0, 1, 0),
+						Position = UDim2.new(0.5, 0, 0.5, 0),
+						ZIndex = 5,
+						BorderSizePixel = 0,
+						BackgroundTransparency = 1,
+						Text = gradedata.Title,
+						Font = Enum.Font.GothamBlack,
+						TextScaled = true,
+						TextWrapped = true,
+						TextColor3 = gradedata.Color
+					}),
+					RatingBG = Roact.createElement("ImageLabel", {
+						AnchorPoint = Vector2.new(0.5, 0.5),
+						Size = UDim2.new(0.95, 0, 0.95, 0),
+						Position = UDim2.new(0.5, 0, 0.5, 0),
+						ZIndex = 3,
+						BorderSizePixel = 0,
+						BackgroundTransparency = 1,
+						ScaleType = Enum.ScaleType.Fit,
+						Image = "http://www.roblox.com/asset/?id=4512064807",
+						ImageColor3 = gradedata.Color
+					}),
+				}), 
 				User = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(0, 0.5),
 					Size = UDim2.new(0.15, 0, 0.8, 0),
@@ -236,7 +275,7 @@ function self:DoResults(props, rate, song)
 				}),
 				Back = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(1, 0),
-					Size = UDim2.new(0.2, 0, 0.2, 0),
+					Size = UDim2.new(0.125, 0, 0.2, 0),
 					Position = UDim2.new(0.98, 0, 0.7, 0),
 					ZIndex = 3,
 					BorderSizePixel = 0,
@@ -245,12 +284,12 @@ function self:DoResults(props, rate, song)
 					Image = "rbxassetid://2790382281",
 					SliceCenter = Rect.new(4, 4, 252, 252),
 					SliceScale = 1,
-					ImageColor3 = Color3.fromRGB(16, 102, 34)
+					ImageColor3 = Color3.fromRGB(35, 35, 35)
 				},{
 					Data = Roact.createElement("TextButton", {
 						AnchorPoint = Vector2.new(0.5, 0.5),
-						Size = UDim2.new(0.85, 0, 0.7, 0),
-						Position = UDim2.new(0.5, 0, 0.6, 0),
+						Size = UDim2.new(1, 0, 0.7, 0),
+						Position = UDim2.new(0.5, 0, 0.5, 0),
 						ZIndex = 4,
 						BorderSizePixel = 0,
 						BackgroundTransparency = 1,
@@ -258,7 +297,7 @@ function self:DoResults(props, rate, song)
 						Font = Enum.Font.GothamBlack,
 						TextScaled = true,
 						TextWrapped = true,
-						TextColor3 = Color3.fromRGB(192, 192, 192),
+						TextColor3 = Color3.fromRGB(255,255,255),
 						[Roact.Event.MouseButton1Click] = function()
 							self:Unmount()
 							Screens:FindScreen("SongSelectScreen"):DoSongSelect()
@@ -300,7 +339,7 @@ function self:DoResults(props, rate, song)
 							ZIndex = 5,
 							BorderSizePixel = 0,
 							BackgroundTransparency = 1,
-							Text = "#1",
+							Text = "#??",
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
@@ -338,7 +377,7 @@ function self:DoResults(props, rate, song)
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
-							TextColor3 = gradedata.Color
+							TextColor3 = Color3.fromRGB(255, 255, 255)
 						}),
 						Label = Roact.createElement("TextLabel", {
 							AnchorPoint = Vector2.new(0.5, 0),
@@ -368,7 +407,7 @@ function self:DoResults(props, rate, song)
 							ZIndex = 5,
 							BorderSizePixel = 0,
 							BackgroundTransparency = 1,
-							Text = maxcombo,
+							Text = Math.format(maxcombo),
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
@@ -402,7 +441,7 @@ function self:DoResults(props, rate, song)
 							ZIndex = 5,
 							BorderSizePixel = 0,
 							BackgroundTransparency = 1,
-							Text = Math.round(score, 2),
+							Text = Math.format(Math.round(score, 2)),
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
@@ -440,7 +479,7 @@ function self:DoResults(props, rate, song)
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
-							TextColor3 = tierdata.Color
+							TextColor3 = gradedata.Color
 						}),
 						Label = Roact.createElement("TextLabel", {
 							AnchorPoint = Vector2.new(0.5, 0),
@@ -527,7 +566,7 @@ function self:DoResults(props, rate, song)
 									ZIndex = 10,
 									BorderSizePixel = 0,
 									BackgroundTransparency = 1,
-									Text = marvs,
+									Text = Math.format(marvs),
 									Font = Enum.Font.GothamBlack,
 									TextScaled = true,
 									TextWrapped = true,
@@ -577,7 +616,7 @@ function self:DoResults(props, rate, song)
 									ZIndex = 8,
 									BorderSizePixel = 0,
 									BackgroundTransparency = 1,
-									Text = perfs,
+									Text = Math.format(perfs),
 									Font = Enum.Font.GothamBlack,
 									TextScaled = true,
 									TextWrapped = true,
@@ -607,7 +646,7 @@ function self:DoResults(props, rate, song)
 									ZIndex = 8,
 									BorderSizePixel = 0,
 									BackgroundTransparency = 1,
-									Text = greats,
+									Text = Math.format(greats),
 									Font = Enum.Font.GothamBlack,
 									TextScaled = true,
 									TextWrapped = true,
@@ -637,7 +676,7 @@ function self:DoResults(props, rate, song)
 									ZIndex = 8,
 									BorderSizePixel = 0,
 									BackgroundTransparency = 1,
-									Text = goods,
+									Text = Math.format(goods),
 									Font = Enum.Font.GothamBlack,
 									TextScaled = true,
 									TextWrapped = true,
@@ -667,7 +706,7 @@ function self:DoResults(props, rate, song)
 									ZIndex = 8,
 									BorderSizePixel = 0,
 									BackgroundTransparency = 1,
-									Text = okays,
+									Text = Math.format(okays),
 									Font = Enum.Font.GothamBlack,
 									TextScaled = true,
 									TextWrapped = true,
@@ -688,6 +727,20 @@ function self:DoResults(props, rate, song)
 								SliceScale = 1,
 								ImageColor3 = Color3.fromRGB(50, 21, 21)
 							}, {
+								Ratio = Roact.createElement("TextLabel", {
+									AnchorPoint = Vector2.new(0, 0.5),
+									Size = UDim2.new(0.25, 0, 0.6, 0),
+									Position = UDim2.new(0.74, 0, 0.5, 0),
+									ZIndex = 11,
+									BorderSizePixel = 0,
+									BackgroundTransparency = 1,
+									Text = ratio..":1",
+									Font = Enum.Font.GothamBlack,
+									TextScaled = true,
+									TextWrapped = true,
+									TextColor3 = Color3.fromRGB(255, 255, 255),
+									TextStrokeTransparency = 0.5
+								}),
 								RemoveRoundCorner = Roact.createElement("Frame",{
 									Size = UDim2.new(1, 0, 0.5, 0),
 									Position = UDim2.new(0, 0, 0, 0),
@@ -702,7 +755,7 @@ function self:DoResults(props, rate, song)
 									ZIndex = 10,
 									BorderSizePixel = 0,
 									BackgroundTransparency = 1,
-									Text = misses,
+									Text = Math.format(misses),
 									Font = Enum.Font.GothamBlack,
 									TextScaled = true,
 									TextWrapped = true,

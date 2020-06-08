@@ -27,37 +27,66 @@ local function NewOption(props)
 end
 
 local function Base()
-	
-	
-	return Roact.createElement("ScreenGui", {}, {
-		OptionsFrame=Roact.createElement(UI.new("Frame"), {
-			Children={
-				OptionsContainer=Roact.createElement(UI.new("ScrollingFrame"), {
-					Size=UDim2.new(1,0,0.9,0);
-					Anchor=Vector2.new(0,0);
-					Position=UDim2.new(0,0,0,0);
-					BTransparency=1;
-					Children={
-						ScrollSpeed=Roact.createElement(UI.new("Option"), {
-							max_opt=6;
-							opt_num=1;
-							Name="Scroll Speed";
-							Setting="ScrollSpeed";
-						})
-					}
+	return Roact.createElement("ScreenGui", {
+		ResetOnSpawn = false,
+	}, {
+		OptionsFrame = Roact.createElement("ImageLabel", {
+			AnchorPoint =  Vector2.new(0.5,0.5);
+			Position =  UDim2.new(0.5,0,0.5,0);
+			BackgroundColor3 = Color3.fromRGB(12,12,12);
+			BackgroundTransparency = 0.2;
+			Size = UDim2.new(1,0,1,0);
+			BorderSizePixel = 0,
+			BackgroundTransparency = 1,
+			ScaleType = Enum.ScaleType.Slice,
+			Image = "rbxassetid://2790382281",
+			SliceCenter = Rect.new(4, 4, 252, 252),
+			SliceScale = 1,
+			ImageColor3 = Color3.fromRGB(27, 27, 27),
+		}, {
+			Scale = Roact.createElement("UIScale", {
+				Scale = 0.8,
+			}),
+			OptionsContainer = Roact.createElement("ScrollingFrame", {
+				AnchorPoint = Vector2.new(0.5,0.5);
+				Size = UDim2.new(0.975,0,0.95,0);
+				Position = UDim2.new(0.5,0,0.5,0);
+				BackgroundTransparency = 1;
+				
+				
+				--[[Children = {
+					O = Roact.createElement()
+				},]]
+			}),
+			BackButton = Roact.createElement("ImageButton", {
+				BackgroundColor3 = Color3.fromRGB(232, 49, 49),
+				Size = UDim2.new(0.14, 0, 0.08, 0),
+				Position =  UDim2.new(1.01,0,0,0),
+				BackgroundTransparency = 1,
+				BorderSizePixel = 0,
+				ScaleType = Enum.ScaleType.Slice,
+				Image = "rbxassetid://2790382281",
+				SliceCenter = Rect.new(4, 4, 252, 252),
+				SliceScale = 1,
+				ImageColor3 = Color3.fromRGB(232, 49, 49),
+				[Roact.Event.MouseButton1Click] = function()
+					self:Unmount()
+					Screens:FindScreen("MainMenuScreen"):DoOptions()
+				end;
+			}, {
+				AspectRatio = Roact.createElement("UIAspectRatioConstraint", {}),
+				BackButton = Roact.createElement("TextLabel", {
+					AnchorPoint =  Vector2.new(0.5,0.5),
+					Text = "X",
+					Position = UDim2.new(0.5, 0, 0.5, 0),
+					Size = UDim2.new(0.9, 0, 0.9, 0),
+					BackgroundTransparency = 1,
+					Font = Enum.Font.GothamBlack,
+					TextScaled = true,
+					TextWrapped = true,
+					TextColor3 = Color3.fromRGB(255, 255, 255)
 				});
-				BackButton=Roact.createElement("TextButton", {
-					BackgroundColor3=Color3.fromRGB(232, 49, 49);
-					AnchorPoint=Vector2.new(0,1);
-					Text="BACK";
-					Position=UDim2.new(0,5,1,-5);
-					Size=UDim2.new(0.14,0,0.08,0);
-					[Roact.Event.MouseButton1Click] = function(rbx)
-						self:Unmount()
-						Screens:FindScreen("MainMenuScreen"):DoOptions()
-					end;
-				});
-			}
+			});
 		});
 	});
 end
