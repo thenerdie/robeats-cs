@@ -96,7 +96,7 @@ function self:DoResults(props, rate, song)
 				Position = UDim2.new(0.5, 0, 0, 0),
 				ZIndex = 2,
 				BorderSizePixel = 0,
-				BackgroundColor3 = Color3.new(0.8, 0.24, 0.1),
+				BackgroundColor3 = Color3.fromRGB(223, 179, 179)9, 19),
 				BackgroundTransparency = 0,
 				ScaleType = Enum.ScaleType.Crop,
 				ImageTransparency = 1
@@ -232,6 +232,37 @@ function self:DoResults(props, rate, song)
 						TextScaled = true,
 						TextWrapped = true,
 						TextColor3 = Color3.fromRGB(255, 255, 255)
+					})
+				}),
+				Back = Roact.createElement("ImageLabel", {
+					AnchorPoint = Vector2.new(1, 0),
+					Size = UDim2.new(0.2, 0, 0.2, 0),
+					Position = UDim2.new(0.98, 0, 0.7, 0),
+					ZIndex = 3,
+					BorderSizePixel = 0,
+					BackgroundTransparency = 1,
+					ScaleType = Enum.ScaleType.Slice,
+					Image = "rbxassetid://2790382281",
+					SliceCenter = Rect.new(4, 4, 252, 252),
+					SliceScale = 1,
+					ImageColor3 = Color3.fromRGB(16, 102, 34)
+				},{
+					Data = Roact.createElement("TextButton", {
+						AnchorPoint = Vector2.new(0.5, 0.5),
+						Size = UDim2.new(0.85, 0, 0.7, 0),
+						Position = UDim2.new(0.5, 0, 0.6, 0),
+						ZIndex = 4,
+						BorderSizePixel = 0,
+						BackgroundTransparency = 1,
+						Text = "BACK",
+						Font = Enum.Font.GothamBlack,
+						TextScaled = true,
+						TextWrapped = true,
+						TextColor3 = Color3.fromRGB(192, 192, 192),
+						[Roact.Event.MouseButton1Click] = function()
+							self:Unmount()
+							Screens:FindScreen("SongSelectScreen"):DoSongSelect()
+						end
 					})
 				})
 			}),

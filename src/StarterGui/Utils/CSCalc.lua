@@ -106,7 +106,7 @@ local function timespanData(hits, startAtMs, timespanMs)
 end
 
 function calc:DoRating(song)
-    local data = song:GetData()
+    --[[local data = song:GetData()
     local rating = 0;
     if data.totalNotes < 20 then
         return 0
@@ -120,7 +120,7 @@ function calc:DoRating(song)
         i = i + 1
         rating = rating + v
     end
-    rating = rating / 2
+    rating = rating / 2]]--
     return 0 -- this isnt even a real calculator xd
 end
 
