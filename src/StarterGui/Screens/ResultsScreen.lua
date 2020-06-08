@@ -96,9 +96,11 @@ function self:DoResults(props, rate, song)
 				Position = UDim2.new(0.5, 0, 0, 0),
 				ZIndex = 2,
 				BorderSizePixel = 0,
-				BackgroundTransparency = 1,
+				BackgroundColor3 = Color3.new(0.8, 0.24, 0.1),
+				BackgroundTransparency = 0,
 				ScaleType = Enum.ScaleType.Crop,
-				Image = "http://www.roblox.com/asset/?id=2404285030"
+				ImageTransparency = 1
+				--Image = "http://www.roblox.com/asset/?id=2404285030"
 			}, {
 				User = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(0, 0.5),
