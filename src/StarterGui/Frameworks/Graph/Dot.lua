@@ -55,6 +55,8 @@ function Dot:new()
 	local function Lines(props)
 		local m = {}
 		local my = {}
+
+		local zind = props.ZIndex or 1
 		
 		if self.linex then
 			for i = self.xfloor, self.xceiling, self.xinterval do
@@ -65,7 +67,8 @@ function Dot:new()
 					AnchorPoint=Vector2.new(0,0.5);
 					Size=UDim2.new(0,1,1,0);
 					Position=UDim2.new(pos,0,0,0);
-					BackgroundColor3=Color3.new(0.19,0.19,0.19)
+					BackgroundColor3=Color3.new(0.19,0.19,0.19);
+					ZIndex=zind+1;
 				})
 			end
 		end
@@ -78,7 +81,8 @@ function Dot:new()
 					AnchorPoint=Vector2.new(0,0.5);
 					Size=UDim2.new(1,0,0,1);
 					Position=UDim2.new(0,0,1-pos,0);
-					BackgroundColor3=Color3.new(0.19,0.19,0.19)
+					BackgroundColor3=Color3.new(0.19,0.19,0.19);
+					ZIndex=zind+1;
 				})
 			end
 		end
@@ -88,6 +92,7 @@ function Dot:new()
 			AnchorPoint=Vector2.new(0.5,0.5);
 			Position=UDim2.new(0.5,0,0.5,0);
 			BackgroundTransparency=1;
+			ZIndex=zind;
 		}, Roact.createFragment({
 			X=Roact.createFragment(m);
 			Y=Roact.createFragment(my);
@@ -95,6 +100,9 @@ function Dot:new()
 	end
 	
 	local function Markers(props)
+
+		local zind = props.ZIndex or 1
+
 		local m = {}
 		local my = {}
 		for i = self.xfloor, self.xceiling, self.xinterval do
@@ -107,7 +115,8 @@ function Dot:new()
 				Position=UDim2.new(pos,0,0.75,0);
 				Text=tostring(i);
 				TextXAlignment=Enum.TextXAlignment.Center;
-				TextColor3=Color3.new(0.25,0.25,0.25)
+				TextColor3=Color3.new(0.25,0.25,0.25);
+				ZIndex=zind+1;
 			})
 		end
 		for i = self.yfloor, self.yceiling, self.yinterval do
@@ -120,7 +129,8 @@ function Dot:new()
 				Position=UDim2.new(0.15,0,1-pos,0);
 				Text=tostring(i);
 				TextXAlignment=Enum.TextXAlignment.Center;
-				TextColor3=Color3.new(0.29,0.29,0.29)
+				TextColor3=Color3.new(0.29,0.29,0.29);
+				ZIndex=zind+1;
 			})
 		end
 		return Roact.createFragment({
@@ -129,18 +139,23 @@ function Dot:new()
 				Position=UDim2.new(0.5,0,1,0);
 				Size=UDim2.new(0.8,0,0.2,0);
 				BackgroundTransparency=1;
+				ZIndex=zind;
 			}, m);
 			Y=Roact.createElement("Frame",{
 				AnchorPoint=Vector2.new(0,0.5);
 				Position=UDim2.new(0,0,0.5,0);
 				Size=UDim2.new(0.2,0,0.8,0);
 				BackgroundTransparency=1;
+				ZIndex=zind;
 			}, my);
 		})
 	end
 	
 	local function Points(props)
 		local roactob = {}
+
+		local zind = props.ZIndex or 1
+
 		for i, point in pairs(self.objects) do
 			local pos = getSPosition(point.X, point.Y)
 			roactob[#roactob+1] = Roact.createElement("Frame", {
@@ -149,6 +164,7 @@ function Dot:new()
 				BackgroundColor3=point.Color or props.DotColor or Color3.new(1,1,1);
 				BorderSizePixel=0;
 				AnchorPoint=Vector2.new(0.5,0.5);
+				ZIndex=zind+1
 			})
 		end
 		return Roact.createElement("Frame",{
@@ -156,6 +172,7 @@ function Dot:new()
 			AnchorPoint=Vector2.new(0.5,0.5);
 			Position=UDim2.new(0.5,0,0.5,0);
 			BackgroundTransparency=1;
+			ZIndex=zind;
 		}, roactob)
 	end
 	
@@ -169,11 +186,12 @@ function Dot:new()
 			Position=props.Position or UDim2.new(0,0,0,0);
 			Size=props.Size or UDim2.new(0.2,0,0.4,0);
 			BackgroundColor3=props.BGColor or Color3.new(0.1,0.1,0.1);
-			ClipsDescendants=true
+			ClipsDescendants=true;
+			ZIndex=props.ZIndex or 1
 		}, {
 			Objects=Roact.createElement(Points, props);
-			Markers=Roact.createElement(Markers);
-			Lines=Roact.createElement(Lines)
+			Markers=Roact.createElement(Markers, props);
+			Lines=Roact.createElement(Lines, props)
 		})
 	end
 	
