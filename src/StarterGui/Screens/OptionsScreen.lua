@@ -29,7 +29,8 @@ local function formatColor(color3)
 	return string.format("R: %3d, G: %3d, B: %3d", color3.R or 0, color3.G or 0, color3.B or 0)
 end
 
-local function NumberOption(name, bound)
+local function NumberOption(name, bound, increment)
+	increment = increment or 1
 	local boundFire = "Update"..bound
 	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
 	optionNumber = optionNumber + 1
@@ -96,7 +97,7 @@ local function NumberOption(name, bound)
 				TextWrapped = true,
 				TextColor3 = Color3.fromRGB(255, 255, 255),
 				[Roact.Event.MouseButton1Click] = function(rbx)
-					local optionValue = Settings:Increment(bound, 1)
+					local optionValue = Settings:Increment(bound, increment)
 					self[boundFire](optionValue)
 				end
 			})
@@ -125,7 +126,7 @@ local function NumberOption(name, bound)
 				TextWrapped = true,
 				TextColor3 = Color3.fromRGB(255, 255, 255),
 				[Roact.Event.MouseButton1Click] = function(rbx)
-					local optionValue = Settings:Increment(bound, -1)
+					local optionValue = Settings:Increment(bound, -increment)
 					self[boundFire](optionValue)
 				end
 			})
@@ -207,6 +208,7 @@ local function Base()
 				BackgroundTransparency = 1;
 			}, { -- OPTIONS GO HERE
 				ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
+				SongRate = NumberOption("Song Rate", "Rate", 0.1);
 				NoteColor = ColorOption("Note Color", "NoteColor");
 			}),
 			BackButton = Roact.createElement("ImageButton", {

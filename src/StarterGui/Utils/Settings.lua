@@ -4,6 +4,7 @@ local Settings = {}
 Settings.Options = {
 	ScrollSpeed = 20;
 	NoteColor = Color3.new(0.5,0.5,0.5);
+	Rate = 1;
 	Keybinds = {
 		[1] = Enum.KeyCode.Z;
 		[2] = Enum.KeyCode.X;
