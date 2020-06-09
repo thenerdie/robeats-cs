@@ -48,7 +48,7 @@ local function SongButton(instance, song, songNum)
 		Position=UDim2.new(0,0,0,(songNum-1)*45);
 		TextXAlignment=Enum.TextXAlignment.Left;
 		TextSize=10;
-		TextColor3=song:GetColor();
+		TextColor3=Color3.fromRGB(255, 255, 255);
 		TextStrokeTransparency=0.1;
 		Text=song:GetDisplayName();
 		[Roact.Event.MouseButton1Click] = function()
