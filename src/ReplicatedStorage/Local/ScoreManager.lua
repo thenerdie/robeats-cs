@@ -12,10 +12,10 @@ local DebugConfig = require(game.ReplicatedStorage.Shared.DebugConfig)
 
 local ScoreManager = {}
 
-function ScoreManager:new(popups,combo)
+function ScoreManager:new(popups,system,combo)
 	local self = {}
 
-	local _scoring_system = 0
+	local _scoring_system = system
 
 	self._score = 0
 	self._chain = 0
@@ -55,6 +55,7 @@ function ScoreManager:new(popups,combo)
 
 	function self:teardown()
 	end
+	
 	if combo == nil or _scoring_system == 0 then
 		function get_chain_multiplier()
 			if self._chain > 200 then
@@ -131,15 +132,15 @@ function ScoreManager:new(popups,combo)
 	elseif combo ~= nil and _scoring_system == 1  then
 		function result_to_point_total(note_result)
 			if note_result == NoteResult.Marvelous then
-				return (1000000 * 0.5 / combo) * (320 / 320)
+				return (1000000 / combo) * (320 / 320)
 			elseif note_result == NoteResult.Perfect then
-				return (1000000 * 0.5 / combo) * (300 / 320)
+				return (1000000 / combo) * (300 / 320)
 			elseif note_result == NoteResult.Great then
-				return (1000000 * 0.5 / combo) * (200 / 320)
+				return (1000000 / combo) * (200 / 320)
 			elseif note_result == NoteResult.Good then
-				return (1000000 * 0.5 / combo) * (100 / 320)
+				return (1000000 / combo) * (100 / 320)
 			elseif note_result == NoteResult.Okay then
-				return (1000000 * 0.5 / combo) * (50 / 320)
+				return (1000000 / combo) * (50 / 320)
 			else
 				return 0
 			end

@@ -9,7 +9,7 @@ local score = require(game.ReplicatedStorage.Local.ScoreManager)
 
 local GameJoin = {}
 
-function GameJoin:new(combo)
+function GameJoin:new()
 	local self = {}
 
 	local _game_environment_center = nil
