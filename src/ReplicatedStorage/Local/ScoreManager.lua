@@ -15,6 +15,8 @@ local ScoreManager = {}
 function ScoreManager:new(popups,combo)
 	local self = {}
 
+	self._scoring_system = 0
+
 	self._score = 0
 	self._chain = 0
 
@@ -53,7 +55,7 @@ function ScoreManager:new(popups,combo)
 
 	function self:teardown()
 	end
-	if combo == nil then
+	if combo == nil or _scoring_system == 0 then
 		local function get_chain_multiplier()
 			if self._chain > 200 then
 				return 1.4
@@ -67,7 +69,7 @@ function ScoreManager:new(popups,combo)
 				return 1
 			end
 		end
-	else
+	elseif combo ~= nil and _scoring_system == 1 then
 		local function get_chain_multiplier()
 			if self._chain > 200 then
 				return 1
@@ -77,6 +79,21 @@ function ScoreManager:new(popups,combo)
 				return 1
 			elseif self._chain > 50 then
 				return 1
+			else
+				return 1
+			end
+		end
+	else
+		-- Backup in case both above don't work, Robeats combo.
+		local function get_chain_multiplier()
+			if self._chain > 200 then
+				return 1.4
+			elseif self._chain > 150 then
+				return 1.3
+			elseif self._chain > 100 then
+				return 1.2
+			elseif self._chain > 50 then
+				return 1.1
 			else
 				return 1
 			end
@@ -95,7 +112,7 @@ function ScoreManager:new(popups,combo)
 		end
 	end
 	
-	if combo == nil then
+	if combo == nil or _scoring_system == 0  then
 		function result_to_point_total(note_result)
 			if note_result == NoteResult.Marvelous then
 				return 400
@@ -111,7 +128,7 @@ function ScoreManager:new(popups,combo)
 				return 0
 			end
 		end
-	else
+	elseif combo ~= nil and _scoring_system == 1  then
 		function result_to_point_total(note_result)
 			if note_result == NoteResult.Marvelous then
 				return (1000000 * 0.5 / combo) * (320 / 320)
@@ -123,6 +140,23 @@ function ScoreManager:new(popups,combo)
 				return (1000000 * 0.5 / combo) * (100 / 320)
 			elseif note_result == NoteResult.Okay then
 				return (1000000 * 0.5 / combo) * (50 / 320)
+			else
+				return 0
+			end
+		end
+	else
+		-- Backup in case both above don't work, Robeats scoring.
+		function result_to_point_total(note_result)
+			if note_result == NoteResult.Marvelous then
+				return 400
+			elseif note_result == NoteResult.Perfect then
+				return 300
+			elseif note_result == NoteResult.Great then
+				return 200
+			elseif note_result == NoteResult.Good then
+				return 100
+			elseif note_result == NoteResult.Okay then
+				return 50
 			else
 				return 0
 			end
