@@ -105,7 +105,7 @@ function Dot:new()
 	end
 	
 	local function Markers(props)
-		local zind = props.ZIndex or 2
+		local zind = 6
 		local m = {}
 		local my = {}
 		for i = self.xfloor, self.xceiling, self.xinterval do
@@ -156,7 +156,7 @@ function Dot:new()
 	
 	local function Points(props)
 		local roactob = {}
-		local zind = props.ZIndex or 2
+		local zind = 6
 		for i, point in pairs(self.objects) do
 			local pos = getSPosition(point.X, point.Y)
 			roactob[#roactob+1] = Roact.createElement("Frame", {
