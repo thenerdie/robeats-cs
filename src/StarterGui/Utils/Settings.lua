@@ -9,6 +9,7 @@ Settings.Options = {
 		[2] = Enum.KeyCode.X;
 		[3] = Enum.KeyCode.Comma;
 		[4] = Enum.KeyCode.Period;
+		[5] = Enum.KeyCode.Backspace; -- // WILL BE BOUND TO QUICK EXIT LATER ON
 	}
 }
 
