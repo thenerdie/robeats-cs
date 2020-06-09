@@ -42,7 +42,6 @@ local function getNumSlots()
 end
 
 local function SongButton(instance, song, songNum)
-	print(song)
 	return Roact.createElement("TextButton", {
 		Size=UDim2.new(1,0,0,45);
 		BackgroundColor3=song:GetButtonColor();
