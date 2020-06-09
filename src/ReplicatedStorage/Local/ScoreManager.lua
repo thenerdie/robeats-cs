@@ -15,7 +15,7 @@ local ScoreManager = {}
 function ScoreManager:new(popups,combo)
 	local self = {}
 
-	self._scoring_system = 0
+	local _scoring_system = 0
 
 	self._score = 0
 	self._chain = 0
@@ -56,7 +56,7 @@ function ScoreManager:new(popups,combo)
 	function self:teardown()
 	end
 	if combo == nil or _scoring_system == 0 then
-		local function get_chain_multiplier()
+		function get_chain_multiplier()
 			if self._chain > 200 then
 				return 1.4
 			elseif self._chain > 150 then
@@ -70,7 +70,7 @@ function ScoreManager:new(popups,combo)
 			end
 		end
 	elseif combo ~= nil and _scoring_system == 1 then
-		local function get_chain_multiplier()
+		function get_chain_multiplier()
 			if self._chain > 200 then
 				return 1
 			elseif self._chain > 150 then
@@ -85,7 +85,7 @@ function ScoreManager:new(popups,combo)
 		end
 	else
 		-- Backup in case both above don't work, Robeats combo.
-		local function get_chain_multiplier()
+		function get_chain_multiplier()
 			if self._chain > 200 then
 				return 1.4
 			elseif self._chain > 150 then
