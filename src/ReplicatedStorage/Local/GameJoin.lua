@@ -9,7 +9,7 @@ local score = require(game.ReplicatedStorage.Local.ScoreManager)
 
 local GameJoin = {}
 
-function GameJoin:new()
+function GameJoin:new(combo)
 	local self = {}
 
 	local _game_environment_center = nil
@@ -30,8 +30,8 @@ function GameJoin:new()
 		_local_services = local_services
 	end
 
-	function self:load_game(local_services,song,song_rate, scroll_speed, game_environment, game_protos, game_element, note_color, audio_offset, hit_position, popups, specOffset, amods)
-		_game = GameLocal:new(_local_services, _game_environment_center, self, game_environment, game_protos, game_element, note_color, hit_position, popups, specOffset, amods)
+	function self:load_game(local_services,song,song_rate, scroll_speed, game_environment, game_protos, game_element, note_color, audio_offset, hit_position, popups, specOffset, amods,combo)
+		_game = GameLocal:new(_local_services, _game_environment_center, self, game_environment, game_protos, game_element, note_color, hit_position, popups, specOffset, amods,combo)
 		_game.is_spectating = ispec
 		_game._audio_manager:load_song(_game,song, song_rate, scroll_speed, nil, audio_offset, note_color)
 		_game:setup_world()

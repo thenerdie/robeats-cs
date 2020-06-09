@@ -29,7 +29,7 @@ GameLocal.Mode = {
 	DoRemove = 10;
 }
 
-function GameLocal:new(local_services, _game_environment_center_part, _game_join, game_environment, game_protos, game_element, note_colors, hit_offset, popups, specOffset, amods)
+function GameLocal:new(local_services, _game_environment_center_part, _game_join, game_environment, game_protos, game_element, note_colors, hit_offset, popups, specOffset, amods,combo)
 	local _game_protos = game_protos
 	local _game_element = game_element
 	local note_offset = hit_offset
@@ -41,7 +41,7 @@ function GameLocal:new(local_services, _game_environment_center_part, _game_join
 	local self = {
 		_tracksystems = SPDict:new();
 		_audio_manager = AudioManager:new(game_element, specOffset, amods);
-		_score_manager = ScoreManager:new(popups);
+		_score_manager = ScoreManager:new(popups, 0, combo);
 		_world_effect_manager = WorldEffectManager:new(local_services, game_environment, _game_protos, _game_element);
 		_effects = EffectSystem:new(game_element);
 		_players = RemoteInstancePlayerInfoManager:new();
