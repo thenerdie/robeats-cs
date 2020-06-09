@@ -65,7 +65,7 @@ function self:DoResults(props, rate, song)
 	graph.xfloor = 0
 	graph.xceiling = songLen
 	
-	graph.yfloor = audio_manager.NOTE_REMOVE_TIME
+	graph.yfloor = Math.negative(audio_manager.NOTE_REMOVE_TIME)
 	graph.yceiling = math.abs(audio_manager.NOTE_REMOVE_TIME)
 	
 	for i, hit in pairs(gamejoin:GetMsDeviance()) do

@@ -16,4 +16,8 @@ function Math.format(number)
 	return formatted
 end
 
+function Math.negative(number)
+	return number < 0 and number or -number
+end
+
 return Math
