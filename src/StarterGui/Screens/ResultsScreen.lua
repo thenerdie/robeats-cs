@@ -69,7 +69,12 @@ function self:DoResults(props, rate, song)
 	graph.yceiling = math.abs(audio_manager.NOTE_REMOVE_TIME)
 	
 	for i, hit in pairs(gamejoin:GetMsDeviance()) do
-		graph:AddObject(hit[1]*songLen, hit[2], Metrics:GetJudgementColor(hit[3]))
+		local judgeNum = hit[3]
+		if judgeNum ~= 6 then
+			graph:AddObject(hit[1]*songLen, hit[2], Metrics:GetJudgementColor(judgeNum))
+		else
+			graph:AddBreak(hit[1]*songLen)
+		end
 	end
 	
 	local now = DT:GetDateTime()

@@ -23,6 +23,7 @@ function Dot:new()
 	self.yceiling = 11
 	
 	self.objects = {}
+	self.breaks = {}
 	
 	local function reverseLerp(a,b,c)
 		b = b - a
@@ -39,8 +40,8 @@ function Dot:new()
 	
 	local function getSPosition(x, y)
 		return {
-			X=reverseLerp(self.xfloor,self.xceiling,x);
-			Y=reverseLerp(self.yfloor,self.yceiling,y);
+			X=reverseLerp(self.xfloor,self.xceiling,x or 0);
+			Y=reverseLerp(self.yfloor,self.yceiling,y or 0);
 		}
 	end
 	
@@ -51,13 +52,18 @@ function Dot:new()
 			Color=color;
 		}
 	end
+
+	local function genBreak(x, color)
+		self.breaks[#self.breaks+1] = {
+			X=x;
+			Color=color;
+		}
+	end
 	
 	local function Lines(props)
 		local m = {}
 		local my = {}
-
 		local zind = props.ZIndex or 1
-		
 		if self.linex then
 			for i = self.xfloor, self.xceiling, self.xinterval do
 				local pos = reverseLerp(self.xfloor,self.xceiling,i)
@@ -85,8 +91,7 @@ function Dot:new()
 					ZIndex=zind+1;
 				})
 			end
-		end
-		
+		end	
 		return Roact.createElement("Frame",{
 			Size=UDim2.new(0.8,0,0.8,0);
 			AnchorPoint=Vector2.new(0.5,0.5);
@@ -100,9 +105,7 @@ function Dot:new()
 	end
 	
 	local function Markers(props)
-
 		local zind = props.ZIndex or 1
-
 		local m = {}
 		local my = {}
 		for i = self.xfloor, self.xceiling, self.xinterval do
@@ -153,9 +156,7 @@ function Dot:new()
 	
 	local function Points(props)
 		local roactob = {}
-
 		local zind = props.ZIndex or 1
-
 		for i, point in pairs(self.objects) do
 			local pos = getSPosition(point.X, point.Y)
 			roactob[#roactob+1] = Roact.createElement("Frame", {
@@ -175,11 +176,39 @@ function Dot:new()
 			ZIndex=zind;
 		}, roactob)
 	end
+
+	local function Breaks(props)
+		local roactob = {}
+		local zind = props.ZIndex or 1
+		for i, point in pairs(self.breaks) do
+			local pos = getSPosition(point.X)
+			roactob[#roactob+1] = Roact.createElement("Frame", {
+				Size=UDim2.new(0,1,1,0);
+				Position=UDim2.new(pos.X,0,0,0);
+				BackgroundColor3=point.Color or Color3.new(1,1,1);
+				BorderSizePixel=0;
+				AnchorPoint=Vector2.new(0.5,0);
+				ZIndex=zind+1
+			})
+		end
+		return Roact.createElement("Frame",{
+			Size=UDim2.new(0.8,0,0.8,0);
+			AnchorPoint=Vector2.new(0.5,0.5);
+			Position=UDim2.new(0.5,0,0.5,0);
+			BackgroundTransparency=1;
+			ZIndex=zind;
+		}, roactob)
+	end
 	
 	function self:AddObject(x, y, color)
 		genObj(x, y, color)
 	end
 	
+	function self:AddBreak(x, color)
+		color = color or Color3.new(1,0,0)
+		genBreak(x, color)
+	end
+
 	function self.component(props)
 		return Roact.createElement("Frame", {
 			AnchorPoint=props.Anchor or Vector2.new(0,0);
@@ -191,7 +220,8 @@ function Dot:new()
 		}, {
 			Objects=Roact.createElement(Points, props);
 			Markers=Roact.createElement(Markers, props);
-			Lines=Roact.createElement(Lines, props)
+			Lines=Roact.createElement(Lines, props);
+			Breaks=Roact.createElement(Breaks, props);
 		})
 	end
 	
