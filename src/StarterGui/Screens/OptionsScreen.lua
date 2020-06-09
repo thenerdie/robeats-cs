@@ -177,6 +177,10 @@ local function ColorOption(name, bound)
 				TextColor3 = Color3.fromRGB(179, 179, 179)
 			})
 		});
+		ColorPicker = Roact.createElement("ImageLabel", {
+			BackgroundTransparency = 1;
+			Image = "rbxassetid://4674990774";
+		})
 	})
 end
 
@@ -250,6 +254,7 @@ function self:DoOptions()
 end
 
 function self:Unmount()
+	optionNumber = 0
 	Roact.unmount(handle)
 end
 

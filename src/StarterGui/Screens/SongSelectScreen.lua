@@ -187,8 +187,8 @@ local function Base()
 					[Roact.Event.MouseButton1Click] = function(rbx)
 						local g = Game:new()
 						self:Unmount()
-						local rate = 1
-						g:StartGame(self.curSelected, Settings.Options.Rate, Settings.Options.Keybinds, Settings.Options.NoteColor, Settings.Options.ScrollSpeed)
+						local rate = Settings.Options.Rate
+						g:StartGame(self.curSelected, rate, Settings.Options.Keybinds, Settings.Options.NoteColor, Settings.Options.ScrollSpeed)
 						Screens:FindScreen("ResultsScreen"):DoResults({
 							gamejoin=g._local_services._game_join;
 							localgame=g.local_game;

@@ -22,7 +22,7 @@ local function Option(props, optionNumber)
 		Position=UDim2.new(0,0,(optionNumber-1)/numNames,0);
 		TextSize=18;
 		Text=props.Name;
-		OnClick = props.Click
+		OnClick = props.Click;
 	})
 	--[[Roact.createElement("TextButton", {
 		Size=UDim2.new(1,0,1/numNames,0);
