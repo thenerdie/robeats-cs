@@ -20,7 +20,7 @@ end
 
 function Settings:BindToSetting(name, call)
 	local setn = name
-	local event = Instance.new("BindableEvent", nil)
+	local event = Instance.new("BindableEvent")
 	event.Event:Connect(function(new)
 		call(new)
 	end)

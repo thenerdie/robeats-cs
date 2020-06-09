@@ -27,7 +27,7 @@ local maxOptionNumber = 7
 
 local function Option(name, type, bound)
 	local boundFire = "Update"..bound
-	self[bound], self[boundFire] = Roact.createBinding(type == "number" and 0 or "")
+	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
 	optionNumber = optionNumber + 1
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(1,0,0.15,0);
@@ -69,9 +69,9 @@ local function Option(name, type, bound)
 			})
 		});
 		Plus = Roact.createElement("ImageLabel", {
-			AnchorPoint = Vector2.new(0, 0.5),
+			AnchorPoint = Vector2.new(1, 0.5),
 			Size = UDim2.new(0.2,0,0.5,0),
-			Position = UDim2.new(0.4,5,0.5,0),
+			Position = UDim2.new(0.8,-60,0.5,0),
 			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
 			ScaleType = Enum.ScaleType.Slice,
@@ -98,9 +98,9 @@ local function Option(name, type, bound)
 			})
 		});
 		Minus = Roact.createElement("ImageLabel", {
-			AnchorPoint = Vector2.new(0, 0.5),
+			AnchorPoint = Vector2.new(1, 0.5),
 			Size = UDim2.new(0.2,0,0.5,0),
-			Position = UDim2.new(0.6,5,0.5,0),
+			Position = UDim2.new(1,-30,0.5,0),
 			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
 			ScaleType = Enum.ScaleType.Slice,
@@ -156,7 +156,8 @@ local function Base()
 				Position = UDim2.new(0.5,0,0.5,0);
 				BackgroundTransparency = 1;
 			}, { -- OPTIONS GO HERE
-				ScrollSpeed = Option("Scroll Speed", "number", "ScrollSpeed")
+				ScrollSpeed = Option("Scroll Speed", "number", "ScrollSpeed");
+				
 			}),
 			BackButton = Roact.createElement("ImageButton", {
 				BackgroundColor3 = Color3.fromRGB(232, 49, 49),
