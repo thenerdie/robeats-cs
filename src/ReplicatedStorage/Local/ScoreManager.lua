@@ -53,18 +53,33 @@ function ScoreManager:new(popups,combo)
 
 	function self:teardown()
 	end
-
-	local function get_chain_multiplier()
-		if self._chain > 200 then
-			return 1
-		elseif self._chain > 150 then
-			return 1
-		elseif self._chain > 100 then
-			return 1
-		elseif self._chain > 50 then
-			return 1
-		else
-			return 1
+	if combo == nil then
+		local function get_chain_multiplier()
+			if self._chain > 200 then
+				return 1.4
+			elseif self._chain > 150 then
+				return 1.3
+			elseif self._chain > 100 then
+				return 1.2
+			elseif self._chain > 50 then
+				return 1.1
+			else
+				return 1
+			end
+		end
+	else
+		local function get_chain_multiplier()
+			if self._chain > 200 then
+				return 1
+			elseif self._chain > 150 then
+				return 1
+			elseif self._chain > 100 then
+				return 1
+			elseif self._chain > 50 then
+				return 1
+			else
+				return 1
+			end
 		end
 	end
 
