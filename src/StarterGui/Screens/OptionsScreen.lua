@@ -25,7 +25,11 @@ local tree = {}
 local optionNumber = 0
 local maxOptionNumber = 7
 
-local function Option(name, type, bound)
+local function formatColor(color3)
+	return string.format("R: %3d, G: %3d, B: %3d", color3.R or 0, color3.G or 0, color3.B or 0)
+end
+
+local function NumberOption(name, bound)
 	local boundFire = "Update"..bound
 	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
 	optionNumber = optionNumber + 1
@@ -129,6 +133,52 @@ local function Option(name, type, bound)
 	})
 end
 
+local function ColorOption(name, bound)
+	local boundFire = "Update"..bound
+	self[bound], self[boundFire] = Roact.createBinding(formatColor(Settings.Options[bound]))
+	optionNumber = optionNumber + 1
+	return Roact.createElement("Frame", {
+		Size = UDim2.new(1,0,0.15,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / maxOptionNumber, 0);
+		BackgroundTransparency = 1;
+	}, {
+		Name = Roact.createElement("TextLabel", {
+			BackgroundTransparency = 1;
+			Font = Enum.Font.GothamBlack;
+			TextColor3 = Color3.fromRGB(255, 255, 255);
+			Text = name;
+			TextSize = 30;
+			Position = UDim2.new(0,0,0,0);
+			Size = UDim2.new(0.2,0,1,0);
+		});
+		OptionValue = Roact.createElement("ImageLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			Size = UDim2.new(0.2,0,0.5,0),
+			Position = UDim2.new(0.2,0,0.5,0),
+			BorderSizePixel = 0,
+			BackgroundTransparency = 1,
+			ScaleType = Enum.ScaleType.Slice,
+			Image = "rbxassetid://2790382281",
+			SliceCenter = Rect.new(4, 4, 252, 252),
+			SliceScale = 1,
+			ImageColor3 = Color3.fromRGB(35, 35, 35)
+		},{
+			Data = Roact.createElement("TextLabel", {
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Size = UDim2.new(0.85, 0, 0.7, 0),
+				Position = UDim2.new(0.5, 0, 0.5, 0),
+				BorderSizePixel = 0,
+				BackgroundTransparency = 1,
+				Text = formatColor(self[bound]),
+				Font = Enum.Font.GothamBlack,
+				TextScaled = true,
+				TextWrapped = true,
+				TextColor3 = Color3.fromRGB(179, 179, 179)
+			})
+		});
+	})
+end
+
 local function Base()
 	return Roact.createElement("ScreenGui", {
 		ResetOnSpawn = false,
@@ -139,13 +189,13 @@ local function Base()
 			BackgroundColor3 = Color3.fromRGB(12,12,12);
 			BackgroundTransparency = 0.2;
 			Size = UDim2.new(1,0,1,0);
-			BorderSizePixel = 0,
-			BackgroundTransparency = 1,
-			ScaleType = Enum.ScaleType.Slice,
-			Image = "rbxassetid://2790382281",
-			SliceCenter = Rect.new(4, 4, 252, 252),
-			SliceScale = 1,
-			ImageColor3 = Color3.fromRGB(27, 27, 27),
+			BorderSizePixel = 0;
+			BackgroundTransparency = 1;
+			ScaleType = Enum.ScaleType.Slice;
+			Image = "rbxassetid://2790382281";
+			SliceCenter = Rect.new(4, 4, 252, 252);
+			SliceScale = 1;
+			ImageColor3 = Color3.fromRGB(27, 27, 27);
 		}, {
 			Scale = Roact.createElement("UIScale", {
 				Scale = 0.8,
@@ -156,8 +206,8 @@ local function Base()
 				Position = UDim2.new(0.5,0,0.5,0);
 				BackgroundTransparency = 1;
 			}, { -- OPTIONS GO HERE
-				ScrollSpeed = Option("Scroll Speed", "number", "ScrollSpeed");
-				
+				ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
+				NoteColor = ColorOption("Note Color", "NoteColor");
 			}),
 			BackButton = Roact.createElement("ImageButton", {
 				BackgroundColor3 = Color3.fromRGB(232, 49, 49),
