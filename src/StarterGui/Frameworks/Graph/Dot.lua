@@ -63,7 +63,7 @@ function Dot:new()
 	local function Lines(props)
 		local m = {}
 		local my = {}
-		local zind = props.ZIndex or 1
+		local zind = props.ZIndex or 0
 		if self.linex then
 			for i = self.xfloor, self.xceiling, self.xinterval do
 				local pos = reverseLerp(self.xfloor,self.xceiling,i)
@@ -74,7 +74,7 @@ function Dot:new()
 					Size=UDim2.new(0,1,1,0);
 					Position=UDim2.new(pos,0,0,0);
 					BackgroundColor3=Color3.new(0.19,0.19,0.19);
-					ZIndex=zind+1;
+					ZIndex=zind;
 				})
 			end
 		end
@@ -88,7 +88,7 @@ function Dot:new()
 					Size=UDim2.new(1,0,0,1);
 					Position=UDim2.new(0,0,1-pos,0);
 					BackgroundColor3=Color3.new(0.19,0.19,0.19);
-					ZIndex=zind+1;
+					ZIndex=zind;
 				})
 			end
 		end	
@@ -105,7 +105,7 @@ function Dot:new()
 	end
 	
 	local function Markers(props)
-		local zind = props.ZIndex or 1
+		local zind = props.ZIndex or 2
 		local m = {}
 		local my = {}
 		for i = self.xfloor, self.xceiling, self.xinterval do
@@ -156,7 +156,7 @@ function Dot:new()
 	
 	local function Points(props)
 		local roactob = {}
-		local zind = props.ZIndex or 1
+		local zind = props.ZIndex or 2
 		for i, point in pairs(self.objects) do
 			local pos = getSPosition(point.X, point.Y)
 			roactob[#roactob+1] = Roact.createElement("Frame", {
@@ -188,7 +188,7 @@ function Dot:new()
 				BackgroundColor3=point.Color or Color3.new(1,1,1);
 				BorderSizePixel=0;
 				AnchorPoint=Vector2.new(0.5,0);
-				ZIndex=zind+1
+				ZIndex=zind
 			})
 		end
 		return Roact.createElement("Frame",{
