@@ -27,12 +27,12 @@ function Game:new()
 	g._local_services = {}
 	g.local_game = {}
 	g.force_quit = false
-	function g:StartGame(song, rate, keys, note_color, scroll_speed)
+	function g:StartGame(song, rate, keys, note_color, scroll_speed,combo)
 		local GameplayScreen = Screens:FindScreen("GameplayScreen")
 		local _local_services = {}
 		_local_services = {
 			_spui = SPUISystem:new(5);
-			_game_join = GameJoin:new();
+			_game_join = GameJoin:new(combo);
 			_input = InputUtil:new(keys);
 			_sfx_manager = SFXManager:new(EnvironmentSetup:get_element());
 			_object_pool = ObjectPool:new(EnvironmentSetup:get_element());
@@ -55,7 +55,8 @@ function Game:new()
 			0,
 			{},
 			nil,
-			ModManager:GetActivatedMods() or {}
+			ModManager:GetActivatedMods() or {},
+			combo
 		)
 		g.local_game = localGame
 		

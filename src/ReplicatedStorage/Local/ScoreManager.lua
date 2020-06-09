@@ -12,8 +12,10 @@ local DebugConfig = require(game.ReplicatedStorage.Shared.DebugConfig)
 
 local ScoreManager = {}
 
-function ScoreManager:new(popups)
+function ScoreManager:new(popups,combo)
 	local self = {}
+
+	local _scoring_system = 0
 
 	self._score = 0
 	self._chain = 0
@@ -53,18 +55,48 @@ function ScoreManager:new(popups)
 
 	function self:teardown()
 	end
-
-	local function get_chain_multiplier()
-		if self._chain > 200 then
-			return 1.4
-		elseif self._chain > 150 then
-			return 1.3
-		elseif self._chain > 100 then
-			return 1.2
-		elseif self._chain > 50 then
-			return 1.1
-		else
-			return 1
+	if combo == nil or _scoring_system == 0 then
+		function get_chain_multiplier()
+			if self._chain > 200 then
+				return 1.4
+			elseif self._chain > 150 then
+				return 1.3
+			elseif self._chain > 100 then
+				return 1.2
+			elseif self._chain > 50 then
+				return 1.1
+			else
+				return 1
+			end
+		end
+	elseif combo ~= nil and _scoring_system == 1 then
+		function get_chain_multiplier()
+			if self._chain > 200 then
+				return 1
+			elseif self._chain > 150 then
+				return 1
+			elseif self._chain > 100 then
+				return 1
+			elseif self._chain > 50 then
+				return 1
+			else
+				return 1
+			end
+		end
+	else
+		-- Backup in case both above don't work, Robeats combo.
+		function get_chain_multiplier()
+			if self._chain > 200 then
+				return 1.4
+			elseif self._chain > 150 then
+				return 1.3
+			elseif self._chain > 100 then
+				return 1.2
+			elseif self._chain > 50 then
+				return 1.1
+			else
+				return 1
+			end
 		end
 	end
 
@@ -79,20 +111,55 @@ function ScoreManager:new(popups)
 			return 1
 		end
 	end
-
-	local function result_to_point_total(note_result)
-		if note_result == NoteResult.Marvelous then
-			return 400
-		elseif note_result == NoteResult.Perfect then
-			return 300
-		elseif note_result == NoteResult.Great then
-			return 200
-		elseif note_result == NoteResult.Good then
-			return 100
-		elseif note_result == NoteResult.Okay then
-			return 50
-		else
-			return 0
+	
+	if combo == nil or _scoring_system == 0  then
+		function result_to_point_total(note_result)
+			if note_result == NoteResult.Marvelous then
+				return 400
+			elseif note_result == NoteResult.Perfect then
+				return 300
+			elseif note_result == NoteResult.Great then
+				return 200
+			elseif note_result == NoteResult.Good then
+				return 100
+			elseif note_result == NoteResult.Okay then
+				return 50
+			else
+				return 0
+			end
+		end
+	elseif combo ~= nil and _scoring_system == 1  then
+		function result_to_point_total(note_result)
+			if note_result == NoteResult.Marvelous then
+				return (1000000 * 0.5 / combo) * (320 / 320)
+			elseif note_result == NoteResult.Perfect then
+				return (1000000 * 0.5 / combo) * (300 / 320)
+			elseif note_result == NoteResult.Great then
+				return (1000000 * 0.5 / combo) * (200 / 320)
+			elseif note_result == NoteResult.Good then
+				return (1000000 * 0.5 / combo) * (100 / 320)
+			elseif note_result == NoteResult.Okay then
+				return (1000000 * 0.5 / combo) * (50 / 320)
+			else
+				return 0
+			end
+		end
+	else
+		-- Backup in case both above don't work, Robeats scoring.
+		function result_to_point_total(note_result)
+			if note_result == NoteResult.Marvelous then
+				return 400
+			elseif note_result == NoteResult.Perfect then
+				return 300
+			elseif note_result == NoteResult.Great then
+				return 200
+			elseif note_result == NoteResult.Good then
+				return 100
+			elseif note_result == NoteResult.Okay then
+				return 50
+			else
+				return 0
+			end
 		end
 	end
 
