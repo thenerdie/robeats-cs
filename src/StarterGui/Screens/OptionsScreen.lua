@@ -35,18 +35,20 @@ local function NumberOption(name, bound, increment)
 	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
 	optionNumber = optionNumber + 1
 	return Roact.createElement("Frame", {
-		Size = UDim2.new(1,0,0.15,0);
-		Position = UDim2.new(0, 0, (optionNumber-1) / maxOptionNumber, 0);
-		BackgroundTransparency = 1;
+		Size = UDim2.new(0.975,0,0.075,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
+		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
+		BorderSizePixel = 0;
 	}, {
 		Name = Roact.createElement("TextLabel", {
 			BackgroundTransparency = 1;
 			Font = Enum.Font.GothamBlack;
 			TextColor3 = Color3.fromRGB(255, 255, 255);
 			Text = name;
-			TextSize = 30;
-			Position = UDim2.new(0,0,0,0);
-			Size = UDim2.new(0.2,0,1,0);
+			TextScaled = true,
+			TextWrapped = true,
+			Position = UDim2.new(0.025,0,0.5,0);
+			Size = UDim2.new(0.2,0,0.25,0);
 		});
 		OptionValue = Roact.createElement("ImageLabel", {
 			AnchorPoint = Vector2.new(0, 0.5),
@@ -142,20 +144,22 @@ local function ColorOption(name, bound)
 		Size = UDim2.new(1,0,0.15,0);
 		Position = UDim2.new(0, 0, (optionNumber-1) / maxOptionNumber, 0);
 		BackgroundTransparency = 1;
+    BorderSizePixel = 0;
 	}, {
 		Name = Roact.createElement("TextLabel", {
 			BackgroundTransparency = 1;
 			Font = Enum.Font.GothamBlack;
 			TextColor3 = Color3.fromRGB(255, 255, 255);
 			Text = name;
-			TextSize = 30;
-			Position = UDim2.new(0,0,0,0);
-			Size = UDim2.new(0.2,0,1,0);
+			TextScaled = true,
+			TextWrapped = true,
+			Position = UDim2.new(0.025,0,0.5,0);
+			Size = UDim2.new(0.2,0,0.25,0);
 		});
 		OptionValue = Roact.createElement("ImageLabel", {
 			AnchorPoint = Vector2.new(0, 0.5),
 			Size = UDim2.new(0.2,0,0.5,0),
-			Position = UDim2.new(0.2,0,0.5,0),
+			Position = UDim2.new(0.25,0,0.5,0),
 			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
 			ScaleType = Enum.ScaleType.Slice,
@@ -205,20 +209,48 @@ local function Base()
 			Scale = Roact.createElement("UIScale", {
 				Scale = 0.8,
 			}),
-			OptionsContainer = Roact.createElement("ScrollingFrame", {
+			Tabs = Roact.createElement("ImageLabel", {
+				Size = UDim2.new(0.2,0,0.89,0);
+				Position = UDim2.new(0.005,0,0.01,0);
+				BackgroundTransparency = 1;
+				BorderSizePixel = 0;
+				ScaleType = Enum.ScaleType.Slice;
+				Image = "rbxassetid://2790382281";
+				SliceCenter = Rect.new(4, 4, 252, 252);
+				SliceScale = 1;
+				ImageColor3 = Color3.fromRGB(17, 17, 17);
+			}),
+			OptionsContainer = Roact.createElement("ImageLabel", {
+				AnchorPoint = Vector2.new(0,0.5);
+				Size = UDim2.new(0.785,0,0.98,0);
+				Position = UDim2.new(0.21,0,0.5,0);
+				BackgroundTransparency = 1;
+				BorderSizePixel = 0;
+				ScaleType = Enum.ScaleType.Slice;
+				Image = "rbxassetid://2790382281";
+				SliceCenter = Rect.new(4, 4, 252, 252);
+				SliceScale = 1;
+				ImageColor3 = Color3.fromRGB(17, 17, 17);
+			}, {
+				List = Roact.createElement("ScrollingFrame", {
 				AnchorPoint = Vector2.new(0.5,0.5);
-				Size = UDim2.new(0.975,0,0.95,0);
+				Size = UDim2.new(0.975,0,0.965,0);
 				Position = UDim2.new(0.5,0,0.5,0);
 				BackgroundTransparency = 1;
-			}, { -- OPTIONS GO HERE
-				ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
-				SongRate = NumberOption("Song Rate", "Rate", 0.1);
-				NoteColor = ColorOption("Note Color", "NoteColor");
+				BorderSizePixel = 0;
+				TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png";
+				BottomImage = "rbxasset://textures/ui/Scroll/scroll-middle.png";
+				ScrollBarThickness = 10
+				},{ -- OPTIONS GO HERE
+					ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
+					SongRate = NumberOption("Song Rate", "Rate", 0.1);
+					NoteColor = ColorOption("Note Color", "NoteColor");
+				}),
 			}),
 			BackButton = Roact.createElement("ImageButton", {
 				BackgroundColor3 = Color3.fromRGB(232, 49, 49),
-				Size = UDim2.new(0.14, 0, 0.08, 0),
-				Position =  UDim2.new(1.01,0,0,0),
+				Size = UDim2.new(0.2, 0, 0.08, 0),
+				Position =  UDim2.new(0.005,0,0.99,0),
 				BackgroundTransparency = 1,
 				BorderSizePixel = 0,
 				ScaleType = Enum.ScaleType.Slice,
@@ -226,17 +258,17 @@ local function Base()
 				SliceCenter = Rect.new(4, 4, 252, 252),
 				SliceScale = 1,
 				ImageColor3 = Color3.fromRGB(232, 49, 49),
+				AnchorPoint =  Vector2.new(0,1),
 				[Roact.Event.MouseButton1Click] = function()
 					self:Unmount()
 					Screens:FindScreen("MainMenuScreen"):DoOptions()
 				end;
 			}, {
-				AspectRatio = Roact.createElement("UIAspectRatioConstraint", {}),
 				BackButton = Roact.createElement("TextLabel", {
 					AnchorPoint =  Vector2.new(0.5,0.5),
-					Text = "X",
+					Text = "BACK",
 					Position = UDim2.new(0.5, 0, 0.5, 0),
-					Size = UDim2.new(0.9, 0, 0.9, 0),
+					Size = UDim2.new(0.9, 0, 0.6, 0),
 					BackgroundTransparency = 1,
 					Font = Enum.Font.GothamBlack,
 					TextScaled = true,
