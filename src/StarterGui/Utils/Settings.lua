@@ -4,6 +4,7 @@ local Settings = {}
 Settings.Options = {
 	ScrollSpeed = 20;
 	NoteColor = Color3.new(0.5,0.5,0.5);
+	Rate = 1;
 	Keybinds = {
 		[1] = Enum.KeyCode.Z;
 		[2] = Enum.KeyCode.X;
@@ -20,7 +21,7 @@ end
 
 function Settings:BindToSetting(name, call)
 	local setn = name
-	local event = Instance.new("BindableEvent", nil)
+	local event = Instance.new("BindableEvent")
 	event.Event:Connect(function(new)
 		call(new)
 	end)
