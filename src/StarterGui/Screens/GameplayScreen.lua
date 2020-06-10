@@ -63,7 +63,7 @@ local function DoBase(props)
 	local chain = playdata[10]
     local maxcombo = playdata[11]
 
-    local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc) --35 is the rating
+    local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc)
 
     local gradedata = Metrics:GetGradeData(acc)
     local tierdata = Metrics:GetTierData(rating)

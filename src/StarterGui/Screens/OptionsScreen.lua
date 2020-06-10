@@ -41,7 +41,6 @@ local function NumberOption(name, bound, increment)
 		BorderSizePixel = 0;
 	}, {
 		Name = Roact.createElement("TextLabel", {
-			AnchorPoint = Vector2.new(0, 0.5);
 			BackgroundTransparency = 1;
 			Font = Enum.Font.GothamBlack;
 			TextColor3 = Color3.fromRGB(255, 255, 255);
@@ -53,8 +52,8 @@ local function NumberOption(name, bound, increment)
 		});
 		OptionValue = Roact.createElement("ImageLabel", {
 			AnchorPoint = Vector2.new(0, 0.5),
-			Size = UDim2.new(0.25,0,0.5,0),
-			Position = UDim2.new(0.25,0,0.5,0),
+			Size = UDim2.new(0.2,0,0.5,0),
+			Position = UDim2.new(0.2,0,0.5,0),
 			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
 			ScaleType = Enum.ScaleType.Slice,
@@ -142,13 +141,12 @@ local function ColorOption(name, bound)
 	self[bound], self[boundFire] = Roact.createBinding(formatColor(Settings.Options[bound]))
 	optionNumber = optionNumber + 1
 	return Roact.createElement("Frame", {
-		Size = UDim2.new(0.975,0,0.075,0);
-		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
-		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
-		BorderSizePixel = 0;
+		Size = UDim2.new(1,0,0.15,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / maxOptionNumber, 0);
+		BackgroundTransparency = 1;
+    BorderSizePixel = 0;
 	}, {
 		Name = Roact.createElement("TextLabel", {
-			AnchorPoint = Vector2.new(0, 0.5);
 			BackgroundTransparency = 1;
 			Font = Enum.Font.GothamBlack;
 			TextColor3 = Color3.fromRGB(255, 255, 255);
