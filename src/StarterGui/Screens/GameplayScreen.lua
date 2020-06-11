@@ -140,7 +140,6 @@ local function DoBase(props)
 			SliceScale = 1,
 			ImageColor3 = Color3.fromRGB(232, 49, 49),
 			[Roact.Event.MouseButton1Click] = function(rbx)
-            	self:Unmount()
             	game_.force_quit = true
      		end;
 		}, {
