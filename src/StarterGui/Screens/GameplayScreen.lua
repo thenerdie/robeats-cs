@@ -12,6 +12,7 @@ local Metrics = require(Utils.Metrics)
 local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
 local Keybind = require(Utils.Keybind)
+local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -164,12 +165,16 @@ end
 function self:Initialize(props, g)
     game_ = g
 
+    Logger:Log("Initializing stage...")
+
     listenerPool[#listenerPool+1] = Keybind:listen(Settings.Options.QuickExitKeybind[1], function()
         game_.force_quit = true
     end)
 
     tree = DoBase(props)
     handle = Roact.mount(tree, PlayerGui, "GameplayScreen")
+
+    Logger:log("Gameplay tree mounted!")
 end
 
 function self:Update(props)
@@ -178,11 +183,14 @@ function self:Update(props)
 end
 
 function self:Unmount()
+    Logger:Log("Tearing down stage...")
     for i, v in pairs(listenerPool) do
         v:stop()
     end
     listenerPool = {}
+    Logger:Log("Event listeners destroyed...")
     Roact.unmount(handle)
+    Logger:log("Gameplay tree mounted!")
 end
 
 return self

@@ -13,6 +13,7 @@ local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
 local Game = require(Utils.Game)
 local Search = require(Utils.Search)
+local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -180,15 +181,19 @@ local function Base()
 end
 
 function self:DoSongSelect()
+	Logger:Log("Entering song select...")
 	tree = Base()
 	handle = Roact.mount(tree, PlayerGui, "SongSelectMenu")
+	Logger:Log("Song select screen mounted!")
 end
 
 function self:Unmount()
 	Roact.unmount(handle)
+	Logger:Log("Song select screen unmounted!")
 end
 
 function self:UpdateLeaderboard()
+	Logger:Log("Leaderboard updated...")
 	spawn(function()
 		lb = Online:GetMapLeaderboard(self.curSelected:GetId())
 		tree = Base()
