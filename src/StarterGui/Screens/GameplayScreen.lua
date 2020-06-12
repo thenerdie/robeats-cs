@@ -11,6 +11,7 @@ local Online = require(Utils.Online)
 local Metrics = require(Utils.Metrics)
 local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
+local Keybind = require(Utils.Keybind)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -18,6 +19,8 @@ local Graph = require(Frameworks.Graph)
 local UI = require(Frameworks.UI)
 
 local self = {}
+
+local listenerPool = {}
 
 local handle = {}
 local tree = {}
@@ -140,7 +143,6 @@ local function DoBase(props)
 			SliceScale = 1,
 			ImageColor3 = Color3.fromRGB(232, 49, 49),
 			[Roact.Event.MouseButton1Click] = function(rbx)
-            	self:Unmount()
             	game_.force_quit = true
      		end;
 		}, {
@@ -161,6 +163,11 @@ end
 
 function self:Initialize(props, g)
     game_ = g
+
+    listenerPool[#listenerPool+1] = Keybind:listen(Settings.Options.QuickExitKeybind[1], function()
+        game_.force_quit = true
+    end)
+
     tree = DoBase(props)
     handle = Roact.mount(tree, PlayerGui, "GameplayScreen")
 end
@@ -171,6 +178,10 @@ function self:Update(props)
 end
 
 function self:Unmount()
+    for i, v in pairs(listenerPool) do
+        v:stop()
+    end
+    listenerPool = {}
     Roact.unmount(handle)
 end
 

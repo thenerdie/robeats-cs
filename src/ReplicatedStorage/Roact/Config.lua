@@ -15,11 +15,11 @@
 -- Every valid configuration value should be non-nil in this table.
 local defaultConfig = {
 	-- Enables asserts for internal Roact APIs. Useful for debugging Roact itself.
-	["internalTypeChecks"] = false,
+	["internalTypeChecks"] = true,
 	-- Enables stricter type asserts for Roact's public API.
-	["typeChecks"] = false,
+	["typeChecks"] = true,
 	-- Enables storage of `debug.traceback()` values on elements for debugging.
-	["elementTracing"] = false,
+	["elementTracing"] = true,
 	-- Enables validation of component props in stateful components.
 	["propValidation"] = false,
 }

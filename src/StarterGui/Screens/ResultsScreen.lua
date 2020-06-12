@@ -797,6 +797,7 @@ function self:DoResults(props, rate, song)
 	})
 	
 	
+	
 	local tree = frame
 	handle = Roact.mount(tree, PlayerGui, "MainMenu")
 end
