@@ -26,7 +26,7 @@ function Logger:register(scr)
     local self = {}
 
     function self:Log(msg)
-        out(scr:GetFullName() .. ".lua | " .. msg)
+        out(scr.Name .. ".lua | " .. msg)
     end
 
     return self
