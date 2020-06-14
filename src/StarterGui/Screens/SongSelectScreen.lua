@@ -12,6 +12,8 @@ local Metrics = require(Utils.Metrics)
 local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
 local Game = require(Utils.Game)
+local Search = require(Utils.Search)
+local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -35,7 +37,7 @@ local handle = {}
 local function getNumSlots()
 	local num = #lb
 	if num > maxSlots then
-		return 50
+		return maxSlots
 	else
 		return num
 	end
@@ -96,32 +98,9 @@ local function LeaderboardSlot(data,slotNum)
 end
 
 local function SongButtons(props)
-	local bttns = {}
-	local search = props.search or nil
-	
-	if search ~= nil then
-		search = search:lower()
-		search = string.split(search, " ")
-	end
-	
+	local bttns = {}	
 	for i, song in pairs(props.songs) do
-		local doAdd = false
-		
-		local foundNumber = 0
-		
-		if search == nil then
-			doAdd = true
-		else
-			for i, searchWord in pairs(search) do
-				if string.find(song.instance.Name:lower(), searchWord) ~= nil then
-					foundNumber = foundNumber + 1
-				end
-			end
-			if foundNumber == #search then
-				doAdd = true
-			end
-		end
-		
+		local doAdd = Search:find(song.instance.Name, props.search)
 		if doAdd then bttns[#bttns+1] = SongButton(song.instance, song, i) end
 	end
 	return Roact.createFragment(bttns), #bttns
@@ -187,7 +166,7 @@ local function Base()
 					[Roact.Event.MouseButton1Click] = function(rbx)
 						local g = Game:new()
 						self:Unmount()
-						local rate = 1
+						local rate = Settings.Options.Rate
 						g:StartGame(self.curSelected, rate, Settings.Options.Keybinds, Settings.Options.NoteColor, Settings.Options.ScrollSpeed)
 						Screens:FindScreen("ResultsScreen"):DoResults({
 							gamejoin=g._local_services._game_join;
@@ -202,15 +181,19 @@ local function Base()
 end
 
 function self:DoSongSelect()
+	Logger:Log("Entering song select...")
 	tree = Base()
 	handle = Roact.mount(tree, PlayerGui, "SongSelectMenu")
+	Logger:Log("Song select screen mounted!")
 end
 
 function self:Unmount()
 	Roact.unmount(handle)
+	Logger:Log("Song select screen unmounted!")
 end
 
 function self:UpdateLeaderboard()
+	Logger:Log("Leaderboard updated...")
 	spawn(function()
 		lb = Online:GetMapLeaderboard(self.curSelected:GetId())
 		tree = Base()

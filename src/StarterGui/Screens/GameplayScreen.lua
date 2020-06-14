@@ -11,6 +11,8 @@ local Online = require(Utils.Online)
 local Metrics = require(Utils.Metrics)
 local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
+local Keybind = require(Utils.Keybind)
+local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -18,6 +20,8 @@ local Graph = require(Frameworks.Graph)
 local UI = require(Frameworks.UI)
 
 local self = {}
+
+local listenerPool = {}
 
 local handle = {}
 local tree = {}
@@ -63,7 +67,7 @@ local function DoBase(props)
 	local chain = playdata[10]
     local maxcombo = playdata[11]
 
-    local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc) --35 is the rating
+    local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc)
 
     local gradedata = Metrics:GetGradeData(acc)
     local tierdata = Metrics:GetTierData(rating)
@@ -140,7 +144,6 @@ local function DoBase(props)
 			SliceScale = 1,
 			ImageColor3 = Color3.fromRGB(232, 49, 49),
 			[Roact.Event.MouseButton1Click] = function(rbx)
-            	self:Unmount()
             	game_.force_quit = true
      		end;
 		}, {
@@ -161,8 +164,17 @@ end
 
 function self:Initialize(props, g)
     game_ = g
+
+    Logger:Log("Initializing stage...")
+
+    listenerPool[#listenerPool+1] = Keybind:listen(Settings.Options.QuickExitKeybind[1], function()
+        game_.force_quit = true
+    end)
+
     tree = DoBase(props)
     handle = Roact.mount(tree, PlayerGui, "GameplayScreen")
+
+    Logger:Log("Gameplay tree mounted!")
 end
 
 function self:Update(props)
@@ -171,7 +183,14 @@ function self:Update(props)
 end
 
 function self:Unmount()
+    Logger:Log("Tearing down stage...")
+    for i, v in pairs(listenerPool) do
+        v:stop()
+    end
+    listenerPool = {}
+    Logger:Log("Event listeners destroyed...")
     Roact.unmount(handle)
+    Logger:Log("Gameplay tree mounted!")
 end
 
 return self

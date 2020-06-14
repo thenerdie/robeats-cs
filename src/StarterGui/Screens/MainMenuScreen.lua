@@ -4,6 +4,7 @@ local LocalPlayer = game.Players.LocalPlayer
 
 local Utils = script.Parent.Parent.Utils
 local Screens = require(Utils.ScreenUtil) 
+local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -22,7 +23,7 @@ local function Option(props, optionNumber)
 		Position=UDim2.new(0,0,(optionNumber-1)/numNames,0);
 		TextSize=18;
 		Text=props.Name;
-		OnClick = props.Click
+		OnClick = props.Click;
 	})
 	--[[Roact.createElement("TextButton", {
 		Size=UDim2.new(1,0,1/numNames,0);
@@ -34,6 +35,8 @@ local function Option(props, optionNumber)
 end
 
 function self:DoOptions(props)
+	Logger:Log("Main menu mounting...")
+	Logger:Log("Max options: " .. numNames)
 	local frame = Roact.createElement("ScreenGui", {
 		ResetOnSpawn = false,
 		ZIndexBehavior = Enum.ZIndexBehavior.Global
@@ -439,9 +442,11 @@ function self:DoOptions(props)
 		})
 	})
 	handle = Roact.mount(frame, PlayerGui, "MainMenu")
+	Logger:Log("Main menu mounted!")
 end
 function self:Unmount()
 	Roact.unmount(handle)
+	Logger:Log("Main menu unmounted!")
 end
 
 return self
