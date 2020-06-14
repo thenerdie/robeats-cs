@@ -59,6 +59,7 @@ local function sendScore(data)
 end
 
 local function getPlays(p_ID)
+	p_ID = "P"..tostring(p_ID)
 	local headers = {
 		["Content-Type"] = "application/json";
 		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
@@ -151,6 +152,7 @@ local function getGlobalLeaderboard()
 end
 
 local function getStats(p_ID)
+	p_ID = "P"..tostring(p_ID)
 	local headers = {
 		["Content-Type"] = "application/json";
 		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";

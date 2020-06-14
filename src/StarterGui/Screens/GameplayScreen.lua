@@ -174,7 +174,7 @@ function self:Initialize(props, g)
     tree = DoBase(props)
     handle = Roact.mount(tree, PlayerGui, "GameplayScreen")
 
-    Logger:log("Gameplay tree mounted!")
+    Logger:Log("Gameplay tree mounted!")
 end
 
 function self:Update(props)
@@ -190,7 +190,7 @@ function self:Unmount()
     listenerPool = {}
     Logger:Log("Event listeners destroyed...")
     Roact.unmount(handle)
-    Logger:log("Gameplay tree mounted!")
+    Logger:Log("Gameplay tree mounted!")
 end
 
 return self
