@@ -54,6 +54,10 @@ local function formatKeys(keys)
 	return ret
 end
 
+local function enumToNumber(enum)
+	return enum.Value - 48
+end
+
 local function NumberOption(name, bound, increment)
 	increment = increment or 1
 	local boundFire = "Update"..bound
@@ -220,6 +224,59 @@ local function KeybindOption(name, bound, numOfKeys)
 	})
 end
 
+local function ColorOption(name, bound)
+	numOfKeys = numOfKeys or 1
+	local boundFire = "Update"..bound
+	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
+	optionNumber = optionNumber + 1
+	return Roact.createElement("Frame", {
+		Size = UDim2.new(1,0,0.15,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / maxOptionNumber, 0);
+		BackgroundTransparency = 1;
+    	BorderSizePixel = 0;
+	}, {
+		Name = Roact.createElement("TextLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			BackgroundTransparency = 1;
+			Font = Enum.Font.GothamBlack;
+			TextColor3 = Color3.fromRGB(255, 255, 255);
+			Text = name;
+			TextScaled = true,
+			TextWrapped = true,
+			Position = UDim2.new(0.025,0,0.5,0);
+			Size = UDim2.new(0.2,0,0.25,0);
+		});
+		OptionValue = Roact.createElement("ImageLabel", {
+			AnchorPoint = Vector2.new(1, 0.5),
+			Size = UDim2.new(0.4,0,0.5,0),
+			Position = UDim2.new(0.95,0,0.5,0),
+			BorderSizePixel = 0,
+			BackgroundTransparency = 1,
+			ScaleType = Enum.ScaleType.Slice,
+			Image = "rbxassetid://2790382281",
+			SliceCenter = Rect.new(4, 4, 252, 252),
+			SliceScale = 1,
+			ImageColor3 = Color3.fromRGB(35, 35, 35)
+		},{
+			Data = Roact.createElement("TextButton", {
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Size = UDim2.new(0.85, 0, 0.7, 0),
+				Position = UDim2.new(0.5, 0, 0.5, 0),
+				BorderSizePixel = 0,
+				BackgroundTransparency = 1,
+				Text = self[bound]:map(function(val)
+					return formatColor(val)
+				end),
+				Font = Enum.Font.GothamBlack,
+				TextScaled = true,
+				TextWrapped = true,
+				TextColor3 = Color3.fromRGB(179, 179, 179),
+			})
+		});
+		
+	})
+end
+
 local totalSections = 4
 
 local function NewSection(name, children)
@@ -251,6 +308,7 @@ local function Sections()
 	return {
 		[1] = NewSection("General", {
 			Keybind = KeybindOption("Gameplay keys", "Keybinds", 4);
+			NoteColor = ColorOption("Note Color", "NoteColor");
 		});
 		[2] = NewSection("Song", {
 			SongRate = NumberOption("Song Rate", "Rate", 0.05);

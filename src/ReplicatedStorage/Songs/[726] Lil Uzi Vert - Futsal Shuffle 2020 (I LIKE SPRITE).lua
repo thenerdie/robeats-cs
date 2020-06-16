@@ -1,3 +1,5 @@
+local Modchart = require(game.Players.LocalPlayer.PlayerGui.Utils.Modchart)
+
 local rtv = {}
 
           -- Converted for Robeats CS --
@@ -22,9 +24,10 @@ rtv.AudioNotePrebufferTime = 1000
 rtv.AudioMod = 0
 rtv.AudioHitSFXGroup = 0
 rtv.HitObjects = {}
+rtv.ModPoints = {}
 local function nt(time,track) rtv.HitObjects[#rtv.HitObjects+1]={Time=time;Type=1;Track=track;} end
 local function hd(time,track,duration) rtv.HitObjects[#rtv.HitObjects+1] = {Time=time;Type=2;Track=track;Duration=duration;}  end
---
+local function mdpnt(time, fctn) rtv.ModPoints[#rtv.ModPoints+1] = {Time=time, Callback=fctn} end
 nt(16805,3)--0
 nt(16805,4)--1
 hd(16805,2,437)--2
@@ -1299,4 +1302,27 @@ rtv.NpsGraph = {
 7.5, 
 5
 };
+
+mdpnt(17805, function()
+     Modchart:PositionCam(Vector3.new(0,-2,0))
+end)
+
+mdpnt(18205, function()
+     Modchart:PositionCam(Vector3.new(0,2,0))
+end)
+
+mdpnt(18705, function()
+     Modchart:RotateCam(CFrame.Angles(math.rad(5),0,math.rad(5)))
+end)
+
+mdpnt(19705, function()
+     Modchart:RotateCam(CFrame.Angles(math.rad(0),0,math.rad(0)))
+end)
+
+for i = 20700, 30700, 1000 do
+     mdpnt(i, function()
+          Modchart:BounceCam(10, 0.35)
+     end)
+end
+
 return rtv

@@ -9,6 +9,9 @@ local DebugOut = require(game.ReplicatedStorage.Local.DebugOut)
 local Constants = require(game.ReplicatedStorage.Shared.Constants)
 local HitSFXGroup = require(game.ReplicatedStorage.Local.HitSFXGroup)
 local SongDatabase = require(game.ReplicatedStorage.AudioData.SongDatabase)
+local Modchart = require(game.Players.LocalPlayer.PlayerGui.Utils.Modchart)
+
+local FastSpawn = require(game.ReplicatedStorage.FastSpawn)
 
 local ModManager = require(game.ReplicatedStorage.ModManager)
 --local Spectating = game.ReplicatedStorage.Spectating
@@ -32,10 +35,6 @@ function AudioManager:new(game_element, specOffset, amods)
 	end
 	
 	local self = {}
-	
-	--ModManager:ApplyMod(game.ReplicatedStorage.Mods.Mirror)
-	
-	--local amods = ModManager:GetActivatedMods()
 
 	--STEPMANIA J4
 	self.NOTE_PREBUFFER_TIME = 500
@@ -88,6 +87,8 @@ function AudioManager:new(game_element, specOffset, amods)
 	local PRE_START_TIME_MS_MAX = Constants.PRE_START_TIME_MS_MAX
 	local POST_TIME_PLAYING_MS_MAX = Constants.POST_TIME_PLAYING_MS_MAX
 	local _song_rate = 1.0
+
+	local modchart_index = 1
 
 	self._audio_time_offset = 0
 
@@ -169,6 +170,7 @@ function AudioManager:new(game_element, specOffset, amods)
 		_current_mode = AudioManager.Mode.Loading
 		self._audio_data_index = 1
 		self._current_audio_data = song_:GetData()
+		self.mod_points = self._current_audio_data.ModPoints or {}
 		if note_colors == 2 then
 			self.snap_enabled = true
 		end
@@ -407,6 +409,7 @@ function AudioManager:new(game_element, specOffset, amods)
 	function self:start_play()
 		_current_mode = AudioManager.Mode.PreStart
 		_pre_start_time = 0
+		Modchart:Init()
 	end
 
 	local _raise_pre_start_trigger = false
@@ -483,6 +486,17 @@ function AudioManager:new(game_element, specOffset, amods)
 				_current_mode = AudioManager.Mode.PostPlaying
 			end
 			
+			for i = modchart_index, #self.mod_points, 1 do
+				local curPoint = self.mod_points[i]
+				if self:get_current_time_ms() >= curPoint.Time then
+					modchart_index = modchart_index + 1
+					if curPoint.Callback then
+						FastSpawn(curPoint.Callback)
+					end
+					break
+				end
+			end
+
 			--[[Spectating.UpdateGame:FireServer({
 				bgmTime = self._bgm_time_position*1000
 			})]]--
