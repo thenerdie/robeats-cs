@@ -14,6 +14,7 @@ local Settings = require(Utils.Settings)
 local Game = require(Utils.Game)
 local Search = require(Utils.Search)
 local Logger = require(Utils.Logger):register(script)
+local Color = require(Utils.Color)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -167,12 +168,25 @@ local function Base()
 						local g = Game:new()
 						self:Unmount()
 						local rate = Settings.Options.Rate
-						g:StartGame(self.curSelected, rate, Settings.Options.Keybinds, Settings.Options.NoteColor, Settings.Options.ScrollSpeed)
+						local note_color_opt = Settings.Options.NoteColor
+						local noteColor = Color:convertHSV(note_color_opt)
+						g:StartGame(self.curSelected, rate, Settings.Options.Keybinds, noteColor, Settings.Options.ScrollSpeed)
 						Screens:FindScreen("ResultsScreen"):DoResults({
 							gamejoin=g._local_services._game_join;
 							localgame=g.local_game;
 						}, rate, self.curSelected)
 						g:DestroyStage()
+					end;
+				});
+				BackButton=Roact.createElement("TextButton", {
+					BackgroundColor3=Color3.fromRGB(255, 0, 0);
+					AnchorPoint=Vector2.new(1,1);
+					Text="BACK";
+					Position=UDim2.new(0.7,0,1,0);
+					Size=UDim2.new(0.14,0,0.08,0);
+					[Roact.Event.MouseButton1Click] = function(rbx)
+						self:Unmount()
+						Screens:FindScreen("MainMenuScreen"):DoOptions()
 					end;
 				});
 			}

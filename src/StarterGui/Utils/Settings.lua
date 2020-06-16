@@ -1,9 +1,11 @@
 local Rodux = require(game.ReplicatedStorage.Rodux)
+local Color = require(script.Parent.Color)
+
 local Settings = {}
 
 Settings.Options = {
 	ScrollSpeed = 20;
-	NoteColor = Color3.new(0.5,0.5,0.5);
+	NoteColor = Color:newHSV();
 	Rate = 1;
 	Keybinds = {
 		[1] = Enum.KeyCode.Z;
@@ -12,7 +14,7 @@ Settings.Options = {
 		[4] = Enum.KeyCode.Period;
 	};
 	QuickExitKeybind = {
-		[1] = Enum.KeyCode.Backspace; -- // WILL BE BOUND TO QUICK EXIT LATER ON
+		[1] = Enum.KeyCode.Backspace;
 	};
 }
 
