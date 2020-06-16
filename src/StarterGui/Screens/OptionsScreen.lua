@@ -283,7 +283,6 @@ local function ColorOption(name, bound)
 						local newColor = Color:changeHSV(originalColor, {
 							Hue = 1-hue
 						})
-						print(newColor.Hue, newColor.Saturation, newColor.Value)
 						Settings:ChangeOption(bound, newColor)
 						self.hueC(Settings.Options[bound])
 						cursor.Position = UDim2.new(hue,0,0,0)
@@ -310,9 +309,9 @@ local function ColorOption(name, bound)
 			})
 		});
 		ColorValue = Roact.createElement("Frame", {
-			Size = UDim2.new(0.15,0,0.5,0);
+			Size = UDim2.new(0.2,0,0.5,0);
 			AnchorPoint = Vector2.new(0,0.5);
-			Position = UDim2.new(0.8,0,0.5,0);
+			Position = UDim2.new(0.72,0,0.5,0);
 			[Roact.Ref] = self.sliderRef1;
 			[Roact.Event.MouseMoved] = function(rbx, x, y)
 				local slider = self.sliderRef1:getValue()
@@ -327,7 +326,6 @@ local function ColorOption(name, bound)
 						})
 						print(newColor.Hue, newColor.Saturation, newColor.Value)
 						Settings:ChangeOption(bound, newColor)
-						self.hueC(Settings.Options[bound])
 						cursor.Position = UDim2.new(value,0,0,0)
 					end
 				end
@@ -335,7 +333,11 @@ local function ColorOption(name, bound)
 		}, {
 			UIGradient = Roact.createElement("UIGradient", {
 				Color = self.hueB:map(function(clr)
-					local brightSpec = Color:changeHSV(clr, {
+					local tab = {}
+					for i, v in pairs(clr) do
+						tab[i] = v
+					end
+					local brightSpec = Color:changeHSV(tab, {
 						Saturation = 1;
 						Value = 1;
 					})
