@@ -5,13 +5,7 @@ local LOCA = game:GetService("LocalizationService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Misc = ReplicatedStorage:WaitForChild("Misc")
 
-local baseUrl = "rcs-backend.glitch.me/"
-
-local useTestBase = true
-
-if useTestBase then
-	baseUrl = "test-" .. baseUrl
-end
+local baseUrl = "robeatscsgame.com/api/"
 
 baseUrl = "https://" .. baseUrl
 
@@ -20,7 +14,6 @@ print(baseUrl)
 local function sendScore(data)
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU"
 	}
 	local params = {
 		Headers=headers;
@@ -52,13 +45,11 @@ local function getPlays(p_ID)
 	p_ID = "P"..tostring(p_ID)
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
-		["userid"] = p_ID;
 	}
 	local params = {
 		Headers=headers;
 		Method="GET";
-		Url=baseUrl.."/plays";
+		Url=baseUrl.."/user/" + p_ID;
 	}
 	local res = nil
 	local suc, err = pcall(function()
@@ -83,13 +74,11 @@ end
 local function getMapLeaderboard(m_ID)
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
-		["mapid"] = m_ID;
 	}
 	local params = {
 		Headers=headers;
 		Method="GET";
-		Url=baseUrl.."/maps";
+		Url=baseUrl.."/maps/" .. m_ID;
 	}
 	local res = nil
 	local suc, err = pcall(function()
@@ -114,7 +103,6 @@ end
 local function getGlobalLeaderboard()
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
 	}
 	local params = {
 		Headers=headers;
@@ -145,13 +133,11 @@ local function getStats(p_ID)
 	p_ID = "P"..tostring(p_ID)
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
-		["userid"] = p_ID
 	}
 	local params = {
 		Headers=headers;
 		Method="GET";
-		Url=baseUrl.."/stats";
+		Url=baseUrl.."/stats/" .. p_ID;
 	}
 	local res = nil
 	local suc, err = pcall(function()
