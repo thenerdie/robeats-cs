@@ -216,7 +216,8 @@ function Dot:new()
 			Size=props.Size or UDim2.new(0.2,0,0.4,0);
 			BackgroundColor3=props.BGColor or Color3.new(0.1,0.1,0.1);
 			ClipsDescendants=true;
-			ZIndex=props.ZIndex or 1
+            ZIndex=props.ZIndex or 1;
+            BorderSizePixel=props.BSizePixel or 0;
 		}, {
 			Objects=Roact.createElement(Bars, props);
 			Markers=Roact.createElement(Markers, props);

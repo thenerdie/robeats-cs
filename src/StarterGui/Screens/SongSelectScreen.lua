@@ -328,8 +328,12 @@ local function Base()
 					Leaderboard = Roact.createElement(Leaderboard);
 				});
 			}),
-			TestBarGraph = getNPSGraph({
-				Position = UDim2.new(0.5,0,0.5,0)
+			NpsGraph = getNPSGraph({
+				Size = UDim2.new(0.27,0,0.35,0),
+				Anchor = Vector2.new(0.5,1),
+				Position = UDim2.new(0.45,0,0.99,0),
+				BSizePixel = 0,
+				ZIndex = 2,
 			}),
 			Songs = Roact.createElement("Frame", {
 				AnchorPoint = Vector2.new(1,0);
