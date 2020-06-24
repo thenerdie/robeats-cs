@@ -35,7 +35,6 @@ function AudioManager:new(game_element, specOffset, amods)
 	end
 	
 	local self = {}
-
 	--STEPMANIA J4
 	self.NOTE_PREBUFFER_TIME = 500
 	self.NOTE_OKAY_MAX = 180

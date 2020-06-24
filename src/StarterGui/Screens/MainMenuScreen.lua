@@ -60,8 +60,10 @@ function self:DoOptions(props)
 				ZIndex = 2,
 				BorderSizePixel = 0,
 				BackgroundTransparency = 1,
+				BackgroundColor3 = Color3.fromRGB(223, 179, 179),
+				BackgroundTransparency = 0,
 				ScaleType = Enum.ScaleType.Crop,
-				Image = "http://www.roblox.com/asset/?id=2404285030"
+				ImageTransparency = 1,
 			}, {
 				User = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(0, 0.5),

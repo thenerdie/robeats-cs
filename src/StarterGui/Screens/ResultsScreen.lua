@@ -111,7 +111,6 @@ function self:DoResults(props, rate, song)
 				BackgroundTransparency = 0,
 				ScaleType = Enum.ScaleType.Crop,
 				ImageTransparency = 1
-				--Image = "http://www.roblox.com/asset/?id=2404285030"
 			}, {
 				Rating = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(0.5, 0.5),
@@ -749,6 +748,7 @@ function self:DoResults(props, rate, song)
 									Font = Enum.Font.GothamBlack,
 									TextScaled = true,
 									TextWrapped = true,
+									TextXAlignment = Enum.TextXAlignment.Right;
 									TextColor3 = Color3.fromRGB(255, 255, 255),
 									TextStrokeTransparency = 0.5
 								}),
