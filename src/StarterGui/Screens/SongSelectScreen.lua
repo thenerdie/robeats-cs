@@ -69,7 +69,7 @@ local function SongButton(instance, song, songNum)
 			Font = Enum.Font.GothamBlack;
 			TextColor3 = Color3.fromRGB(255, 255, 255);
 			TextStrokeTransparency = 0.75;
-			Text = "["..Math.avg(tonumber(song:GetDifficulty()).."]",
+			Text = "["..Math.avg(tonumber(song:GetDifficulty())).."]",
 		}),
 		SongName = Roact.createElement("TextLabel", {
 			Size = UDim2.new(0.85,0,0.5,0);
@@ -94,6 +94,30 @@ local function SongButton(instance, song, songNum)
 			TextXAlignment = Enum.TextXAlignment.Left;
 		}),
 	})
+end
+
+local function getNPSGraph(props)
+	local graph = Graph.new("Bar")
+	if self.curSelected ~= nil then
+		local lowColor = Color3.fromRGB(237, 255, 148)
+		local highColor = Color3.fromRGB(255, 0, 191)
+		local maxColorNps = 32
+		local c = self.curSelected
+		local d = c:GetData()
+		local n = d.NpsGraph
+		local r = Settings.Options.Rate or 1
+		graph.xfloor = 0
+		graph.xceiling = #n
+		graph.xinterval = 30
+		graph.yceiling = (Math.findMax(n)+5)*r
+		graph.yfloor = 0
+		graph.yinterval = math.floor(graph.yceiling/5)
+		for i, v in pairs(n) do
+			v = v*r
+			graph:AddObject(i, v, lowColor:lerp(highColor, math.clamp(v/maxColorNps, 0, 1)))
+		end
+	end
+	return Roact.createElement(graph.component, props)
 end
 
 local function LeaderboardSlot(data,slotNum)
@@ -155,14 +179,6 @@ local function Leaderboard()
 end
 
 local function Base()
-	local tgraph = Graph.new("Bar")
-	tgraph.xinterval = 50
-	tgraph.xceiling = 1000
-	tgraph.yceiling = 1
-	for i = 1, 1000 do
-		tgraph:AddObject(i, Math.positive(math.sin(i)))
-	end
-
 	local sbuttons, found = SongButtons({
 		songs = songs;
 		search = search or nil
@@ -312,7 +328,7 @@ local function Base()
 					Leaderboard = Roact.createElement(Leaderboard);
 				});
 			}),
-			TestBarGraph = Roact.createElement(tgraph.component, {
+			TestBarGraph = getNPSGraph({
 				Position = UDim2.new(0.5,0,0.5,0)
 			}),
 			Songs = Roact.createElement("Frame", {
