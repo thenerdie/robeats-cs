@@ -154,7 +154,15 @@ local function Leaderboard()
 	return Roact.createFragment(lb_gui)
 end
 
-local function Base()	
+local function Base()
+	local tgraph = Graph.new("Bar")
+	tgraph.xinterval = 50
+	tgraph.xceiling = 1000
+	tgraph.yceiling = 10
+	for i = 1, 1000 do
+		tgraph:AddObject(i, Math.positive(math.sin(i)))
+	end
+
 	local sbuttons, found = SongButtons({
 		songs = songs;
 		search = search or nil
@@ -303,6 +311,9 @@ local function Base()
 					}),
 					Leaderboard = Roact.createElement(Leaderboard);
 				});
+			}),
+			TestBarGraph = Roact.createElement(tgraph.component, {
+				Position = UDim2.new(0.5,0,0.5,0)
 			}),
 			Songs = Roact.createElement("Frame", {
 				AnchorPoint = Vector2.new(1,0);
