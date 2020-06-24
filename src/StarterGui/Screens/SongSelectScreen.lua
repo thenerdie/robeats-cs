@@ -31,9 +31,9 @@ local search = nil
 local lb = {}
 local lb_gui = {}
 self.curSelected = nil
-local mapname = "."
-local diffname = "."
-local artistname = "."
+local mapname = ""
+local diffname = ""
+local artistname = ""
 
 local tree = {}
 local handle = {}

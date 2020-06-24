@@ -64,7 +64,6 @@ function self:DoOptions(props)
 				BackgroundTransparency = 0,
 				ScaleType = Enum.ScaleType.Crop,
 				ImageTransparency = 1,
-				--Image = "http://www.roblox.com/asset/?id=2404285030"
 			}, {
 				User = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(0, 0.5),
