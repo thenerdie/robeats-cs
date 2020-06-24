@@ -17,15 +17,8 @@ end
 local function getStrain(data)
     local totalStrain = 0
     local i = 0
-    for k, curHitObj in pairs(data) do
-        i = k
-        if i > 1 then
-            local lastHitObj = data[i-1]
-            totalStrain = totalStrain + math.clamp(800-math.abs(curHitObj.Time - lastHitObj.Time), 0, 800)
-            if curHitObj.Track == lastHitObj.Track then
-                totalStrain = totalStrain + 120
-            end
-        end
+    for i, npsPoint in pairs(data) do
+        totalStrain = totalStrain + npsPoint
     end
     totalStrain = totalStrain / i
     return totalStrain
@@ -37,8 +30,8 @@ function calc:DoRating(song)
     if data.totalNotes < 50 then
         return 0
     end
-    local totalStrain = getStrain(data.HitObjects)
-    rating = totalStrain/10
+    local totalStrain = getStrain(data.NpsGraph)
+    rating = totalStrain
     return rating
 end
 
