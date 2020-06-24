@@ -4,6 +4,7 @@ local LocalPlayer = game.Players.LocalPlayer
 
 local Utils = script.Parent.Parent.Utils
 local Screens = require(Utils.ScreenUtil) 
+local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -34,6 +35,8 @@ local function Option(props, optionNumber)
 end
 
 function self:DoOptions(props)
+	Logger:Log("Main menu mounting...")
+	Logger:Log("Max options: " .. numNames)
 	local frame = Roact.createElement("ScreenGui", {
 		ResetOnSpawn = false,
 		ZIndexBehavior = Enum.ZIndexBehavior.Global
@@ -57,8 +60,11 @@ function self:DoOptions(props)
 				ZIndex = 2,
 				BorderSizePixel = 0,
 				BackgroundTransparency = 1,
+				BackgroundColor3 = Color3.fromRGB(223, 179, 179),
+				BackgroundTransparency = 0,
 				ScaleType = Enum.ScaleType.Crop,
-				Image = "http://www.roblox.com/asset/?id=2404285030"
+				ImageTransparency = 1,
+				--Image = "http://www.roblox.com/asset/?id=2404285030"
 			}, {
 				User = Roact.createElement("ImageLabel", {
 					AnchorPoint = Vector2.new(0, 0.5),
@@ -439,9 +445,11 @@ function self:DoOptions(props)
 		})
 	})
 	handle = Roact.mount(frame, PlayerGui, "MainMenu")
+	Logger:Log("Main menu mounted!")
 end
 function self:Unmount()
 	Roact.unmount(handle)
+	Logger:Log("Main menu unmounted!")
 end
 
 return self

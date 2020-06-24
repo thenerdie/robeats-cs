@@ -12,6 +12,8 @@ local Metrics = require(Utils.Metrics)
 local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
 local Keybind = require(Utils.Keybind)
+local Logger = require(Utils.Logger):register(script)
+local Color = require(Utils.Color)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -51,6 +53,25 @@ local function formatKeys(keys)
 		ret = ret .. ap_str
 	end
 	return ret
+end
+
+local function enumToNumber(enum)
+	return enum.Value - 48
+end
+
+local function getRainbow()
+	local keypoints = {}
+	local numOfPrimary = 12
+	for i = 1, numOfPrimary+1 do
+		local alpha = (i-1)/numOfPrimary
+		keypoints[#keypoints+1] = ColorSequenceKeypoint.new(alpha, Color3.fromHSV(1-alpha, 1, 1 ))
+	end
+	local sequence = ColorSequence.new(keypoints)
+	return sequence
+end
+
+local function getHue(clr)
+	return ColorSequence.new(clr, Color3.new(0,0,0))
 end
 
 local function NumberOption(name, bound, increment)
@@ -219,6 +240,128 @@ local function KeybindOption(name, bound, numOfKeys)
 	})
 end
 
+local function ColorOption(name, bound)
+	local boundFire = "Update"..bound
+	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
+	self.sliderRef = Roact.createRef()
+	self.sliderRef1 = Roact.createRef()
+	self.mouseDown = false
+	self.mouseDown1 = false
+	self.hueB, self.hueC = Roact.createBinding(Settings.Options[bound])
+	optionNumber = optionNumber + 1
+	return Roact.createElement("Frame", {
+		Size = UDim2.new(1,0,0.15,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / maxOptionNumber, 0);
+		BackgroundTransparency = 1;
+    	BorderSizePixel = 0;
+	}, {
+		Name = Roact.createElement("TextLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			BackgroundTransparency = 1;
+			Font = Enum.Font.GothamBlack;
+			TextColor3 = Color3.fromRGB(255, 255, 255);
+			Text = name;
+			TextScaled = true,
+			TextWrapped = true,
+			Position = UDim2.new(0.025,0,0.5,0);
+			Size = UDim2.new(0.2,0,0.25,0);
+		});
+		-- COLOR RAINBOW HAS ISSUES
+		ColorRainbow = Roact.createElement("Frame", {
+			Size = UDim2.new(0.4,0,0.5,0);
+			AnchorPoint = Vector2.new(0,0.5);
+			Position = UDim2.new(0.3,0,0.5,0);
+			[Roact.Ref] = self.sliderRef;
+			[Roact.Event.MouseMoved] = function(rbx, x, y)
+				local slider = self.sliderRef:getValue()
+				local sx = x-slider.AbsolutePosition.X
+				if self.mouseDown then
+					local cursor = slider.Cursor
+					if cursor then
+						local hue = sx/slider.AbsoluteSize.X
+						local originalColor = Settings.Options[bound]
+						local newColor = Color:changeHSV(originalColor, {
+							Hue = 1-hue
+						})
+						Settings:ChangeOption(bound, newColor)
+						self.hueC(Settings.Options[bound])
+						cursor.Position = UDim2.new(hue,0,0,0)
+					end
+				end
+			end
+		}, {
+			UIGradient = Roact.createElement("UIGradient", {
+				Color = getRainbow()
+			});
+			Cursor = Roact.createElement("ImageButton", {
+				BackgroundColor3 = Color3.new(0,0,0);
+				Size = UDim2.new(0,5,1,0);
+				Position = UDim2.new(1-Settings.Options[bound].Hue,0,0,0);
+				AnchorPoint = Vector2.new(0.5,0);
+				ImageTransparency = 1;
+				BackgroundTransparency = 0;
+				[Roact.Event.MouseButton1Down] = function(rbx)
+					self.mouseDown = true
+				end;
+				[Roact.Event.MouseButton1Up] = function(rbx)
+					self.mouseDown = false
+				end;
+			})
+		});
+		ColorValue = Roact.createElement("Frame", {
+			Size = UDim2.new(0.2,0,0.5,0);
+			AnchorPoint = Vector2.new(0,0.5);
+			Position = UDim2.new(0.72,0,0.5,0);
+			[Roact.Ref] = self.sliderRef1;
+			[Roact.Event.MouseMoved] = function(rbx, x, y)
+				local slider = self.sliderRef1:getValue()
+				local sx = x-slider.AbsolutePosition.X
+				if self.mouseDown1 then
+					local cursor = slider.Cursor
+					if cursor then
+						local value = sx/slider.AbsoluteSize.X
+						local originalColor = Settings.Options[bound]
+						local newColor = Color:changeHSV(originalColor, {
+							Value = 1-value
+						})
+						print(newColor.Hue, newColor.Saturation, newColor.Value)
+						Settings:ChangeOption(bound, newColor)
+						cursor.Position = UDim2.new(value,0,0,0)
+					end
+				end
+			end
+		}, {
+			UIGradient = Roact.createElement("UIGradient", {
+				Color = self.hueB:map(function(clr)
+					local tab = {}
+					for i, v in pairs(clr) do
+						tab[i] = v
+					end
+					local brightSpec = Color:changeHSV(tab, {
+						Saturation = 1;
+						Value = 1;
+					})
+					return getHue(Color:convertHSV(brightSpec))
+				end)
+			});
+			Cursor = Roact.createElement("ImageButton", {
+				BackgroundColor3 = Color3.new(0,0,0);
+				Size = UDim2.new(0,5,1,0);
+				Position = UDim2.new(1-Settings.Options[bound].Value,0,0,0);
+				AnchorPoint = Vector2.new(0.5,0);
+				ImageTransparency = 1;
+				BackgroundTransparency = 0;
+				[Roact.Event.MouseButton1Down] = function(rbx)
+					self.mouseDown1 = true
+				end;
+				[Roact.Event.MouseButton1Up] = function(rbx)
+					self.mouseDown1 = false
+				end;
+			})
+		})
+	})
+end
+
 local totalSections = 4
 
 local function NewSection(name, children)
@@ -250,6 +393,7 @@ local function Sections()
 	return {
 		[1] = NewSection("General", {
 			Keybind = KeybindOption("Gameplay keys", "Keybinds", 4);
+			NoteColor = ColorOption("Note Color", "NoteColor");
 		});
 		[2] = NewSection("Song", {
 			SongRate = NumberOption("Song Rate", "Rate", 0.05);

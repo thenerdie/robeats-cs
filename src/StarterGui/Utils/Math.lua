@@ -20,4 +20,8 @@ function Math.negative(number)
 	return number < 0 and number or -number
 end
 
+function Math.positive(number)
+	return math.abs(number)
+end
+
 return Math

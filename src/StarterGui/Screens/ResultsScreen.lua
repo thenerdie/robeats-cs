@@ -11,6 +11,7 @@ local Online = require(Utils.Online)
 local Metrics = require(Utils.Metrics)
 local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
+local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -25,6 +26,7 @@ local handle = {}
 
 
 function self:DoResults(props, rate, song)
+	Logger:Log("Results screen mounting...")
 	--_marv_count,_perfect_count,_great_count,_good_count,_ok_count,_miss_count,_total_count,self:get_acc(),self._score,self._chain,_max_chain
 	local localgame = props.localgame
 	local gamejoin = props.gamejoin
@@ -57,6 +59,8 @@ function self:DoResults(props, rate, song)
 	local gradedata = Metrics:GetGradeData(acc)
 	local tierdata = Metrics:GetTierData(rating)
 	
+	Logger:Log("Data grabbed successfully!")
+
 	local graph = Graph.new("Dot")
 	
 	graph.xinterval = 20
@@ -76,6 +80,8 @@ function self:DoResults(props, rate, song)
 			graph:AddBreak(hit[1]*songLen)
 		end
 	end
+
+	Logger:Log("Graph generated successfully!")
 	
 	local now = DT:GetDateTime()
 	
@@ -743,6 +749,7 @@ function self:DoResults(props, rate, song)
 									Font = Enum.Font.GothamBlack,
 									TextScaled = true,
 									TextWrapped = true,
+									TextXAlignment = Enum.TextXAlignment.Right;
 									TextColor3 = Color3.fromRGB(255, 255, 255),
 									TextStrokeTransparency = 0.5
 								}),
@@ -796,14 +803,14 @@ function self:DoResults(props, rate, song)
 		})
 	})
 	
-	
-	
 	local tree = frame
 	handle = Roact.mount(tree, PlayerGui, "MainMenu")
+	Logger:Log("Results screen mounted!")
 end
 
 function self:Unmount()
 	Roact.unmount(handle)
+	Logger:Log("Results screen unmounted!")
 end
 
 return self

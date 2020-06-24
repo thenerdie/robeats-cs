@@ -5,23 +5,7 @@ local LOCA = game:GetService("LocalizationService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Misc = ReplicatedStorage:WaitForChild("Misc")
 
---local webhookURI = "https://discordapp.com/api/webhooks/688098285512425493/BRzzdm3skcsqjyaAR5hyup2xamrlAMHrlsD7b1uZ6J11DiNs-ZtM49TLI9x-f0bSCUT1"
-
-local webhookID = "688098285512425493"
-local webhookToken = "BRzzdm3skcsqjyaAR5hyup2xamrlAMHrlsD7b1uZ6J11DiNs-ZtM49TLI9x-f0bSCUT1"
-
-local DiscordWebhookModule = require(game.ServerScriptService.DiscordWebhook)
-
-local DiscordWebhook = DiscordWebhookModule.new(webhookID, webhookToken)
-local formatter = DiscordWebhookModule:GetFromatHelper()
-
-local baseUrl = "rcs-backend.glitch.me/"
-
-local useTestBase = true
-
-if useTestBase then
-	baseUrl = "test-" .. baseUrl
-end
+local baseUrl = "robeatscsgame.com/api/"
 
 baseUrl = "https://" .. baseUrl
 
@@ -30,7 +14,6 @@ print(baseUrl)
 local function sendScore(data)
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU"
 	}
 	local params = {
 		Headers=headers;
@@ -59,15 +42,14 @@ local function sendScore(data)
 end
 
 local function getPlays(p_ID)
+	p_ID = "P"..tostring(p_ID)
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
-		["userid"] = p_ID;
 	}
 	local params = {
 		Headers=headers;
 		Method="GET";
-		Url=baseUrl.."/plays";
+		Url=baseUrl.."/user/" + p_ID;
 	}
 	local res = nil
 	local suc, err = pcall(function()
@@ -92,13 +74,11 @@ end
 local function getMapLeaderboard(m_ID)
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
-		["mapid"] = m_ID;
 	}
 	local params = {
 		Headers=headers;
 		Method="GET";
-		Url=baseUrl.."/maps";
+		Url=baseUrl.."/maps/" .. m_ID;
 	}
 	local res = nil
 	local suc, err = pcall(function()
@@ -123,7 +103,6 @@ end
 local function getGlobalLeaderboard()
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
 	}
 	local params = {
 		Headers=headers;
@@ -151,15 +130,14 @@ local function getGlobalLeaderboard()
 end
 
 local function getStats(p_ID)
+	p_ID = "P"..tostring(p_ID)
 	local headers = {
 		["Content-Type"] = "application/json";
-		["auth-key"] = "HCQVcEs2NZdaMvJhDXJPdbR1l3Wy45h5QdLSZNXtN6ouU";
-		["userid"] = p_ID
 	}
 	local params = {
 		Headers=headers;
 		Method="GET";
-		Url=baseUrl.."/stats";
+		Url=baseUrl.."/stats/" .. p_ID;
 	}
 	local res = nil
 	local suc, err = pcall(function()
@@ -274,48 +252,6 @@ function round(num, numDecimalPlaces)
 	return math.floor(num * mult + 0.5) / mult
 end
 
-local function sendWebhook(play_slot)
-	local avatarUrl = getAvatarUrl(play_slot.RawUserId)
-	local msg = DiscordWebhook:NewMessage()
-	msg:SetUsername("Score Watchdog")
-	msg:SetAvatarUrl("https://t7.rbxcdn.com/ccf7d7ff226460ef5e6abc2c3ecd39a8")
-	local mentions = msg:GetAllowedMention()
-	local embed = msg:NewEmbed()
-	embed:SetTitle("Score Submitted")
-	embed:Append("A score was submitted for user " .. play_slot.PlayerName .. " (".. play_slot.UserId ..")")
-	embed:SetURL("https://www.roblox.com/users/" .. play_slot.RawUserId .. "/profile")
-	embed:SetTimestamp(tick())
-	embed:SetColor3(play_slot.TierColor)
-	embed:AppendFooter("This was an automated in-game message.")
-	embed:SetAuthorName("Score Watchdog")
-	
-	embed:SetThumbnailIconURL(avatarUrl)
-	
-	local PlayStatField = embed:NewField()
-	
-	PlayStatField:SetName("Play Stats")
-	PlayStatField:AppendLine("Map: " .. formatter:CodeblockLine(play_slot.MapName))
-	PlayStatField:AppendLine("Rating: " .. formatter:CodeblockLine(tostring(round(play_slot.Rating, 2)) .. " SR"))
-	PlayStatField:AppendLine("Accuracy: " .. formatter:CodeblockLine(tostring(round(play_slot.Accuracy, 2)) .. "%"))
-	PlayStatField:AppendLine("Spread: " .. formatter:CodeblockLine(tostring(play_slot.Spread)))
-	PlayStatField:AppendLine("Score: " .. formatter:CodeblockLine(tostring(play_slot.Score)))
-	
-	local RemarksField = embed:NewField()	
-	
-	RemarksField:SetName("Remarks")
-	
-	if play_slot.Rating > 64 then
-		mentions:AddGlobalMention("Database Manager")
-		RemarksField:AppendLine("This play is suspicious due to the very high rating. Database Managers will investigate.")
-		RemarksField:AppendLine("@Database Manager")
-	else
-		RemarksField:AppendLine("This play seems OK.")
-	end
-	
-	msg:Send()
-	print("Webhook sent!")
-end
-
 game.Players.PlayerAdded:Connect(function(p)
 	local p_ID = p.UserId
 	local leaderstats = Instance.new("IntValue")
@@ -406,7 +342,6 @@ Misc.SubmitScore.OnServerInvoke = function(player, map, score, accuracy, rate, s
 		end
 		data.RawUserId = player.UserId
 		data.TierColor = tierColor
-		sendWebhook(data, map)
 		return "#" .. data_res.Rank+1, data_res.Data.Rating
 	end
 end
