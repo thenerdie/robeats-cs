@@ -24,4 +24,8 @@ function Math.positive(number)
 	return math.abs(number)
 end
 
+function Math.avg(number)
+	return math.floor(number + 0.5)
+end
+
 return Math

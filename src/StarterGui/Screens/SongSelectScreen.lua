@@ -69,7 +69,7 @@ local function SongButton(instance, song, songNum)
 			Font = Enum.Font.GothamBlack;
 			TextColor3 = Color3.fromRGB(255, 255, 255);
 			TextStrokeTransparency = 0.75;
-			Text = "["..math.floor(tonumber(song:GetDifficulty()) + 0.5).."]",
+			Text = "["..Math.avg(tonumber(song:GetDifficulty()).."]",
 		}),
 		SongName = Roact.createElement("TextLabel", {
 			Size = UDim2.new(0.85,0,0.5,0);
@@ -158,7 +158,7 @@ local function Base()
 	local tgraph = Graph.new("Bar")
 	tgraph.xinterval = 50
 	tgraph.xceiling = 1000
-	tgraph.yceiling = 10
+	tgraph.yceiling = 1
 	for i = 1, 1000 do
 		tgraph:AddObject(i, Math.positive(math.sin(i)))
 	end
