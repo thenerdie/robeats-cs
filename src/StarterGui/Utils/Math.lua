@@ -28,4 +28,15 @@ function Math.avg(number)
 	return math.floor(number + 0.5)
 end
 
+function Math.findMax(tab)
+	tab = tab or {}
+	local num = 0
+	for i, v in pairs(tab) do
+		if v > num then
+			num = v
+		end
+	end
+	return num
+end
+
 return Math
