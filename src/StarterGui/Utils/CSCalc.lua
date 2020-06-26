@@ -4,24 +4,48 @@ local calc = {}
 
 -- LEGEND: Time, Type, Track, Duration
 
-local function genDataset()
+local row_data_to_type = {
+    [nil] = "unknown";
+    [1] = "chord";
+    [2] = "jump";
+    [3] = "hand";
+    [4] = "quad";
+}
+
+local function rowDataset()
     return {
-        jack=0;
-        chord=0;
-        stream=0;
-        handstream=0;
-        jumpstream=0;
+        chord=false;
+        hand=false;
+        jump=false;
+        single=false;
     }
 end
 
-local function getStrain(data)
-    local totalStrain = 0
-    local i = 0
-    for i, npsPoint in pairs(data) do
-        totalStrain = totalStrain + npsPoint
+local function datasetForRowData(rdata)
+    local numNotes = 0
+    local dataset = rowDataset()
+    for i, v in pairs(rdata) do
+        if v == true then
+            numNotes = numNotes + 1
+        end
     end
-    totalStrain = totalStrain / i
-    return totalStrain
+    dataset[row_data_to_type[numNotes]] = true
+    return dataset
+end
+
+local function splitNoteGroups(hitObjects)
+    local note_groups = {}
+    local function generateRow(time, row_data)
+        return {
+            Time=time;
+            RowData=row_data;
+        }
+    end
+    local lastTime = 0
+    for i, hit_object in pairs(hitObjects) do
+        
+    end
+    return note_groups
 end
 
 function calc:DoRating(song)
@@ -30,8 +54,10 @@ function calc:DoRating(song)
     if data.totalNotes < 50 then
         return 0
     end
-    local totalStrain = getStrain(data.NpsGraph)
-    rating = totalStrain
+    local note_groups = splitNoteGroups(data.HitObjects)
+    for i, group in pairs(note_groups) do
+
+    end
     return rating
 end
 
