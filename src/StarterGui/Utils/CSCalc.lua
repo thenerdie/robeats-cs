@@ -5,7 +5,7 @@ local calc = {}
 -- LEGEND: Time, Type, Track, Duration
 
 local row_data_to_type = {
-    [nil] = "unknown";
+    [0] = "unknown";
     [1] = "chord";
     [2] = "jump";
     [3] = "hand";

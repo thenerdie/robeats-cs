@@ -3,7 +3,7 @@ local AllSongs = game.ReplicatedStorage:WaitForChild("Songs")
 
 local Songs = {}
 
-function Songs:GetAllSongs(search)
+function Songs:GetAllSongs()
 	local sgs = {}
 	for i, song in pairs(AllSongs:GetChildren()) do
 		sgs[#sgs+1] = SongObject:new(song)

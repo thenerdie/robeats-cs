@@ -30,7 +30,7 @@ local maxSlots = 50
 local search = nil
 local lb = {}
 local lb_gui = {}
-self.curSelected = nil
+self.curSelected = songs[1]
 local mapname = ""
 local diffname = ""
 local artistname = ""
@@ -90,7 +90,7 @@ local function SongButton(instance, song, songNum)
 			Font = Enum.Font.GothamBlack;
 			TextColor3 = Color3.fromRGB(255, 255, 255);
 			TextStrokeTransparency = 0.75;
-			Text = song:GetArtist().." - ?",
+			Text = string.format("%s - %s", song:GetArtist(), song:GetCreator());
 			TextXAlignment = Enum.TextXAlignment.Left;
 		}),
 	})
@@ -103,8 +103,7 @@ local function getNPSGraph(props)
 		local highColor = Color3.fromRGB(255, 0, 191)
 		local maxColorNps = 32
 		local c = self.curSelected
-		local d = c:GetData()
-		local n = d.NpsGraph
+		local n = c:GetNpsGraph()
 		local r = Settings.Options.Rate or 1
 		graph.xfloor = 0
 		graph.xceiling = #n

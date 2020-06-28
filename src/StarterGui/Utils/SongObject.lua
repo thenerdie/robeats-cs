@@ -40,11 +40,7 @@ function SongObject:new(instance)
 		return self.instance.Name
 	end
 	
-	function self:GetDisplayName() --ok so lets fix this seriously
-		--[[local str = string.gsub(self.instance.Name, "%b[]", "", 1)
-		if str:sub(1,2) == " " then
-			str = str:sub(2, str:len())
-		end]]--
+	function self:GetDisplayName()
 		local str = "[" .. self:GetDifficulty() .. "] " .. self:GetArtist() .. " - " .. self:GetSongName()
 		
 		local diffName = self:GetDifficultyName()
@@ -57,97 +53,57 @@ function SongObject:new(instance)
 	end
 	
 	function self:GetButtonColor()
-		return Color3.new(0.4,0.4,0.4)
+		return self:GetData().AudioButtonColor or Color3.new(0.4,0.4,0.4)
 	end
 	
 	function self:GetDifficulty()
 		if not hasCalced then
 			hasCalced = true
-			cachedRating = CSCalc:DoRating(self)
+			cachedRating = self:GetData().AudioDifficulty or CSCalc:DoRating(self)
 		end
 		return cachedRating
 	end
 	
 	function self:GetSongVersion()
-		return 1
+		return self:GetData().AudioSongVersion or 1
+	end
+
+	function self:GetNpsGraph()
+		local points = {}
+		local lastMs = 0
+		local objects = self:GetData().HitObjects
+		local curNps = 0
+		for i, object in pairs(objects) do
+			local curTime = object.Time
+			if curTime - lastMs > 1000 then
+				lastMs = curTime
+				points[#points+1] = curNps
+				curNps = 0
+			else
+				curNps = curNps + 1
+			end
+		end
+		return points
 	end
 	
 	function self:GetId()
-		local retString = ""
-		itrString(self.instance.Name, function(char)
-			if char ~= "[" then
-				if char == "]" then return -1 end
-				retString = retString .. char
-			end
-		end)
-		return retString
+		return self:GetData().AudioId
 	end
 	
 	function self:GetDifficultyName()
-		local retString = ""
-		local canDoNext = false
-		local numbrac = 0
-		itrString(self.instance.Name, function(char)
-			local canDoThis = canDoNext
-			if char == "[" then
-				numbrac = numbrac + 1
-			end
-			if char == "]" and numbrac == 2 then
-				canDoThis = false
-				return -1
-			end
-			if numbrac == 2 then
-				canDoNext = true
-			end
-			if canDoThis then
-				retString = retString .. char
-			end
-		end)
-		if retString == "" then
-			retString = nil
-		end
-		return retString
+		return self:GetData().AudioDifficultyName
 	end
 	
 	function self:GetArtist()
-		local retString = ""
-		local canDoNext = false
-		local prevChar = ""
-		local numbrac = 0
-		itrString(self.instance.Name, function(char)
-			local canDoThis = canDoNext
-			if char == " " then
-				canDoNext = true
-			elseif char == "-" and prevChar == " " then
-				return -1
-			end
-			if canDoThis then
-				retString = retString .. char
-			end
-			prevChar = char
-		end)
-		return retString:sub(1, retString:len()-1)
+		return self:GetData().AudioArtist
+	end
+
+	function self:GetCreator()
+		return self:GetData().AudioMapper
 	end
 	
 	function self:GetSongName() --not 100% accurate, expand later
-		local retString = ""
-		local canDoNext = false
-		local prevChar = ""
-		local numbrac = 0
-		itrString(self.instance.Name, function(char)
-			local canDoThis = canDoNext
-			if char == " " and prevChar == "-" then
-				canDoNext = true
-			end
-			if char == "(" then
-				return -1
-			end
-			if canDoThis then
-				retString = retString .. char
-			end
-			prevChar = char
-		end)
-		return retString
+		return self:GetData().AudioFilename
 	end
 	
 	function self:GetColor()
