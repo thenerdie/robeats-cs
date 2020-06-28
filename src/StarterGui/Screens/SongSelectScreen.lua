@@ -15,6 +15,7 @@ local Game = require(Utils.Game)
 local Search = require(Utils.Search)
 local Logger = require(Utils.Logger):register(script)
 local Color = require(Utils.Color)
+local Keybind = require(Utils.Keybind)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -46,6 +47,16 @@ local function getNumSlots()
 		return num
 	end
 end
+
+local screenBinds = {
+	Keybind:listen(Enum.KeyCode.Equals, function()
+		Settings.Options.Rate = Settings.Options.Rate + 0.1
+	end);
+	Keybind:listen(Enum.KeyCode.Minus, function()
+		Settings.Options.Rate = Settings.Options.Rate - 0.1
+	end)
+}
+
 
 local function SongButton(instance, song, songNum)
 	return Roact.createElement("ImageButton", {
@@ -433,6 +444,9 @@ local function Base()
 end
 
 function self:DoSongSelect()
+	for i, bind in pairs(screenBinds) do
+		bind:begin()
+	end
 	Logger:Log("Entering song select...")
 	tree = Base()
 	handle = Roact.mount(tree, PlayerGui, "SongSelectMenu")
@@ -440,6 +454,9 @@ function self:DoSongSelect()
 end
 
 function self:Unmount()
+	for i, bind in pairs(screenBinds) do
+		bind:stop()
+	end
 	Roact.unmount(handle)
 	Logger:Log("Song select screen unmounted!")
 end
