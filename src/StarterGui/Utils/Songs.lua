@@ -1,5 +1,5 @@
 local SongObject = require(script.Parent.SongObject)
-local AllSongs = game.ReplicatedStorage:WaitForChild("Songs")
+local AllSongs = game.ReplicatedStorage:WaitForChild("LocalStorage"):WaitForChild("Songs")
 
 local Songs = {}
 
