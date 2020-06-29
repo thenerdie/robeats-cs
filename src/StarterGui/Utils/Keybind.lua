@@ -10,7 +10,6 @@ function Keybind:listen(keyCode, callback)
     local function setListener()
         connection = UserInputService.InputBegan:Connect(function(u)
             if u.KeyCode == keyCode then
-                print("Keybind fired!")
                 callback(u)
             end
         end)

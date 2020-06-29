@@ -48,12 +48,16 @@ local function getNumSlots()
 	end
 end
 
+local rateBinding, changeRateBinding = Roact.createBinding(Settings.Options.Rate)
+
 local screenBinds = {
 	Keybind:listen(Enum.KeyCode.Equals, function()
 		Settings.Options.Rate = Settings.Options.Rate + 0.1
+		changeRateBinding(Settings.Options.Rate)
 	end);
 	Keybind:listen(Enum.KeyCode.Minus, function()
 		Settings.Options.Rate = Settings.Options.Rate - 0.1
+		changeRateBinding(Settings.Options.Rate)
 	end)
 }
 
@@ -285,6 +289,18 @@ local function Base()
 						Size = UDim2.new(0.96,0,0.7,0);
 						Font = Enum.Font.GothamBlack;
 					});
+				}),
+				SongRate = Roact.createElement("TextLabel", {
+					Position = UDim2.new(0.9,0,0.845555,0);
+					TextSize = 28;
+					AnchorPoint = Vector2.new(1,1);
+					BackgroundTransparency = 1;
+					TextStrokeTransparency = 0.75;
+					Font = Enum.Font.GothamBlack;
+					TextColor3 = Color3.fromRGB(255, 255, 255);
+					Text = rateBinding:map(function(rate)
+						return string.format("Song Rate: %0.2fx", rate)
+					end);
 				})
 			}),
 			SearchBox = Roact.createElement("Frame", {
