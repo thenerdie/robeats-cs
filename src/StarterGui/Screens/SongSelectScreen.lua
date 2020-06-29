@@ -54,10 +54,12 @@ local screenBinds = {
 	Keybind:listen(Enum.KeyCode.Equals, function()
 		Settings.Options.Rate = Settings.Options.Rate + 0.1
 		changeRateBinding(Settings.Options.Rate)
+		self:Redraw()
 	end);
 	Keybind:listen(Enum.KeyCode.Minus, function()
 		Settings.Options.Rate = Settings.Options.Rate - 0.1
 		changeRateBinding(Settings.Options.Rate)
+		self:Redraw()
 	end)
 }
 
@@ -470,6 +472,11 @@ function self:DoSongSelect()
 	tree = Base()
 	handle = Roact.mount(tree, PlayerGui, "SongSelectMenu")
 	Logger:Log("Song select screen mounted!")
+end
+
+function self:Redraw()
+	tree = Base()
+	Roact.update(handle,tree)
 end
 
 function self:Unmount()
