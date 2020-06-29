@@ -57,6 +57,9 @@ local screenBinds = {
 	end)
 }
 
+for i, bind in pairs(screenBinds) do
+	bind:stop()
+end
 
 local function SongButton(instance, song, songNum)
 	return Roact.createElement("ImageButton", {
@@ -455,6 +458,7 @@ end
 
 function self:Unmount()
 	for i, bind in pairs(screenBinds) do
+		print("Stopping bind...")
 		bind:stop()
 	end
 	Roact.unmount(handle)
