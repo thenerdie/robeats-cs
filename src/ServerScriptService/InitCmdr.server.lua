@@ -1,4 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Cmdr = require(game:GetService("ServerScriptService"):WaitForChild("Cmdr-v1.5.0"))
+local ServerScriptService = game:GetService("ServerScriptService")
+local Cmdr = require(ServerScriptService:WaitForChild("Cmdr-v1.5.0"))
 
 Cmdr:RegisterDefaultCommands()
+Cmdr:RegisterCommandsIn(ServerScriptService:WaitForChild("CmdrCustomCommands"))
