@@ -12,6 +12,10 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 repeat wait() until script.Parent.Utils ~= nil
 local Utils = script.Parent.Utils
 local ScreenUtil = require(Utils.ScreenUtil)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Cmdr = require(ReplicatedStorage:WaitForChild("CmdrClient"))
+
+Cmdr:SetActivationKeys({ Enum.KeyCode.BackSlash })
 
 for i, screen in pairs(PlayerGui:WaitForChild("Screens"):GetChildren()) do
 	ScreenUtil:NewScreen(screen.Name, require(screen))
