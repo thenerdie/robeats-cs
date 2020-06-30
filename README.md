@@ -19,7 +19,7 @@ If you want to contribute to the codebase, just follow these steps and you'll be
 
 Make sure you have git installed and run this:
 
-`git clone https://github.com/RoBeats-CS/robeats-cs.git`
+`git clone https://github.com/RoBeats-CS/robeats-cs.git --recurse-submodules`
 
 This will clone the current codebase onto your computer.
 
