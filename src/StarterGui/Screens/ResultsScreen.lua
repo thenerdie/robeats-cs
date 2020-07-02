@@ -765,9 +765,9 @@ function self:DoResults(props, rate, song)
 								ImageColor3 = Color3.fromRGB(50, 21, 21)
 							}, {
 								Ratio = Roact.createElement("TextLabel", {
-									AnchorPoint = Vector2.new(0, 0.5),
+									AnchorPoint = Vector2.new(1, 0.5),
 									Size = UDim2.new(0.25, 0, 0.6, 0),
-									Position = UDim2.new(0.8, 0, 0.5, 0),
+									Position = UDim2.new(0.98, 0, 0.5, 0),
 									ZIndex = 11,
 									BorderSizePixel = 0,
 									BackgroundTransparency = 1,
