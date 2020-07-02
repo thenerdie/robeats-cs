@@ -219,6 +219,33 @@ function self:DoResults(props, rate, song)
 							TextColor3 = Color3.fromRGB(255, 255, 255)
 						})
 					}),
+					Date = Roact.createElement("ImageLabel", {
+						AnchorPoint = Vector2.new(0, 0),
+						Size = UDim2.new(2.5, 0, 0.2, 0),
+						Position = UDim2.new(0.95, 0, 0.45, 0),
+						ZIndex = 3,
+						BorderSizePixel = 0,
+						BackgroundTransparency = 1,
+						ScaleType = Enum.ScaleType.Slice,
+						Image = "rbxassetid://2790382281",
+						SliceCenter = Rect.new(4, 4, 252, 252),
+						SliceScale = 1,
+						ImageColor3 = Color3.fromRGB(63, 63, 63)
+					},{
+						Data = Roact.createElement("TextLabel", {
+							AnchorPoint = Vector2.new(0.5, 0.5),
+							Size = UDim2.new(0.85, 0, 0.7, 0),
+							Position = UDim2.new(0.5, 0, 0.6, 0),
+							ZIndex = 4,
+							BorderSizePixel = 0,
+							BackgroundTransparency = 1,
+							Text = now:format("Played at #M/#d/#Y at #H:#m:#s #a"),
+							Font = Enum.Font.GothamBlack,
+							TextScaled = true,
+							TextWrapped = true,
+							TextColor3 = Color3.fromRGB(255, 255, 255)
+						})
+					}),
 					Image = Roact.createElement("ImageLabel", {
 						Size = UDim2.new(1, 0, 1, 0),
 						Position = UDim2.new(0, 0, 0, 0),
