@@ -28,6 +28,8 @@ local self = {}
 	
 local maxSlots = 50
 
+local rateMult = 1
+
 local search = nil
 local lb = {}
 local lb_gui = {}
@@ -89,7 +91,7 @@ local function SongButton(instance, song, songNum)
 			Font = Enum.Font.GothamBlack;
 			TextColor3 = Color3.fromRGB(255, 255, 255);
 			TextStrokeTransparency = 0.75;
-			Text = "["..Math.avg(tonumber(song:GetDifficulty())).."]",
+			Text = "["..Math.avg(tonumber(song:GetDifficulty())*rateMult).."]",
 		}),
 		SongName = Roact.createElement("TextLabel", {
 			Size = UDim2.new(0.85,0,0.5,0);
@@ -198,6 +200,7 @@ local function Leaderboard()
 end
 
 local function Base()
+	rateMult = Metrics:CalculateRateMult(Settings.Options.Rate or 1)
 	local sbuttons, found = SongButtons({
 		songs = songs;
 		search = search or nil
@@ -502,9 +505,9 @@ function self:UpdateMapInfo()
 		mapname = self.curSelected:GetSongName()
 		artistname = self.curSelected:GetArtist()
 		if self.curSelected:GetDifficultyName() == nil then
-			diffname = "["..tostring(math.floor(tonumber(self.curSelected:GetDifficulty()) + 0.5)).."]"
+			diffname = "["..(Math.avg(tonumber(self.curSelected:GetDifficulty()) + 0.5)*rateMult).."]"
 		else
-			diffname = "["..tostring(math.floor(tonumber(self.curSelected:GetDifficulty()) + 0.5)).."] "..self.curSelected:GetDifficultyName()
+			diffname = "["..(Math.avg(tonumber(self.curSelected:GetDifficulty()) + 0.5)*rateMult).."] "..self.curSelected:GetDifficultyName()
 		end
 		tree = Base()
 		Roact.update(handle,tree)

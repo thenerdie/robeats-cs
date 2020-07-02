@@ -1,6 +1,6 @@
 local Metrics = {}
 
-function Metrics:CalculateSR(rate,difficulty,acc)
+function Metrics:CalculateRateMult(rate)
 	local ratemult = 1
 	if rate then
 		if rate >= 1 then
@@ -9,6 +9,11 @@ function Metrics:CalculateSR(rate,difficulty,acc)
 			ratemult = 1 + (rate-1) * 2
 		end
 	end
+	return ratemult
+end
+
+function Metrics:CalculateSR(rate,difficulty,acc)
+	local ratemult = Metrics:CalculateRateMult(rate)
 	return ratemult * ((acc/97)^4) * difficulty
 end
 
