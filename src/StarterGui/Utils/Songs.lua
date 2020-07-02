@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 
 local SongObject = require(script.Parent.SongObject)
-local AllSongs = game.ReplicatedStorage:WaitForChild("SongLibrary"):WaitForChild("Songs")
+local AllSongs = game.ReplicatedStorage:WaitForChild("LocalStorage"):WaitForChild("Songs")
 local TestSongs = game.ReplicatedStorage:WaitForChild("TestSongs", 5)
 
 local Songs = {}

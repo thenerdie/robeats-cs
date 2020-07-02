@@ -7,7 +7,7 @@ function Online:GetMapLeaderboard(m_ID)
 	return m.GetSongLeaderboard:InvokeServer(m_ID)
 end
 
-function Online:GetPlayerPlays(p_ID)
+function Online:GetPlayerPlays()
 	return m.GetTopPlays:InvokeServer()
 end
 
