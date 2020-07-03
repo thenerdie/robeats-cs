@@ -71,7 +71,10 @@ local function getRainbow()
 end
 
 local function getHue(clr)
-	return ColorSequence.new(clr, Color3.new(0,0,0))
+	local white = ColorSequenceKeypoint.new(0,Color3.fromRGB(255,255,255))
+	local black = ColorSequenceKeypoint.new(1,Color3.fromRGB(0,0,0))
+	local color = ColorSequenceKeypoint.new(0.5,clr)
+	return ColorSequence.new({white,color,black})
 end
 
 local function NumberOption(name, bound, increment)
@@ -97,8 +100,8 @@ local function NumberOption(name, bound, increment)
 		});
 		OptionValue = Roact.createElement("ImageLabel", {
 			AnchorPoint = Vector2.new(0, 0.5),
-			Size = UDim2.new(0.2,0,0.5,0),
-			Position = UDim2.new(0.2,0,0.5,0),
+			Size = UDim2.new(0.225,0,0.5,0),
+			Position = UDim2.new(0.25,0,0.5,0),
 			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
 			ScaleType = Enum.ScaleType.Slice,
@@ -187,10 +190,10 @@ local function KeybindOption(name, bound, numOfKeys)
 	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
 	optionNumber = optionNumber + 1
 	return Roact.createElement("Frame", {
-		Size = UDim2.new(1,0,0.15,0);
-		Position = UDim2.new(0, 0, (optionNumber-1) / maxOptionNumber, 0);
-		BackgroundTransparency = 1;
-    	BorderSizePixel = 0;
+		Size = UDim2.new(0.975,0,0.075,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
+		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
+		BorderSizePixel = 0;
 	}, {
 		Name = Roact.createElement("TextLabel", {
 			AnchorPoint = Vector2.new(0, 0.5),
@@ -250,10 +253,10 @@ local function ColorOption(name, bound)
 	self.hueB, self.hueC = Roact.createBinding(Settings.Options[bound])
 	optionNumber = optionNumber + 1
 	return Roact.createElement("Frame", {
-		Size = UDim2.new(1,0,0.15,0);
-		Position = UDim2.new(0, 0, (optionNumber-1) / maxOptionNumber, 0);
-		BackgroundTransparency = 1;
-    	BorderSizePixel = 0;
+		Size = UDim2.new(0.975,0,0.075,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
+		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
+		BorderSizePixel = 0;
 	}, {
 		Name = Roact.createElement("TextLabel", {
 			AnchorPoint = Vector2.new(0, 0.5),
@@ -271,6 +274,7 @@ local function ColorOption(name, bound)
 			Size = UDim2.new(0.4,0,0.5,0);
 			AnchorPoint = Vector2.new(0,0.5);
 			Position = UDim2.new(0.3,0,0.5,0);
+			BorderSizePixel = 0;
 			[Roact.Ref] = self.sliderRef;
 			[Roact.Event.MouseMoved] = function(rbx, x, y)
 				local slider = self.sliderRef:getValue()
@@ -295,6 +299,7 @@ local function ColorOption(name, bound)
 			});
 			Cursor = Roact.createElement("ImageButton", {
 				BackgroundColor3 = Color3.new(0,0,0);
+				BorderSizePixel = 0;
 				Size = UDim2.new(0,5,1,0);
 				Position = UDim2.new(1-Settings.Options[bound].Hue,0,0,0);
 				AnchorPoint = Vector2.new(0.5,0);
@@ -312,18 +317,27 @@ local function ColorOption(name, bound)
 			Size = UDim2.new(0.2,0,0.5,0);
 			AnchorPoint = Vector2.new(0,0.5);
 			Position = UDim2.new(0.72,0,0.5,0);
+			BorderSizePixel = 0;
 			[Roact.Ref] = self.sliderRef1;
 			[Roact.Event.MouseMoved] = function(rbx, x, y)
 				local slider = self.sliderRef1:getValue()
 				local sx = x-slider.AbsolutePosition.X
+				local threshold = 0.5
 				if self.mouseDown1 then
 					local cursor = slider.Cursor
 					if cursor then
 						local value = sx/slider.AbsoluteSize.X
 						local originalColor = Settings.Options[bound]
-						local newColor = Color:changeHSV(originalColor, {
-							Value = 1-value
-						})
+						local newColor
+						if value > 0.5 then
+							newColor = Color:changeHSV(originalColor, {
+								Value = 1-(value*2)
+							})
+						elseif value < 0.5 then
+							newColor = Color:changeHSV(originalColor, {
+								Saturation = 0+(value*2)
+							})
+						end
 						print(newColor.Hue, newColor.Saturation, newColor.Value)
 						Settings:ChangeOption(bound, newColor)
 						cursor.Position = UDim2.new(value,0,0,0)
@@ -347,6 +361,7 @@ local function ColorOption(name, bound)
 			Cursor = Roact.createElement("ImageButton", {
 				BackgroundColor3 = Color3.new(0,0,0);
 				Size = UDim2.new(0,5,1,0);
+				BorderSizePixel = 0;
 				Position = UDim2.new(1-Settings.Options[bound].Value,0,0,0);
 				AnchorPoint = Vector2.new(0.5,0);
 				ImageTransparency = 1;
@@ -362,7 +377,7 @@ local function ColorOption(name, bound)
 	})
 end
 
-local totalSections = 4
+local totalSections = 5
 
 local function NewSection(name, children)
 	children = children or {}
