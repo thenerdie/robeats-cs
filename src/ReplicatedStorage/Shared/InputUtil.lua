@@ -49,27 +49,10 @@ function InputUtil:new(keys, disablePresses)
 	local key_overrides = nil
 	if keys[1] ~= nil or keys[2] ~= nil or keys[3] ~= nil or keys[4] ~= nil then
 		key_overrides = keys
-	end
-	
-	if disablePresses then --use some default keys so that we can actually simulate client key presses while spectating
-		key_overrides = {}
-		key_overrides[1] = Enum.KeyCode.Q
-		key_overrides[2] = Enum.KeyCode.W
-		key_overrides[3] = Enum.KeyCode.O
-		key_overrides[4] = Enum.KeyCode.P
-	end
-	
+	end	
 
 	function self:cons()
 		local userinput_service = game:GetService("UserInputService")
-
-		userinput_service.TextBoxFocused:connect(function(textbox)
-			--_textbox_focused = true
-		end)
-		userinput_service.TextBoxFocusReleased:connect(function(textbox)
-			--_do_textbox_unfocus = true
-		end)
-
 		userinput_service.InputBegan:connect(function(input, gameProcessed)
 			if not disablePresses then
 				if input.UserInputType == Enum.UserInputType.Keyboard then
