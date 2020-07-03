@@ -15,8 +15,8 @@ local function AddVersion(versionNum, cngs)
 end
 
 AddVersion(0.1, {
-    AddChange("bro"),
-    AddChange("what"),
+    AddChange("Fixed pathing for GitHub repo"),
+    AddChange("Added TestSongs directory to the GitHub repo")
 })
 
 

@@ -1,3 +1,5 @@
+pcall(function()
+
 local DataStoreService = game:GetService("DataStoreService")
 local Bans = DataStoreService:GetDataStore("Bans")
 
@@ -7,6 +9,8 @@ game.Players.PlayerAdded:Connect(function(player)
 	if get ~= nil then
 		player:Kick(get)
 	end
+end)
+
 end)
 
 --[[
