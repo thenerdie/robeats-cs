@@ -13,6 +13,7 @@ local UI = require(Frameworks.UI)
 local UpdateNotes = require(workspace:WaitForChild("UpdateNotes"))
 
 local self = {}
+	
 local handle = {}
 
 local options = {}

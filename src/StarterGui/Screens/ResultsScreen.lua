@@ -830,7 +830,7 @@ function self:DoResults(props, rate, song)
 	})
 	
 	local tree = frame
-	handle = Roact.mount(tree, PlayerGui, "MainMenu")
+	handle = Roact.mount(tree, PlayerGui, "Results")
 	Logger:Log("Results screen mounted!")
 end
 

@@ -173,7 +173,7 @@ function self:Initialize(props, g)
     end)
 
     tree = DoBase(props)
-    handle = Roact.mount(tree, PlayerGui, "GameplayScreen")
+    handle = Roact.mount(tree, PlayerGui, "Gameplay")
 
     Logger:Log("Gameplay tree mounted!")
 end

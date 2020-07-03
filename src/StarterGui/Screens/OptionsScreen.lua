@@ -535,7 +535,7 @@ end
 
 function self:DoOptions()
 	tree = Base()
-	handle = Roact.mount(tree, PlayerGui, "SongSelectMenu")
+	handle = Roact.mount(tree, PlayerGui, "Options")
 end
 
 function self:Update()
