@@ -79,9 +79,8 @@ function SongObject:new(instance)
 				lastMs = curTime
 				points[#points+1] = curNps
 				curNps = 0
-			else
-				curNps = curNps + 1
 			end
+			curNps = curNps + 1
 		end
 		return points
 	end
