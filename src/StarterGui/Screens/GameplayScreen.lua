@@ -13,6 +13,7 @@ local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
 local Keybind = require(Utils.Keybind)
 local Logger = require(Utils.Logger):register(script)
+local DateTime = require(ReplicatedStorage.DateTime)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -66,6 +67,21 @@ local function DoBase(props)
 	local score = playdata[9]
 	local chain = playdata[10]
     local maxcombo = playdata[11]
+
+    local game_join = game_._local_services._game_join
+
+    local curTime = 0
+    local songLen = 1
+
+    if game_join ~= nil then
+        curTime = game_join:get_songTime()
+        songLen = game_join:get_songLength()
+    end
+
+    local timeLeftMs = songLen - curTime
+    local timeLeftAlpha = curTime/songLen
+    local unformattedTL = DateTime:GetDateTime(timeLeftMs/1000)
+    local formattedTL = unformattedTL:format("#m:#s")
 
     local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc)
 
@@ -158,7 +174,26 @@ local function DoBase(props)
            		Position = UDim2.new(0.5,0,0.5,0);
 				Size = UDim2.new(0.9,0,0.6,0);
         	});
-		});
+        });
+        TimeLeftPGBar = Roact.createElement("Frame", {
+            Size = UDim2.new(timeLeftAlpha,0,0,5);
+            AnchorPoint = Vector2.new(0,1);
+            Position = UDim2.new(0,0,1,0);
+            BackgroundColor3 = Color3.fromRGB(122, 122, 122);
+        });
+        TimeLeftTextLabel = Roact.createElement("TextLabel", {
+            Text = formattedTL;
+            TextSize = 20;
+            TextColor3 = Color3.new(1,1,1);
+            TextStrokeTransparency = 0.75;
+            BackgroundTransparency = 1;
+            TextXAlignment = Enum.TextXAlignment.Left;
+            Size = UDim2.new(0.1,0,0.05,0);
+            AnchorPoint = Vector2.new(0,1);
+            Position = UDim2.new(0.005,0,0.995,0);
+            Font = Enum.Font.GothamBlack;
+            BackgroundColor3 = Color3.fromRGB(122, 122, 122);
+        });
     })
 end
 
