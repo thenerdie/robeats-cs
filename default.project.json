@@ -25,11 +25,6 @@
       "$ignoreUnknownInstances": false,
       "$path": "src/ServerScriptService"
     },
-    "ServerStorage": {
-      "$className": "ServerStorage",
-      "$ignoreUnknownInstances": false,
-      "$path": "src/ServerStorage"
-    },
     "StarterGui": {
       "$className": "StarterGui",
       "$ignoreUnknownInstances": false,
