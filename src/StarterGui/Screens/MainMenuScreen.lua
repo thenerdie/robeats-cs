@@ -10,12 +10,52 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
 local UI = require(Frameworks.UI)
 
+local UpdateNotes = require(workspace:WaitForChild("UpdateNotes"))
+
 local self = {}
 	
 local handle = {}
 
 local options = {}
 local numNames = 6
+
+local function GetUpdateNotes()
+	local notes = {}
+	local numVersions = #UpdateNotes.Versions
+	for i, updateNote in pairs(UpdateNotes.Versions) do
+		notes[i] = Roact.createElement("Frame", {
+			BackgroundTransparency=0.4;
+			BackgroundColor3 = Color3.new(0.3,0.3,0.3);
+			Position = UDim2.new(0, 0, (i-1)/numVersions, 0);
+			Size = UDim2.new(1, 0, 0, 200);
+		}, {
+			Version = Roact.createElement("TextLabel", {
+				Font = Enum.Font.GothamBlack;
+				Text = "VERSION " .. updateNote.Version;
+				BackgroundTransparency = 1;
+				TextColor3 = Color3.new(1, 1, 1);
+				TextSize = 21;
+				Position = UDim2.new(0.05, 0, 0.05, 0);
+				Size = UDim2.new(0.9, 0, 0.15, 0);
+				TextXAlignment = Enum.TextXAlignment.Left;
+				ZIndex = 5;
+			});
+			Text = Roact.createElement("TextLabel", {
+				Font = Enum.Font.GothamBlack;
+				TextScaled = true;
+				BackgroundTransparency = 1;
+				Position = UDim2.new(0.05, 0, 0.25, 0);
+				Size = UDim2.new(0.9, 0, 0.74, 0);
+				Text = updateNote.Text;
+				TextColor3 = Color3.new(0.8, 0.8, 0.8);
+				TextXAlignment = Enum.TextXAlignment.Left;
+				TextYAlignment = Enum.TextYAlignment.Top;
+				ZIndex = 5;
+			});
+		})
+	end
+	return notes
+end
 
 local function Option(props, optionNumber)
 	return Roact.createElement(UI.new("TextButton"), {
@@ -439,8 +479,16 @@ function self:DoOptions(props)
 				TextScaled = true,
 				TextWrapped = true,
 				TextColor3 = Color3.fromRGB(255, 255, 255)
-				})
 			}),
+			SFrame = Roact.createElement("ScrollingFrame", {
+				CanvasSize = UDim2.new(0,0,0,200*#UpdateNotes.Versions),
+				BackgroundTransparency = 1;
+				Position = UDim2.new(0.5, 0, 0.5, 0);
+				Size = UDim2.new(0.9, 0, 0.78, 0);
+				AnchorPoint = Vector2.new(0.5, 0.5);
+				ZIndex = 4;
+			}, GetUpdateNotes())
+		}),
 		})
 	})
 	handle = Roact.mount(frame, PlayerGui, "MainMenu")
