@@ -473,7 +473,7 @@ function self:DoSongSelect()
 	end
 	Logger:Log("Entering song select...")
 	tree = Base()
-	handle = Roact.mount(tree, PlayerGui, "SongSelectMenu")
+	handle = Roact.mount(tree, PlayerGui, "SongSelect")
 	Logger:Log("Song select screen mounted!")
 end
 

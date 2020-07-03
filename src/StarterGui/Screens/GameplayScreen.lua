@@ -98,8 +98,8 @@ local function DoBase(props)
             TextScaled = true;
 			TextWrapped = true;
 			Font = Enum.Font.GothamBlack;
-            AnchorPoint = Vector2.new(1,0);
-            Position = UDim2.new(0.98,0,0.035,0);
+            AnchorPoint = Vector2.new(0.5,0.5);
+            Position = Settings.Options.ScorePos;
 			Size = UDim2.new(0.15,0,0.06,0);
         });
         Accuracy = Roact.createElement("TextLabel", {
@@ -111,8 +111,8 @@ local function DoBase(props)
             TextScaled = true;
 			TextWrapped = true;
 			Font = Enum.Font.GothamBlack;
-            AnchorPoint = Vector2.new(1,0);
-            Position = UDim2.new(0.98,0,0.1,0);
+            AnchorPoint = Vector2.new(0.5,0.5);
+            Position = Settings.Options.AccuracyPos;
 			Size = UDim2.new(0.15,0,0.03,0);
         });
 		Combo = Roact.createElement("TextLabel", {
@@ -123,7 +123,7 @@ local function DoBase(props)
 			TextWrapped = true;
 			Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(0.5,0.5);
-            Position = UDim2.new(0.5,0,0.2,0);
+            Position = Settings.Options.ComboPos;
 			Size = UDim2.new(0.125,0,0.05,0);
         });
 		Judgement = Roact.createElement("TextLabel", {
@@ -134,7 +134,7 @@ local function DoBase(props)
 			TextWrapped = true;
 			Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(0.5,0.5);
-            Position = UDim2.new(0.5,0,0.25,0);
+            Position = Settings.Options.JudgementPos;
 			Size = UDim2.new(0.15,0,0.05,0);
         });
         Rating = Roact.createElement("TextLabel", {
@@ -144,14 +144,15 @@ local function DoBase(props)
             Text = Math.round(rating, 2) .. " SR";
             TextScaled = true;
 			TextWrapped = true;
-			Font = Enum.Font.GothamBlack;
-            Position = UDim2.new(0.02,0,0.035,0);
+            Font = Enum.Font.GothamBlack;
+            AnchorPoint = Vector2.new(0.5,0.5);
+            Position = Settings.Options.RatingPos;
 			Size = UDim2.new(0.125,0,0.05,0);
         });
 		BackButton = Roact.createElement("ImageButton", {
 			Size = UDim2.new(0.14, 0, 0.06, 0),
-			AnchorPoint = Vector2.new(1,1);
-			Position = UDim2.new(0.975, 0, 0.955, 0),
+			AnchorPoint = Vector2.new(0.5,0.5);
+			Position = Settings.Options.BackButtonPos;
 			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
 			ScaleType = Enum.ScaleType.Slice,
@@ -207,7 +208,7 @@ function self:Initialize(props, g)
     end)
 
     tree = DoBase(props)
-    handle = Roact.mount(tree, PlayerGui, "GameplayScreen")
+    handle = Roact.mount(tree, PlayerGui, "Gameplay")
 
     Logger:Log("Gameplay tree mounted!")
 end

@@ -16,6 +16,21 @@ Settings.Options = {
 	QuickExitKeybind = {
 		[1] = Enum.KeyCode.Backspace;
 	};
+	ScorePos = UDim2.new(0.92,0,0.035,0);
+	AccuracyPos = UDim2.new(0.92,0,0.08,0);
+	ComboPos = UDim2.new(0.5,0,0.2,0);
+	JudgementPos = UDim2.new(0.5,0,0.25,0);
+	RatingPos = UDim2.new(0.065,0,0.05,0);
+	BackButtonPos = UDim2.new(0.923,0,0.955,0);
+}
+
+Settings.DefaultUIPos = { -- Used to reset to default, wip
+	Score = UDim2.new(0.92,0,0.035,0);
+	Accuracy = UDim2.new(0.92,0,0.08,0);
+	Combo = UDim2.new(0.5,0,0.2,0);
+	Judgement = UDim2.new(0.5,0,0.25,0);
+	Rating = UDim2.new(0.065,0,0.05,0);
+	BackButton = UDim2.new(0.923,0,0.955,0);
 }
 
 function Settings:ChangeOption(key, value)
