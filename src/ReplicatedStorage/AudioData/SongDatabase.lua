@@ -16,12 +16,12 @@ function SongDatabase:new()
 	local _name_to_key = SPDict:new()
 	local _key_to_fusionresult = SPDict:new()
 
-	local _song_names = game.ReplicatedStorage.Songs:GetChildren()
+	local _song_names = game.ReplicatedStorage.LocalStorage.Songs:GetChildren()
 
 	function self:cons()
 		for i=1,#_song_names do
 			local itr_name = _song_names[i].Name
-			local audio_data = require(game.ReplicatedStorage.Songs[itr_name])
+			local audio_data = require(game.ReplicatedStorage.LocalStorage.Songs[itr_name])
 			SongErrorParser:scan_audiodata_for_errors(audio_data)
 			self:add_key_to_data(i,audio_data)
 			_name_to_key:add(itr_name,i)
@@ -30,7 +30,7 @@ function SongDatabase:new()
 		for i=1,#_song_names do
 			local itr_name = _song_names[i].Name
 			local itr_key = i
-			local audio_data = require(game.ReplicatedStorage.Songs[itr_name])
+			local audio_data = require(game.ReplicatedStorage.LocalStorage.Songs[itr_name])
 			if audio_data.FusionResult ~= nil then
 				local itr_fusion_result_name = audio_data.FusionResult
 				if _name_to_key:contains(itr_fusion_result_name) == false then
