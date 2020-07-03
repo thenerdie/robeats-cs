@@ -5,7 +5,6 @@ pcall(function()
     Bans = DataStoreService:GetDataStore("Bans")
 end)
 
-
 return function(cmdContext, player, reason)
     if DataStoreService ~= nil and Bans ~= nil then
         local uid = player.UserId
