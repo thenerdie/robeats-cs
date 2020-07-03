@@ -387,16 +387,27 @@ local function NewSection(name, children)
 	return {
 		Tab = Roact.createElement("TextButton", {
 			Font = Enum.Font.GothamBlack;
-			TextSize = 30;
-			Text = name;
-			BackgroundTransparency = isSelected and 0.2 or 1;
-			BackgroundColor3 = Color3.fromRGB(102, 164, 218);
+			TextSize = 0;
+			BackgroundTransparency = isSelected and 0.25 or 1;
+			BackgroundColor3 = Color3.fromRGB(255, 255, 255);
 			Size = UDim2.new(1,0,1/totalSections,0);
 			Position = UDim2.new(0,0,(tabNumber-1)/totalSections,0);
 			[Roact.Event.MouseButton1Click] = function(rbx)
 				curSelected = name
 				self:Update()
 			end
+		}, {
+			Text = Roact.createElement("TextLabel", {
+				AnchorPoint =  Vector2.new(0.5,0.5),
+				Text = name,
+				Position = UDim2.new(0.5, 0, 0.5, 0),
+				Size = UDim2.new(0.7, 0, 0.275, 0),
+				BackgroundTransparency = 1,
+				Font = Enum.Font.GothamBlack,
+				TextScaled = true,
+				TextWrapped = true,
+				TextColor3 = isSelected and Color3.fromRGB(0, 0, 0) or Color3.fromRGB(255, 255, 255)
+			});
 		});
 		OptionsList = Roact.createFragment(children);
 		Name=name;
