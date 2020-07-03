@@ -1,40 +1,23 @@
 local UpdateNotes = {}
 UpdateNotes.Versions = {}
 
-local function AddVersion(versionNum, text)
-    UpdateNotes.Versions[#UpdateNotes.Versions+1] = {
-        Version = versionNum,
-        Text = text
+local function AddChange(changeText)
+    return {
+        ChangeText = changeText
     }
 end
 
-AddVersion(0.1, [[
-    Yo this is an epic update
+local function AddVersion(versionNum, cngs)
+    UpdateNotes.Versions[#UpdateNotes.Versions+1] = {
+        Version = versionNum,
+        Changes = cngs,
+    }
+end
 
-    Yh kid we using multi LibraryName
-
-
-
-    bro dude cool
-]])
-AddVersion(0.2, [[
-    Yo this is an even more epic update
-
-    Yh kid we using multi LibraryName
-
-
-
-    bro dude cool
-]])
-AddVersion(0.3, [[
-    bruh this is an even more epic update than before
-
-    yeah we be addin a ton of features nowadays sooo uhhhhh yh kid
-]])
-AddVersion(0.4, [[
-    Yo this is an even more even more even more epic update
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-]])
+AddVersion(0.1, {
+    AddChange("bro"),
+    AddChange("what"),
+})
 
 
 table.sort(UpdateNotes.Versions, function(a, b)

@@ -23,6 +23,10 @@ local function GetUpdateNotes()
 	local notes = {}
 	local numVersions = #UpdateNotes.Versions
 	for i, updateNote in pairs(UpdateNotes.Versions) do
+		local changet = ""
+		for i, change in pairs(updateNote.Changes) do
+			changet = changet .. "- " .. change.ChangeText .. "\n"
+		end
 		notes[i] = Roact.createElement("Frame", {
 			BackgroundTransparency=0.4;
 			BackgroundColor3 = Color3.new(0.3,0.3,0.3);
@@ -42,11 +46,13 @@ local function GetUpdateNotes()
 			});
 			Text = Roact.createElement("TextLabel", {
 				Font = Enum.Font.GothamBlack;
-				TextScaled = true;
+				TextWrapped = true;
+				TextScaled = false;
+				TextSize = 18;
 				BackgroundTransparency = 1;
 				Position = UDim2.new(0.05, 0, 0.25, 0);
 				Size = UDim2.new(0.9, 0, 0.74, 0);
-				Text = updateNote.Text;
+				Text = changet;
 				TextColor3 = Color3.new(0.8, 0.8, 0.8);
 				TextXAlignment = Enum.TextXAlignment.Left;
 				TextYAlignment = Enum.TextYAlignment.Top;
