@@ -25,7 +25,7 @@ function SFXManager:new(game_element)
 		rtv.SoundId = sfx_key
 		rtv.Name = string.format("%s",sfx_key)
 		rtv.Parent = _sfx_pooled_parent
-		rtv.Playing = true
+		rtv.Playing = false
 		if sfx_key == SFXManager.SFX_BOO_1 then
 			rtv.Volume = SFXManager.SFX_BOO_1_VOLUME
 		else
@@ -37,21 +37,8 @@ function SFXManager:new(game_element)
 
 	function self:cons()
 		for i=0,3 do
-			create_pooled(SFXManager.SFX_DRUM_OKAY,0.25)
 			create_pooled(SFXManager.SFX_MISS)
 		end
-		for i=0,2 do
-			create_pooled(SFXManager.SFX_COUNTDOWN_READY)
-		end
-		for i=0,1 do
-			create_pooled(SFXManager.SFX_COUNTDOWN_GO)
-		end
-
-		create_pooled(SFXManager.SFX_COUNTDOWN_READY)
-		create_pooled(SFXManager.SFX_COUNTDOWN_READY)
-		create_pooled(SFXManager.SFX_COUNTDOWN_GO)
-
-		create_pooled(SFXManager.SFX_WOOSH)
 		create_pooled(SFXManager.SFX_BOO_1)
 	end
 
@@ -69,7 +56,7 @@ function SFXManager:new(game_element)
 		local play_sfx = self._key_to_pooled_sound:pop_back_from(sfx_key)
 		play_sfx.TimePosition = 0
 		play_sfx.Looped = false
-		play_sfx.Playing = false
+		play_sfx.Playing = true
 		play_sfx.Parent = _sfx_active_parent
 		if volume ~= nil then
 			play_sfx.Volume = volume

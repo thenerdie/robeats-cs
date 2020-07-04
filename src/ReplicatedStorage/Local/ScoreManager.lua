@@ -230,12 +230,6 @@ function ScoreManager:new(popups,system,combo)
 		end
 
 		if params.PlaySFX == true then
-			if _frame_has_played_sfx == false then
-				if note_result == NoteResult.Miss then
-					_game._sfx_manager:play_sfx(SFXManager.SFX_MISS)
-				end
-				_frame_has_played_sfx = true
-			end
 
 			if params.PlayHoldEffect then
 				if note_result ~= NoteResult.Miss then
