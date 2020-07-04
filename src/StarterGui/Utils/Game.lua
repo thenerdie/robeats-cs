@@ -11,7 +11,10 @@ local SPUISystem = require(game.ReplicatedStorage.Shared.SPUISystem)
 local EnqueueFn = require(game.ReplicatedStorage.Shared.EnqueueFn)
 local HitCache = require(game.ReplicatedStorage.Local.HitCache)
 local ModManager = require(game.ReplicatedStorage.ModManager)
-local Settings = require(script.Parent.Settings)
+
+local Utils = script.Parent
+local Settings = require(Utils.Settings)
+local Logger = require(Utils.Logger):register(script)
 local CurrentCamera = workspace.CurrentCamera
 
 local Utils = script.Parent
@@ -30,7 +33,11 @@ function Game:new()
 	g.local_game = {}
 	g.force_quit = false
 	function g:StartGame(song, rate, keys, note_color, scroll_speed,combo)
-		CurrentCamera.FieldOfView = Settings.Options.FOV
+		local fov = Settings.Options.FOV
+		Logger:Log("Current FOV: " .. fov .. ", applying...")
+		CurrentCamera.FieldOfView = fov
+		Logger:Log("FOV applied!")
+		Logger:Log("Setting up gameplay...")
 		local GameplayScreen = Screens:FindScreen("GameplayScreen")
 		local _local_services = {}
 		_local_services = {
@@ -62,6 +69,8 @@ function Game:new()
 			combo
 		)
 		g.local_game = localGame
+
+		Logger:Log("Game currently loading...")
 		
 		local function getCurrentGameStatus()
 			local plr = game.Players.LocalPlayer
@@ -83,10 +92,11 @@ function Game:new()
 		end
 		
 		repeat wait() until localGame:is_ready() and _local_services._game_join:is_game_audio_loaded()
-		
-		print(localGame:is_ready(), _local_services._game_join:is_game_audio_loaded())
-		
+
+		Logger:Log("Game loaded!")
+		Logger:Log("Starting game...")
 		_local_services._game_join:start_game(EnvironmentSetup:get_protos())
+		Logger:Log("Game started!")
 		local isDone = false
 		
 		local tries = 0	
@@ -164,13 +174,17 @@ function Game:new()
 			isDone = _local_services._game_join:check_songDone()
 
 			if rawTime - timeSince >= 50 then
+				Logger:Log("50ms passed, re-reconciling...")
 				timeSince = rawTime
 				UpdateScreen()
 			end
 		end
+		Logger:Log("Game complete! Unmounting...")
 		Unmount()
+		Logger:Log("Unmount successful!")
 	end
 	function g:DestroyStage()
+		Logger:Log("Destroying stage...")
 		g._local_services._game_join:finishGame()
 		local so = workspace.CurrentCamera:GetChildren()
 		for i=1, #so do
@@ -185,6 +199,7 @@ function Game:new()
 				so[i].Parent = nil
 			end
 		end
+		Logger:Log("Stage destroyed successfully!")
 	end
 	function g:GetGame()
 		return g.local_game
