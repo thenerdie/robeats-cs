@@ -1,5 +1,6 @@
 local Rodux = require(game.ReplicatedStorage.Rodux)
 local Color = require(script.Parent.Color)
+local FastSpawn = require(game.ReplicatedStorage.FastSpawn)
 
 local Settings = {}
 
@@ -39,28 +40,23 @@ function Settings:ChangeOption(key, value)
 end
 
 function Settings:BindToSetting(name, call)
-	local setn = name
-	local event = Instance.new("BindableEvent")
-	event.Event:Connect(function(new)
-		call(new)
-	end)
-	spawn(function()
+	FastSpawn(function(name, call)
 		local lastVal = nil
 		local first = true
 		while true do
-			local sn = Settings.Options[setn]
+			local sn = Settings.Options[name]
 			if lastVal ~= sn then
 				if first then
 					first = false
 				else
-					event:Fire(sn)
+					print(sn)
+					call(sn)
 				end
 				lastVal = sn
 			end
 			wait()
 		end
-	end)
-	return event
+	end, name, call)
 end
 
 function Settings:ParseStringColor3(option, str)

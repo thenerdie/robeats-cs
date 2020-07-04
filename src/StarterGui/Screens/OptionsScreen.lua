@@ -338,7 +338,6 @@ local function ColorOption(name, bound)
 								Saturation = value*2
 							})
 						end
-						print(newColor.Hue, newColor.Saturation, newColor.Value)
 						Settings:ChangeOption(bound, newColor)
 						cursor.Position = UDim2.new(value,0,0,0)
 					end
@@ -430,6 +429,10 @@ local function Sections()
 		});
 	}
 end
+
+--[[Settings:BindToSetting("NoteColor", function(newColor)
+	Logger:Log(string.format("New note color: H: %0.2f S: %0.2f V: %0.2f ", newColor.Hue, newColor.Saturation, newColor.Value))
+end)]]--
 
 local function Base()
 	optionNumber = 0
