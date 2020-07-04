@@ -11,6 +11,8 @@ local SPUISystem = require(game.ReplicatedStorage.Shared.SPUISystem)
 local EnqueueFn = require(game.ReplicatedStorage.Shared.EnqueueFn)
 local HitCache = require(game.ReplicatedStorage.Local.HitCache)
 local ModManager = require(game.ReplicatedStorage.ModManager)
+local Settings = require(script.Parent.Settings)
+local CurrentCamera = workspace.CurrentCamera
 
 local Utils = script.Parent
 local Screens = require(Utils.ScreenUtil) 
@@ -28,6 +30,7 @@ function Game:new()
 	g.local_game = {}
 	g.force_quit = false
 	function g:StartGame(song, rate, keys, note_color, scroll_speed,combo)
+		CurrentCamera.FieldOfView = Settings.Options.FOV
 		local GameplayScreen = Screens:FindScreen("GameplayScreen")
 		local _local_services = {}
 		_local_services = {

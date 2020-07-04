@@ -533,7 +533,8 @@ local function Sections()
 		});
 		[3] = NewSection("Gameplay", {
 			ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
-			QuickExit = KeybindOption("Quick exit key", "QuickExitKeybind", 1)
+			QuickExit = KeybindOption("Quick exit key", "QuickExitKeybind", 1);
+			FOV = NumberOption("Field Of View", "FOV", 5);
 		});
 	}
 end
