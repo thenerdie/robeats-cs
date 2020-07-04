@@ -38,6 +38,7 @@ local function formatColor(color3)
 end
 
 local function formatSingleKey(key)
+	if key == -1 then return "..." end
 	local str = key.Name
 	local replacements = {
 		["Comma"] = ",";
@@ -80,7 +81,6 @@ end
 
 local function formatKeys(keys)
 	local ret = ""
-	keys = keys or {}
 	for i = 1, #keys do
 		local v = keys[i]
 		local str = formatSingleKey(v)
@@ -267,6 +267,13 @@ local function KeybindOption(name, bound, numOfKeys)
 				TextWrapped = true,
 				TextColor3 = Color3.fromRGB(179, 179, 179),
 				[Roact.Event.MouseButton1Click] = function(rbx)
+					Settings:ChangeOption(bound, {
+						[1] = -1;
+						[2] = -1;
+						[3] = -1;
+						[4] = -1;
+					})
+					self[boundFire](Settings.Options[bound])
 					for i = 1, numOfKeys do
 						local u = UserInputService.InputBegan:Wait()
 						Settings.Options[bound][i] = u.KeyCode
