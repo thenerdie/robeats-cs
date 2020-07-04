@@ -1,16 +1,16 @@
+local Chat = require(game.ReplicatedStorage.Helpers.Chat)
+
 pcall(function()
+	local DataStoreService = game:GetService("DataStoreService")
+	local Bans = DataStoreService:GetDataStore("Bans")
 
-local DataStoreService = game:GetService("DataStoreService")
-local Bans = DataStoreService:GetDataStore("Bans")
-
-game.Players.PlayerAdded:Connect(function(player)
-	local uid = tostring(player.UserId)
-	local get = Bans:GetAsync(uid)
-	if get ~= nil then
-		player:Kick(get)
-	end
-end)
-
+	game.Players.PlayerAdded:Connect(function(player)
+		local uid = tostring(player.UserId)
+		local get = Bans:GetAsync(uid)
+		if get ~= nil then
+			player:Kick(get)
+		end
+	end)
 end)
 
 --[[
