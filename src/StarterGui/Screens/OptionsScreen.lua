@@ -243,6 +243,63 @@ local function KeybindOption(name, bound, numOfKeys)
 	})
 end
 
+local function BoolOption(name, bound)
+	local boundFire = "Update"..bound
+	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
+	optionNumber = optionNumber + 1
+	return Roact.createElement("Frame", {
+		Size = UDim2.new(0.975,0,0.075,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
+		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
+		BorderSizePixel = 0;
+	}, {
+		Name = Roact.createElement("TextLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			BackgroundTransparency = 1;
+			Font = Enum.Font.GothamBlack;
+			TextColor3 = Color3.fromRGB(255, 255, 255);
+			Text = name;
+			TextScaled = true,
+			TextWrapped = true,
+			Position = UDim2.new(0.025,0,0.5,0);
+			Size = UDim2.new(0.2,0,0.25,0);
+		});
+		OptionValue = Roact.createElement("ImageLabel", {
+			AnchorPoint = Vector2.new(1, 0.5),
+			Size = UDim2.new(0.4,0,0.5,0),
+			Position = UDim2.new(0.95,0,0.5,0),
+			BorderSizePixel = 0,
+			BackgroundTransparency = 1,
+			ScaleType = Enum.ScaleType.Slice,
+			Image = "rbxassetid://2790382281",
+			SliceCenter = Rect.new(4, 4, 252, 252),
+			SliceScale = 1,
+			ImageColor3 = self[bound]:map(function(val)
+				return val and Color3.fromRGB(14, 238, 51) or Color3.fromRGB(253, 60, 34)
+			end),
+		},{
+			Data = Roact.createElement("TextButton", {
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Size = UDim2.new(0.85, 0, 0.7, 0),
+				Position = UDim2.new(0.5, 0, 0.5, 0),
+				BorderSizePixel = 0,
+				BackgroundTransparency = 1,
+				Text = self[bound]:map(function(val)
+					return val and "ON" or "OFF"
+				end),
+				Font = Enum.Font.GothamBlack,
+				TextScaled = true,
+				TextWrapped = true,
+				TextColor3 = Color3.fromRGB(179, 179, 179),
+				[Roact.Event.MouseButton1Click] = function(rbx)
+					local newVal = Settings:ChangeOption(bound, not Settings.Options[bound])
+					self[boundFire](newVal)
+				end
+			})
+		});
+	})
+end
+
 local function ColorOption(name, bound)
 	local boundFire = "Update"..bound
 	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
