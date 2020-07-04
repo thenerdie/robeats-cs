@@ -7,7 +7,6 @@ local NoteResult = require(game.ReplicatedStorage.Shared.NoteResult)
 local RandomLua = require(game.ReplicatedStorage.Shared.RandomLua)
 local DebugOut = require(game.ReplicatedStorage.Local.DebugOut)
 local Constants = require(game.ReplicatedStorage.Shared.Constants)
-local HitSFXGroup = require(game.ReplicatedStorage.Local.HitSFXGroup)
 local SongDatabase = require(game.ReplicatedStorage.AudioData.SongDatabase)
 local Modchart = require(game.Players.LocalPlayer.PlayerGui.Utils.Modchart)
 

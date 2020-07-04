@@ -2,25 +2,6 @@ local SPMultiDict = require(game.ReplicatedStorage.Shared.SPMultiDict)
 local SFXManager = {}
 
 SFXManager.SFX_MISS = "rbxassetid://574838657"
-
-SFXManager.SFX_COUNTDOWN_READY = "rbxassetid://770375074"
-SFXManager.SFX_COUNTDOWN_GO = "rbxassetid://770373595"
-
-SFXManager.SFX_WOOSH = "rbxassetid://770375537"
-SFXManager.SFX_ACQUIRE = "rbxassetid://770372288"
-SFXManager.SFX_BUTTONPRESS = "rbxassetid://770372471"
-SFXManager.SFX_COMBINE = "rbxassetid://770372702"
-
-SFXManager.SFX_FANFARE = "rbxassetid://770373343"
-SFXManager.SFX_MENU_BUY = "rbxassetid://770373814"
-SFXManager.SFX_MENU_CLOSE = "rbxassetid://770373986"
-SFXManager.SFX_MENU_OPEN = "rbxassetid://770374860"
-SFXManager.SFX_MENU_CLOSE_LONG = "rbxassetid://770374214"
-SFXManager.SFX_MENU_OPEN_LONG = "rbxassetid://770374514"
-SFXManager.SFX_USE = "rbxassetid://770375349"
-
-SFXManager.SFX_CROWD_TEMP = "rbxassetid://770373135"
-
 SFXManager.SFX_BOO_1 = "rbxassetid://786602539"
 SFXManager.SFX_BOO_1_VOLUME = 1
 
@@ -72,9 +53,6 @@ function SFXManager:new(game_element)
 
 		create_pooled(SFXManager.SFX_WOOSH)
 		create_pooled(SFXManager.SFX_BOO_1)
-		create_pooled(SFXManager.SFX_ENDCHEER_1)
-		create_pooled(SFXManager.SFX_FEVERCHEER_1)
-		create_pooled(SFXManager.SFX_STARTCHEER_1)
 	end
 
 	function self:preload(sfx_key, count, volume)

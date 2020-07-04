@@ -388,9 +388,6 @@ function ScoreManager:new(popups,system,combo)
 			_powerbar_notes_count = 0
 			if self._power_bar_pct >= 1 then
 
-				_game._sfx_manager:play_sfx(SFXManager.SFX_FEVERCHEER_1)
-				_game._sfx_manager:play_sfx(SFXManager.SFX_WOOSH)
-
 				self._power_bar_state = PowerBarState.Active
 				_powerbar_notes_count = 1
 				if _game._players._slots:contains(_game:get_local_game_slot()) == true then

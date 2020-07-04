@@ -2,7 +2,6 @@ local SPUtil = require(game.ReplicatedStorage.Shared.SPUtil)
 local CurveUtil = require(game.ReplicatedStorage.Shared.CurveUtil)
 local NoteBase = require(game.ReplicatedStorage.Local.NoteBase)
 local NoteResult = require(game.ReplicatedStorage.Shared.NoteResult)
-local SFXManager = require(game.ReplicatedStorage.Local.SFXManager)
 local HoldingNoteEffect = require(game.ReplicatedStorage.Effects.HoldingNoteEffect)
 local ModManager = require(game.ReplicatedStorage.ModManager)
 local test = nil
