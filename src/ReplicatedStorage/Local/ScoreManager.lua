@@ -231,18 +231,7 @@ function ScoreManager:new(popups,system,combo)
 
 		if params.PlaySFX == true then
 			if _frame_has_played_sfx == false then
-				if note_result == NoteResult.Perfect then
-					if params.IsHeldNoteBegin == true then
-						_game._audio_manager._hit_sfx_group:play_first()
-					else
-						_game._audio_manager._hit_sfx_group:play_alternating()
-					end
-
-				elseif note_result == NoteResult.Great then
-					_game._audio_manager._hit_sfx_group:play_first()
-				elseif note_result == NoteResult.Okay then
-					_game._sfx_manager:play_sfx(SFXManager.SFX_DRUM_OKAY)
-				else
+				if note_result == NoteResult.Miss then
 					_game._sfx_manager:play_sfx(SFXManager.SFX_MISS)
 				end
 				_frame_has_played_sfx = true

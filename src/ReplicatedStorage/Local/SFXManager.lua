@@ -1,30 +1,7 @@
 local SPMultiDict = require(game.ReplicatedStorage.Shared.SPMultiDict)
 local SFXManager = {}
 
-SFXManager.SFX_HITFXG_DRUM_1 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_DRUM_2 = "rbxassetid://574838657"
-
-SFXManager.SFX_HITFXG_TAMB_1 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_TAMB_2 = "rbxassetid://574838657"
-
-SFXManager.SFX_HITFXG_INDHIHAT_1 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_INDHIHAT_2 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_INDHIHAT_3 = "rbxassetid://574838657"
-
-SFXManager.SFX_HITFXG_HIHAT_1 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_HIHAT_2 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_HIHAT_3 = "rbxassetid://574838657"
-
-SFXManager.SFX_HITFXG_CLAP_1 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_CLAP_2 = "rbxassetid://574838657"
-
-SFXManager.SFX_HITFXG_JAZZHH_1 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_JAZZHH_2 = "rbxassetid://574838657"
-SFXManager.SFX_HITFXG_JAZZHH_3 = "rbxassetid://574838657"
-
-SFXManager.SFX_DRUM_OKAY = "rbxassetid://574838657"
 SFXManager.SFX_MISS = "rbxassetid://574838657"
-SFXManager.SFX_TICK = "rbxassetid://574838657"
 
 SFXManager.SFX_COUNTDOWN_READY = "rbxassetid://770375074"
 SFXManager.SFX_COUNTDOWN_GO = "rbxassetid://770373595"
@@ -46,9 +23,6 @@ SFXManager.SFX_CROWD_TEMP = "rbxassetid://770373135"
 
 SFXManager.SFX_BOO_1 = "rbxassetid://786602539"
 SFXManager.SFX_BOO_1_VOLUME = 1
-SFXManager.SFX_ENDCHEER_1 = "rbxassetid://786602445"
-SFXManager.SFX_FEVERCHEER_1 = "rbxassetid://786602324"
-SFXManager.SFX_STARTCHEER_1 = "rbxassetid://786602174"
 
 function SFXManager:new(game_element)
 	local self = {}
@@ -117,7 +91,7 @@ function SFXManager:new(game_element)
 		local play_sfx = self._key_to_pooled_sound:pop_back_from(sfx_key)
 		play_sfx.TimePosition = 0
 		play_sfx.Looped = false
-		play_sfx.Playing = true
+		play_sfx.Playing = false
 		play_sfx.Parent = _sfx_active_parent
 		if volume ~= nil then
 			play_sfx.Volume = volume

@@ -239,12 +239,6 @@ function AudioManager:new(game_element, specOffset, amods)
 			_last_note_time = last_hit_object.Time
 		end
 
-		local sfxg_id = self._current_audio_data.AudioHitSFXGroup
-		if sfxg_id == nil then
-			sfxg_id = 0
-		end
-		self._hit_sfx_group = HitSFXGroup:new(_game,sfxg_id)
-		self._hit_sfx_group:preload()
 
 		self._audio_time_offset = self._current_audio_data.AudioTimeOffset + audio_offset --/ song_rate
 
