@@ -38,8 +38,43 @@ local function formatColor(color3)
 end
 
 local function formatSingleKey(key)
-	local str = tostring(key)
-	str = str:sub(14,#str)
+	local str = key.Name
+	local replacements = {
+		["Comma"] = ",";
+		["Slash"] = "/";
+		["Period"] = ".";
+		["Hash"] = "#";
+		["Asterisk"] = "*";
+		["Caret"] = "^";
+		["Ampersand"] = "&";
+		["Quote"] = "\"";
+		["Return"] = "Ent";
+		["Percent"] = "%";
+		["Plus"] = "+";
+		["Minus"] = "-";
+		["Zero"] = "0";
+		["One"] = "1";
+		["Two"] = "2";
+		["Three"] = "3";
+		["Four"] = "4";
+		["Five"] = "5";
+		["Six"] = "6";
+		["Seven"] = "7";
+		["Eight"] = "8";
+		["Nine"] = "9";
+		["Equal"] = "=";
+		["LessThan"] = "<";
+		["GreaterThan"] = ">";
+		["BackSlash"] = "\\";
+		["Question"] = "?";
+		["Equals"] = "=";
+	}
+	for i, v in pairs(replacements) do
+		if str == i then
+			str = v
+			break
+		end
+	end
 	return str
 end
 
