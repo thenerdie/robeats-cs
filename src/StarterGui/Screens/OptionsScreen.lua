@@ -331,11 +331,11 @@ local function ColorOption(name, bound)
 						local newColor
 						if value > 0.5 then
 							newColor = Color:changeHSV(originalColor, {
-								Value = 1-(value-0.5)*2
+								Value = 1-((value-0.5)*2)
 							})
 						elseif value < 0.5 then
 							newColor = Color:changeHSV(originalColor, {
-								Saturation = ((value+0.5)*2)-1
+								Saturation = value*2
 							})
 						end
 						print(newColor.Hue, newColor.Saturation, newColor.Value)
