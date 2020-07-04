@@ -7,7 +7,6 @@ local NoteResult = require(game.ReplicatedStorage.Shared.NoteResult)
 local RandomLua = require(game.ReplicatedStorage.Shared.RandomLua)
 local DebugOut = require(game.ReplicatedStorage.Local.DebugOut)
 local Constants = require(game.ReplicatedStorage.Shared.Constants)
-local HitSFXGroup = require(game.ReplicatedStorage.Local.HitSFXGroup)
 local SongDatabase = require(game.ReplicatedStorage.AudioData.SongDatabase)
 local Modchart = require(game.Players.LocalPlayer.PlayerGui.Utils.Modchart)
 
@@ -239,12 +238,6 @@ function AudioManager:new(game_element, specOffset, amods)
 			_last_note_time = last_hit_object.Time
 		end
 
-		local sfxg_id = self._current_audio_data.AudioHitSFXGroup
-		if sfxg_id == nil then
-			sfxg_id = 0
-		end
-		self._hit_sfx_group = HitSFXGroup:new(_game,sfxg_id)
-		self._hit_sfx_group:preload()
 
 		self._audio_time_offset = self._current_audio_data.AudioTimeOffset + audio_offset --/ song_rate
 
