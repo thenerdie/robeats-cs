@@ -23,7 +23,7 @@ local UI = require(Frameworks.UI)
 local UserInputService = game:GetService("UserInputService")
 
 local self = {}
-	
+
 local handle = {}
 local tree = {}
 
