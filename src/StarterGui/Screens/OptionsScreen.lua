@@ -265,8 +265,6 @@ local function ColorOption(name, bound)
 		vcurScale = s/2
 	end
 
-	print(vcurScale)
-
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(0.975,0,0.075,0);
 		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
