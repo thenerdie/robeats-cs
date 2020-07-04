@@ -252,6 +252,21 @@ local function ColorOption(name, bound)
 	self.mouseDown1 = false
 	self.hueB, self.hueC = Roact.createBinding(Settings.Options[bound])
 	optionNumber = optionNumber + 1
+
+	local o = Settings.Options[bound]
+	local v = o.Value
+	local s = o.Saturation
+	local h = o.Hue
+	local vcurScale = 0
+
+	if s == 1 then
+		vcurScale = 1-(v/2)
+	else
+		vcurScale = s/2
+	end
+
+	print(vcurScale)
+
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(0.975,0,0.075,0);
 		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
@@ -331,13 +346,16 @@ local function ColorOption(name, bound)
 						local newColor
 						if value > 0.5 then
 							newColor = Color:changeHSV(originalColor, {
-								Value = 1-((value-0.5)*2)
+								Saturation = 1;
+								Value = 1-((value-0.5)*2);
 							})
 						elseif value < 0.5 then
 							newColor = Color:changeHSV(originalColor, {
-								Saturation = value*2
+								Saturation = value*2;
+								Value = 1;
 							})
 						end
+						Logger:Log(string.format("New note color: H: %0.2f S: %0.2f V: %0.2f ", newColor.Hue, newColor.Saturation, newColor.Value))
 						Settings:ChangeOption(bound, newColor)
 						cursor.Position = UDim2.new(value,0,0,0)
 					end
@@ -361,7 +379,7 @@ local function ColorOption(name, bound)
 				BackgroundColor3 = Color3.new(0,0,0);
 				Size = UDim2.new(0,5,1,0);
 				BorderSizePixel = 0;
-				Position = UDim2.new(1-Settings.Options[bound].Value,0,0,0);
+				Position = UDim2.new(vcurScale,0,0,0);
 				AnchorPoint = Vector2.new(0.5,0);
 				ImageTransparency = 1;
 				BackgroundTransparency = 0;
