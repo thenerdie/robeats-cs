@@ -25,7 +25,7 @@ function SFXManager:new(game_element)
 		rtv.SoundId = sfx_key
 		rtv.Name = string.format("%s",sfx_key)
 		rtv.Parent = _sfx_pooled_parent
-		rtv.Playing = false
+		rtv.Playing = true
 		if sfx_key == SFXManager.SFX_BOO_1 then
 			rtv.Volume = SFXManager.SFX_BOO_1_VOLUME
 		else
