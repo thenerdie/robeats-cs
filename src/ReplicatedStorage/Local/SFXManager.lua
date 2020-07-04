@@ -110,7 +110,7 @@ function SFXManager:new(game_element)
 	end
 
 	function self:play_sfx(sfx_key,volume)
-		if self._key_to_pooled_sound:count_of(sfx_key) == 0 then
+		--[[if self._key_to_pooled_sound:count_of(sfx_key) == 0 then
 			create_pooled(sfx_key)
 		end
 
@@ -124,7 +124,7 @@ function SFXManager:new(game_element)
 		end
 
 		self._key_to_active_sound:push_back_to(sfx_key,play_sfx)
-		return play_sfx
+		return play_sfx]]--
 	end
 
 	function self:update(dt_scale)
