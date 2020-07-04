@@ -468,6 +468,7 @@ local function Base()
 end
 
 function self:DoSongSelect()
+	changeRateBinding(Settings.Options.Rate)
 	for i, bind in pairs(screenBinds) do
 		bind:begin()
 	end
