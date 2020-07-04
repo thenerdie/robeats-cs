@@ -1,6 +1,6 @@
 local Chat = require(game.ReplicatedStorage.Helpers.Chat)
 
-pcall(function()
+--[[pcall(function()
 	local DataStoreService = game:GetService("DataStoreService")
 	local Bans = DataStoreService:GetDataStore("Bans")
 
@@ -11,6 +11,12 @@ pcall(function()
 			player:Kick(get)
 		end
 	end)
+end)]]--
+
+game.Players.PlayerAdded:Connect(function(player)
+	Chat:GiveRolesToSpeaker(player.Name, {
+		Chat.role("Cool", Color3.fromRGB(16, 137, 173))
+	})
 end)
 
 --[[
