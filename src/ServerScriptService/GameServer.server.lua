@@ -1,4 +1,5 @@
 local Chat = require(game.ReplicatedStorage.Helpers.Chat)
+local Permissions = require(game.ReplicatedStorage.Helpers.Permissions)
 
 --[[pcall(function()
 	local DataStoreService = game:GetService("DataStoreService")
@@ -13,10 +14,13 @@ local Chat = require(game.ReplicatedStorage.Helpers.Chat)
 	end)
 end)]]--
 
-game.Players.PlayerAdded:Connect(function(player)
-	Chat:GiveRolesToSpeaker(player.Name, {
-		Chat.role("Cool", Color3.fromRGB(16, 137, 173))
-	})
+game.Players.PlayerAdded:Connect(function(player) --give out roles
+	local roleData = Permissions:GetUserRoleData(player.UserId)
+	if roleData then
+		Chat:GiveRolesToSpeaker(player.Name, {
+			Chat.role(roleData.Name, roleData.Color)
+		})
+	end
 end)
 
 --[[
