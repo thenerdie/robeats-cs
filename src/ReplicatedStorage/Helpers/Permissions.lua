@@ -19,6 +19,8 @@ Permissions.Roles = {
     newRole("Admin+", 253, Color3.fromRGB(162, 255, 0)),
     newRole("Admin", 252, Color3.fromRGB(81, 255, 0)),
     newRole("Moderator", 251, Color3.fromRGB(5, 222, 255)),
+    newRole("Top 10 Player", 3, Color3.fromRGB(240, 240, 240)),
+    newRole("[ro]Crazy", 2, Color3.fromRGB(255, 15, 63)),
 }
 
 function Permissions:IsAdmin(p_ID)
