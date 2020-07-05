@@ -6,6 +6,7 @@ pcall(function()
 end)
 
 return function(cmdContext, player, reason)
+    print(reason)
     if DataStoreService ~= nil and Bans ~= nil then
         local uid = player.UserId
         Bans:SetAsync(tostring(uid), reason)

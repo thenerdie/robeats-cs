@@ -1,3 +1,3 @@
-return function(cmdContext, player)
-    player:Kick()
+return function(cmdContext, player, reason)
+    player:Kick(reason)
 end
