@@ -1,4 +1,5 @@
 return {
-	Name = "help";
+	Name = "gethelp";
 	Description = "Get help.";
+	Args = {};
 }
