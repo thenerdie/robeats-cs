@@ -1,4 +1,4 @@
-local Groups = script.Parent.Groups
+local Groups = require(script.Parent.Groups)
 
 local Permissions = {}
 
