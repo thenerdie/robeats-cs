@@ -9,6 +9,6 @@ return function(cmdContext, player, reason)
     if DataStoreService ~= nil and Bans ~= nil then
         local uid = player.UserId
         Bans:SetAsync(tostring(uid), reason)
-        player:Kick()
+        player:Kick(reason)
     end
 end
