@@ -2,6 +2,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Roact = require(ReplicatedStorage.Roact)
 local Rodux = require(ReplicatedStorage.Rodux)
 local RoactRodux = require(ReplicatedStorage.RoactRodux)
+local FastSpawn = require(game.ReplicatedStorage.FastSpawn)
 local LocalPlayer = game.Players.LocalPlayer
 
 local Utils = script.Parent.Parent.Utils
@@ -437,17 +438,19 @@ local function Base()
 				ImageColor3 = Color3.fromRGB(43, 255, 110),
 				AnchorPoint =  Vector2.new(0,1),
 				[Roact.Event.MouseButton1Click] = function()
-					local g = Game:new()
-					self:Unmount()
-					local rate = Settings.Options.Rate
-					local note_color_opt = Settings.Options.NoteColor
-					local noteColor = Color:convertHSV(note_color_opt)
-					g:StartGame(self.curSelected, rate, Settings.Options.Keybinds, noteColor, Settings.Options.ScrollSpeed)
-					Screens:FindScreen("ResultsScreen"):DoResults({
-						gamejoin=g._local_services._game_join;
-						localgame=g.local_game;
-					}, rate, self.curSelected)
-					g:DestroyStage()
+					FastSpawn(function()
+						local g = Game:new()
+						self:Unmount()
+						local rate = Settings.Options.Rate
+						local note_color_opt = Settings.Options.NoteColor
+						local noteColor = Color:convertHSV(note_color_opt)
+						g:StartGame(self.curSelected, rate, Settings.Options.Keybinds, noteColor, Settings.Options.ScrollSpeed)
+						Screens:FindScreen("ResultsScreen"):DoResults({
+							gamejoin=g._local_services._game_join;
+							localgame=g.local_game;
+						}, rate, self.curSelected)
+						g:DestroyStage()
+					end)
 				end;
 			}, {
 				PlayButton = Roact.createElement("TextLabel", {
