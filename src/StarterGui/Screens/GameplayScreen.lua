@@ -13,6 +13,7 @@ local Math = require(Utils.Math)
 local Settings = require(Utils.Settings)
 local Keybind = require(Utils.Keybind)
 local Logger = require(Utils.Logger):register(script)
+local DateTime = require(ReplicatedStorage.DateTime)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -67,6 +68,21 @@ local function DoBase(props)
 	local chain = playdata[10]
     local maxcombo = playdata[11]
 
+    local game_join = game_._local_services._game_join
+
+    local curTime = 0
+    local songLen = 1
+
+    if game_join ~= nil then
+        curTime = game_join:get_songTime()
+        songLen = game_join:get_songLength()
+    end
+
+    local timeLeftMs = songLen - curTime
+    local timeLeftAlpha = curTime/songLen
+    local unformattedTL = DateTime:GetDateTime(timeLeftMs/1000)
+    local formattedTL = unformattedTL:format("#m:#s")
+
     local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc)
 
     local gradedata = Metrics:GetGradeData(acc)
@@ -84,7 +100,8 @@ local function DoBase(props)
 			Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(0.5,0.5);
             Position = Settings.Options.ScorePos;
-			Size = UDim2.new(0.15,0,0.06,0);
+            Size = UDim2.new(0.15,0,0.06,0);
+            Visible = Settings.Options.ShowGameplayUI;
         });
         Accuracy = Roact.createElement("TextLabel", {
             BackgroundColor3 = Color3.fromRGB(25,25,25);
@@ -97,7 +114,8 @@ local function DoBase(props)
 			Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(0.5,0.5);
             Position = Settings.Options.AccuracyPos;
-			Size = UDim2.new(0.15,0,0.03,0);
+            Size = UDim2.new(0.15,0,0.03,0);
+            Visible = Settings.Options.ShowGameplayUI;
         });
 		Combo = Roact.createElement("TextLabel", {
 			BackgroundTransparency = 1;
@@ -108,7 +126,8 @@ local function DoBase(props)
 			Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(0.5,0.5);
             Position = Settings.Options.ComboPos;
-			Size = UDim2.new(0.125,0,0.05,0);
+            Size = UDim2.new(0.125,0,0.05,0);
+            Visible = Settings.Options.ShowGameplayUI;
         });
 		Judgement = Roact.createElement("TextLabel", {
 			BackgroundTransparency = 1;
@@ -119,7 +138,8 @@ local function DoBase(props)
 			Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(0.5,0.5);
             Position = Settings.Options.JudgementPos;
-			Size = UDim2.new(0.15,0,0.05,0);
+            Size = UDim2.new(0.15,0,0.05,0);
+            Visible = Settings.Options.ShowGameplayUI;
         });
         Rating = Roact.createElement("TextLabel", {
             BackgroundColor3 = Color3.fromRGB(25,25,25);
@@ -131,7 +151,8 @@ local function DoBase(props)
             Font = Enum.Font.GothamBlack;
             AnchorPoint = Vector2.new(0.5,0.5);
             Position = Settings.Options.RatingPos;
-			Size = UDim2.new(0.125,0,0.05,0);
+            Size = UDim2.new(0.125,0,0.05,0);
+            Visible = Settings.Options.ShowGameplayUI;
         });
 		BackButton = Roact.createElement("ImageButton", {
 			Size = UDim2.new(0.14, 0, 0.06, 0),
@@ -159,7 +180,28 @@ local function DoBase(props)
            		Position = UDim2.new(0.5,0,0.5,0);
 				Size = UDim2.new(0.9,0,0.6,0);
         	});
-		});
+        });
+        TimeLeftPGBar = Roact.createElement("Frame", {
+            Size = UDim2.new(timeLeftAlpha,0,0,5);
+            AnchorPoint = Vector2.new(0,1);
+            Position = UDim2.new(0,0,1,0);
+			BackgroundColor3 = Color3.fromRGB(122, 122, 122);
+			Visible = Settings.Options.ShowGameplayUI;
+        });
+        TimeLeftTextLabel = Roact.createElement("TextLabel", {
+            Text = formattedTL;
+            TextSize = 20;
+            TextColor3 = Color3.new(1,1,1);
+            TextStrokeTransparency = 0.75;
+            BackgroundTransparency = 1;
+            TextXAlignment = Enum.TextXAlignment.Left;
+            Size = UDim2.new(0.1,0,0.05,0);
+            AnchorPoint = Vector2.new(0,1);
+            Position = UDim2.new(0.005,0,0.995,0);
+            Font = Enum.Font.GothamBlack;
+			BackgroundColor3 = Color3.fromRGB(122, 122, 122);
+			Visible = Settings.Options.ShowGameplayUI;
+        });
     })
 end
 
@@ -170,8 +212,12 @@ function self:Initialize(props, g)
 
     listenerPool[#listenerPool+1] = Keybind:listen(Settings.Options.QuickExitKeybind[1], function()
         game_.force_quit = true
+	end)
+	
+	listenerPool[#listenerPool+1] = Keybind:listen(Settings.Options.HideGameplayUI[1], function()
+        Settings.Options.ShowGameplayUI = not Settings.Options.ShowGameplayUI;
     end)
-
+	
     tree = DoBase(props)
     handle = Roact.mount(tree, PlayerGui, "Gameplay")
 
