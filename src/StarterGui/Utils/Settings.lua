@@ -1,12 +1,14 @@
 local Rodux = require(game.ReplicatedStorage.Rodux)
 local Color = require(script.Parent.Color)
+local FastSpawn = require(game.ReplicatedStorage.FastSpawn)
 
 local Settings = {}
 
 Settings.Options = {
 	ScrollSpeed = 20;
-	NoteColor = Color:newHSV();
+	NoteColor = Color:newHSV(0,0,255);
 	Rate = 1;
+	ShowGameplayUI = true;
 	Keybinds = {
 		[1] = Enum.KeyCode.Z;
 		[2] = Enum.KeyCode.X;
@@ -15,6 +17,9 @@ Settings.Options = {
 	};
 	QuickExitKeybind = {
 		[1] = Enum.KeyCode.Backspace;
+	};
+	HideGameplayUI = {
+		[1] = Enum.KeyCode.M;
 	};
 	ScorePos = UDim2.new(0.92,0,0.035,0);
 	AccuracyPos = UDim2.new(0.92,0,0.08,0);
@@ -39,28 +44,23 @@ function Settings:ChangeOption(key, value)
 end
 
 function Settings:BindToSetting(name, call)
-	local setn = name
-	local event = Instance.new("BindableEvent")
-	event.Event:Connect(function(new)
-		call(new)
-	end)
-	spawn(function()
+	FastSpawn(function(name, call)
 		local lastVal = nil
 		local first = true
 		while true do
-			local sn = Settings.Options[setn]
+			local sn = Settings.Options[name]
 			if lastVal ~= sn then
 				if first then
 					first = false
 				else
-					event:Fire(sn)
+					print(sn)
+					call(sn)
 				end
 				lastVal = sn
 			end
 			wait()
 		end
-	end)
-	return event
+	end, name, call)
 end
 
 function Settings:ParseStringColor3(option, str)
