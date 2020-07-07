@@ -23,7 +23,7 @@ local UI = require(Frameworks.UI)
 local UserInputService = game:GetService("UserInputService")
 
 local self = {}
-	
+
 local handle = {}
 local tree = {}
 
@@ -331,14 +331,13 @@ local function ColorOption(name, bound)
 						local newColor
 						if value > 0.5 then
 							newColor = Color:changeHSV(originalColor, {
-								Value = 1-(value*2)
+								Value = 1-((value-0.5)*2)
 							})
 						elseif value < 0.5 then
 							newColor = Color:changeHSV(originalColor, {
-								Saturation = 0+(value*2)
+								Saturation = value*2
 							})
 						end
-						print(newColor.Hue, newColor.Saturation, newColor.Value)
 						Settings:ChangeOption(bound, newColor)
 						cursor.Position = UDim2.new(value,0,0,0)
 					end
@@ -418,18 +417,23 @@ local function Sections()
 	tabNumber = 0
 	return {
 		[1] = NewSection("General", {
-			Keybind = KeybindOption("Gameplay keys", "Keybinds", 4);
-			NoteColor = ColorOption("Note Color", "NoteColor");
-		});
-		[2] = NewSection("Song", {
 			SongRate = NumberOption("Song Rate", "Rate", 0.05);
-		});
-		[3] = NewSection("Gameplay", {
 			ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
-			QuickExit = KeybindOption("Quick exit key", "QuickExitKeybind", 1)
+		});
+		[2] = NewSection("Keybinds", {
+			QuickExit = KeybindOption("Quick exit key", "QuickExitKeybind", 1);
+			HideGameplayScreen = KeybindOption("Hide gameplay elements key", "HideGameplayUI", 1);
+			Keybind = KeybindOption("Gameplay keys", "Keybinds", 4);
+		});
+		[3] = NewSection("Customization", {
+			NoteColor = ColorOption("Note color", "NoteColor");
 		});
 	}
 end
+
+--[[Settings:BindToSetting("NoteColor", function(newColor)
+	Logger:Log(string.format("New note color: H: %0.2f S: %0.2f V: %0.2f ", newColor.Hue, newColor.Saturation, newColor.Value))
+end)]]--
 
 local function Base()
 	optionNumber = 0
