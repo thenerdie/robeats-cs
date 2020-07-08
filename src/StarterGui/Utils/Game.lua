@@ -14,6 +14,7 @@ local ModManager = require(game.ReplicatedStorage.ModManager)
 
 local Utils = script.Parent
 local Settings = require(Utils.Settings)
+local Online = require(Utils.Online)
 local Logger = require(Utils.Logger):register(script)
 local CurrentCamera = workspace.CurrentCamera
 
@@ -174,7 +175,6 @@ function Game:new()
 			isDone = _local_services._game_join:check_songDone()
 
 			if rawTime - timeSince >= 50 then
-				Logger:Log("50ms passed, re-reconciling...")
 				timeSince = rawTime
 				UpdateScreen()
 			end
