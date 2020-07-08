@@ -185,8 +185,8 @@ local function DoBase(props)
             Size = UDim2.new(timeLeftAlpha,0,0,5);
             AnchorPoint = Vector2.new(0,1);
             Position = UDim2.new(0,0,1,0);
-			BackgroundColor3 = Color3.fromRGB(122, 122, 122);
-			Visible = Settings.Options.ShowGameplayUI;
+			      BackgroundColor3 = Color3.fromRGB(122, 122, 122);
+			      Visible = Settings.Options.ShowGameplayUI;
         });
         TimeLeftTextLabel = Roact.createElement("TextLabel", {
             Text = formattedTL;
@@ -199,8 +199,8 @@ local function DoBase(props)
             AnchorPoint = Vector2.new(0,1);
             Position = UDim2.new(0.005,0,0.995,0);
             Font = Enum.Font.GothamBlack;
-			BackgroundColor3 = Color3.fromRGB(122, 122, 122);
-			Visible = Settings.Options.ShowGameplayUI;
+			      BackgroundColor3 = Color3.fromRGB(122, 122, 122);
+			      Visible = Settings.Options.ShowGameplayUI;
         });
     })
 end

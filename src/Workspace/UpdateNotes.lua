@@ -14,14 +14,9 @@ local function AddVersion(versionNum, cngs)
     }
 end
 
-AddVersion(0.1, {
-    AddChange("Fixed pathing for GitHub repo"),
-    AddChange("Added TestSongs directory to the GitHub repo")
+AddVersion("0.1.0", {
+    AddChange("ENTIRE GAME REWRITTEN!"),
+    AddChange("Game is open-source on GitHub so anyone can make changes!")
 })
-
-
-table.sort(UpdateNotes.Versions, function(a, b)
-    return a.Version > b.Version
-end)
 
 return UpdateNotes

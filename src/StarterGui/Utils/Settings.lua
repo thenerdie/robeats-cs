@@ -27,6 +27,7 @@ Settings.Options = {
 	JudgementPos = UDim2.new(0.5,0,0.25,0);
 	RatingPos = UDim2.new(0.065,0,0.05,0);
 	BackButtonPos = UDim2.new(0.923,0,0.955,0);
+	FOV = 70;
 }
 
 Settings.DefaultUIPos = { -- Used to reset to default, wip

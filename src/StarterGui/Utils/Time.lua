@@ -1,0 +1,3 @@
+local Time = {}
+
+return Time

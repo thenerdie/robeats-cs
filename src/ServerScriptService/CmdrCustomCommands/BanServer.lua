@@ -5,11 +5,11 @@ pcall(function()
     Bans = DataStoreService:GetDataStore("Bans")
 end)
 
-
 return function(cmdContext, player, reason)
+    print(reason)
     if DataStoreService ~= nil and Bans ~= nil then
         local uid = player.UserId
         Bans:SetAsync(tostring(uid), reason)
-        player:Kick()
+        player:Kick(reason)
     end
 end

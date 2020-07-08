@@ -1,8 +1,8 @@
--- todo: make this function live
 local HTTP = game:GetService("HttpService")
 local LOCA = game:GetService("LocalizationService")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Anticheat = require(ReplicatedStorage.Shared.Anticheat)
 local Misc = ReplicatedStorage:WaitForChild("Misc")
 
 local baseUrl = "robeatscsgame.com/api/"
@@ -19,7 +19,7 @@ local function sendScore(data)
 		Headers=headers;
 		Body=HTTP:JSONEncode(data);
 		Method="POST";
-		Url=baseUrl.."/submitscore";
+		Url=baseUrl.."/score";
 	}
 	local res = nil
 	local suc, err = pcall(function()
@@ -163,21 +163,6 @@ end
 --------------------------------------------------------------------------------------------------------------------
 local hint = Instance.new("Hint")
 hint.Parent = workspace
---------------------------------------------------------------------------------------------------------------------
-
---HttpWrapper:GetAsync("5dfc1fd5c9734b7cbb9cdaeb", false)
---MapLeaderboards = HttpWrapper:GetAsync("5dfea492bda54254c5f0b62b", false)
---TopPlays = HttpWrapper:GetAsync("5dfeac44bda54254c5f0b941", false)
---------------------------------------------SLOT REFERENCE--------------------------------------------------------------------------
--- GL SLOT ->>> [(num) INDEX] = {(num) Rating=0; (string) PlayerName=""; (num) TotalMapsPlayed=0; (string) UserId=""}
--- PLAY SLOT ->>> [(num) INDEX] = {(num) Score=0; (num) Rating=0; (num) Accuracy=0 (string) Rate=""; (string) Spread=""; (string) PlayerName=""; (string) UserId=""}
--- TP SLOT ->>> same as PLAY SLOT
-------------------------------------------------------------------------------------------------------------------------------------
---//players who are banned from the game
-
-local function gen_play_slot(s, r, acc, rate, pn, ud, spd)
-	return {Score=s; Rating=r; Accuracy=acc; Rate=rate; PlayerName=pn; UserId=ud; Spread=spd}
-end
 
 function getIdFromMap(map_name)
 	local retString = ""
@@ -201,37 +186,6 @@ function calculateRating(rate, acc, difficulty)
 		end
 	end
 	return ratemult * ((acc/97)^4) * difficulty
-end
-
-local function DidCheat(player, map, score, accuracy, rate, spread)
-	local playRating = calculateRating(rate, accuracy, map.SongDiff.Value)
-	local cheated = false
-	if not map then
-		cheated = true
-	end
-	if accuracy > 100 then
-		cheated = true
-	end
-	local spd = {}
-	local splt = string.split(spread, '/')
-	for i, v in pairs(splt) do
-		if i > 1 then
-			spd[#spd+1] = tonumber(v)
-		end
-	end
-	local zeroJud = 0
-	for i, v in pairs(spd) do
-		if v == 0 then
-			zeroJud = zeroJud + 1
-		end
-	end
-	if zeroJud == 5 and playRating > 50 then
-		cheated = true
-	end
-	if cheated then
-		warn("Player " .. player.Name .. " most likely cheated with spread " .. spread .. ", accuracy " .. tostring(accuracy) .. ", rate " .. tostring(rate) .. ", and score " .. tostring(score) .. " on map " .. map.Name .. ".")
-	end
-	return cheated
 end
 
 local function valStat(stat)
@@ -299,51 +253,11 @@ Misc.GetGlobalLeaderboard.OnServerInvoke = function()
 	return getGlobalLeaderboard()
 end
 
-Misc.SubmitScore.OnServerInvoke = function(player, map, score, accuracy, rate, spread, tierColor, hitData) --plr, inst, num, num, string, color, [array]
-	print("// Score Submission Started...")
-	local cheated = DidCheat(player, map, score, accuracy, rate, spread)
-	local leaderstats = player:WaitForChild("leaderstats")
-	local map_name = getIdFromMap(map.Name)
-	local rating = calculateRating(rate, accuracy, map.SongDiff.Value)
-	local p_ID = "P" .. tostring(player.UserId)
-	local play_slot = gen_play_slot(score, rating, accuracy, rate, player.Name, p_ID, spread)
-	local submit = true
-	if cheated then
-		submit = false
-	end
-	if submit then
-		local data = {}
-		local gl_data = {}
-		gl_data.Rating = {}
-		gl_data.TotalMapsPlayed = {}
-		gl_data.PlayerName = {}
-		gl_data.UserId = p_ID
-		data.Rating = play_slot.Rating
-		data.Score = play_slot.Score
-		data.Spread = play_slot.Spread
-		data.UserId = play_slot.UserId
-		data.PlayerName = play_slot.PlayerName
-		data.Accuracy = play_slot.Accuracy
-		data.Rate = play_slot.Rate
-		data.MapName = map.Name
-		data.MapId = map_name
-		local data_res = sendScore(data)
-		if not valStat(data_res) then
-			data_res = {}
-			data_res.Data = {}
-			data_res.Data.Rating = 0
-			data_res.Rank = -1
-		else -- update leaderstats based on what the server returned
-			local plr_stats = leaderstats
-			if plr_stats then
-				plr_stats.Rating.Value = data_res.Data.Rating
-				plr_stats.Rank.Value = "#" .. tostring(tonumber(data_res.Rank) + 1)
-			end
-		end
-		data.RawUserId = player.UserId
-		data.TierColor = tierColor
-		return "#" .. data_res.Rank+1, data_res.Data.Rating
-	end
+Misc.SubmitScore.OnServerInvoke = function(player, data)
+	local RBLXLeaderstats = player:WaitForChild("leaderstats")
+	data.userid = player.UserId
+	data.username = player.Name
+
 end
 
 --[[local function CalculatePlayerRating(p_ID)

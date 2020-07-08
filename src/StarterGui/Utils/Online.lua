@@ -15,4 +15,8 @@ function Online:GetGlobalLeaderboard()
 	return m.GetGlobalLeaderboard:InvokeServer()
 end
 
+function Online:SubmitScore(pkg_data)
+	m.SubmitScore:InvokeServer(pkg_data)
+end
+
 return Online

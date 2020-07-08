@@ -38,14 +38,49 @@ local function formatColor(color3)
 end
 
 local function formatSingleKey(key)
-	local str = tostring(key)
-	str = str:sub(14,#str)
+	if key == -1 then return "..." end
+	local str = key.Name
+	local replacements = {
+		["Comma"] = ",";
+		["Slash"] = "/";
+		["Period"] = ".";
+		["Hash"] = "#";
+		["Asterisk"] = "*";
+		["Caret"] = "^";
+		["Ampersand"] = "&";
+		["Quote"] = "\"";
+		["Return"] = "Ent";
+		["Percent"] = "%";
+		["Plus"] = "+";
+		["Minus"] = "-";
+		["Zero"] = "0";
+		["One"] = "1";
+		["Two"] = "2";
+		["Three"] = "3";
+		["Four"] = "4";
+		["Five"] = "5";
+		["Six"] = "6";
+		["Seven"] = "7";
+		["Eight"] = "8";
+		["Nine"] = "9";
+		["Equal"] = "=";
+		["LessThan"] = "<";
+		["GreaterThan"] = ">";
+		["BackSlash"] = "\\";
+		["Question"] = "?";
+		["Equals"] = "=";
+	}
+	for i, v in pairs(replacements) do
+		if str == i then
+			str = v
+			break
+		end
+	end
 	return str
 end
 
 local function formatKeys(keys)
 	local ret = ""
-	keys = keys or {}
 	for i = 1, #keys do
 		local v = keys[i]
 		local str = formatSingleKey(v)
@@ -233,11 +268,75 @@ local function KeybindOption(name, bound, numOfKeys)
 				TextWrapped = true,
 				TextColor3 = Color3.fromRGB(179, 179, 179),
 				[Roact.Event.MouseButton1Click] = function(rbx)
+					Settings:ChangeOption(bound, {
+						[1] = -1;
+						[2] = -1;
+						[3] = -1;
+						[4] = -1;
+					})
+					self[boundFire](Settings.Options[bound])
 					for i = 1, numOfKeys do
 						local u = UserInputService.InputBegan:Wait()
 						Settings.Options[bound][i] = u.KeyCode
 						self[boundFire](Settings.Options[bound])
 					end
+				end
+			})
+		});
+	})
+end
+
+local function BoolOption(name, bound)
+	local boundFire = "Update"..bound
+	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
+	optionNumber = optionNumber + 1
+	return Roact.createElement("Frame", {
+		Size = UDim2.new(0.975,0,0.075,0);
+		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
+		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
+		BorderSizePixel = 0;
+	}, {
+		Name = Roact.createElement("TextLabel", {
+			AnchorPoint = Vector2.new(0, 0.5),
+			BackgroundTransparency = 1;
+			Font = Enum.Font.GothamBlack;
+			TextColor3 = Color3.fromRGB(255, 255, 255);
+			Text = name;
+			TextScaled = true,
+			TextWrapped = true,
+			Position = UDim2.new(0.025,0,0.5,0);
+			Size = UDim2.new(0.2,0,0.25,0);
+		});
+		OptionValue = Roact.createElement("ImageLabel", {
+			AnchorPoint = Vector2.new(1, 0.5),
+			Size = UDim2.new(0.4,0,0.5,0),
+			Position = UDim2.new(0.95,0,0.5,0),
+			BorderSizePixel = 0,
+			BackgroundTransparency = 1,
+			ScaleType = Enum.ScaleType.Slice,
+			Image = "rbxassetid://2790382281",
+			SliceCenter = Rect.new(4, 4, 252, 252),
+			SliceScale = 1,
+			ImageColor3 = self[bound]:map(function(val)
+				return val and Color3.fromRGB(14, 238, 51) or Color3.fromRGB(253, 60, 34)
+			end),
+		},{
+			Data = Roact.createElement("TextButton", {
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Size = UDim2.new(0.85, 0, 0.7, 0),
+				Position = UDim2.new(0.5, 0, 0.5, 0),
+				BorderSizePixel = 0,
+				BackgroundTransparency = 1,
+				Text = self[bound]:map(function(val)
+					return val and "ON" or "OFF"
+				end),
+				Font = Enum.Font.GothamBlack,
+				TextScaled = true,
+				TextWrapped = true,
+				TextColor3 = Color3.fromRGB(179, 179, 179),
+				[Roact.Event.MouseButton1Click] = function(rbx)
+					local newVal = Settings:ChangeOption(bound, not Settings.Options[bound])
+					self[boundFire](newVal)
 				end
 			})
 		});
@@ -253,6 +352,19 @@ local function ColorOption(name, bound)
 	self.mouseDown1 = false
 	self.hueB, self.hueC = Roact.createBinding(Settings.Options[bound])
 	optionNumber = optionNumber + 1
+
+	local o = Settings.Options[bound]
+	local v = o.Value
+	local s = o.Saturation
+	local h = o.Hue
+	local vcurScale = 0
+
+	if s == 1 then
+		vcurScale = 1-(v/2)
+	else
+		vcurScale = s/2
+	end
+
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(0.975,0,0.075,0);
 		Position = UDim2.new(0, 0, (optionNumber-2) / (maxOptionNumber * 2) + ((optionNumber - 2) / 100), 0);
@@ -332,13 +444,16 @@ local function ColorOption(name, bound)
 						local newColor
 						if value > 0.5 then
 							newColor = Color:changeHSV(originalColor, {
-								Value = 1-((value-0.5)*2)
+								Saturation = 1;
+								Value = 1-((value-0.5)*2);
 							})
 						elseif value < 0.5 then
 							newColor = Color:changeHSV(originalColor, {
-								Saturation = value*2
+								Saturation = value*2;
+								Value = 1;
 							})
 						end
+						Logger:Log(string.format("New note color: H: %0.2f S: %0.2f V: %0.2f ", newColor.Hue, newColor.Saturation, newColor.Value))
 						Settings:ChangeOption(bound, newColor)
 						cursor.Position = UDim2.new(value,0,0,0)
 					end
@@ -362,7 +477,7 @@ local function ColorOption(name, bound)
 				BackgroundColor3 = Color3.new(0,0,0);
 				Size = UDim2.new(0,5,1,0);
 				BorderSizePixel = 0;
-				Position = UDim2.new(1-Settings.Options[bound].Value,0,0,0);
+				Position = UDim2.new(vcurScale,0,0,0);
 				AnchorPoint = Vector2.new(0.5,0);
 				ImageTransparency = 1;
 				BackgroundTransparency = 0;
@@ -429,6 +544,7 @@ local function Sections()
 		});
 		[3] = NewSection("Customization", {
 			NoteColor = ColorOption("Note color", "NoteColor");
+			FOV = NumberOption("Field Of View", "FOV", 5);
 		});
 	}
 end

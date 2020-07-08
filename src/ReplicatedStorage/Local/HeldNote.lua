@@ -648,7 +648,6 @@ function HeldNote:new(
 	end
 
 	--[[Override--]] function self:on_hit(_game,note_result,i_notes)
-		print("Holding...")
 		if _state == HeldNote.State.Pre then
 			--[[_game._effects:add_effect(TriggerNoteEffect:new(
 				_game,
@@ -698,7 +697,6 @@ function HeldNote:new(
 	end
 
 	--[[Override--]] function self:test_release(_game)
-		print("Releasing...")
 		if _state == HeldNote.State.Holding or _state == HeldNote.State.HoldMissedActive then
 			local time_to_end = _game_audio_manager_get_current_time_ms - get_tail_hit_time()
 			local did_hit, note_result = NoteResult:release_timedelta_to_result(time_to_end, _game)

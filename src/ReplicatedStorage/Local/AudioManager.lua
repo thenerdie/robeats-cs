@@ -7,7 +7,6 @@ local NoteResult = require(game.ReplicatedStorage.Shared.NoteResult)
 local RandomLua = require(game.ReplicatedStorage.Shared.RandomLua)
 local DebugOut = require(game.ReplicatedStorage.Local.DebugOut)
 local Constants = require(game.ReplicatedStorage.Shared.Constants)
-local HitSFXGroup = require(game.ReplicatedStorage.Local.HitSFXGroup)
 local SongDatabase = require(game.ReplicatedStorage.AudioData.SongDatabase)
 local Modchart = require(game.Players.LocalPlayer.PlayerGui.Utils.Modchart)
 
@@ -35,19 +34,19 @@ function AudioManager:new(game_element, specOffset, amods)
 	end
 	
 	local self = {}
-	--STEPMANIA J4
+	--MANIA OD9
 	self.NOTE_PREBUFFER_TIME = 500
-	self.NOTE_OKAY_MAX = 180
-	self.NOTE_GOOD_MAX = 135
-	self.NOTE_GREAT_MAX = 90
-	self.NOTE_PERFECT_MAX = 52
-	self.NOTE_MARVELOUS_MAX = 22
-	self.NOTE_MARVELOUS_MIN = -22
-	self.NOTE_PERFECT_MIN = -52
-	self.NOTE_GREAT_MIN = -90
-	self.NOTE_GOOD_MIN = -135
-	self.NOTE_OKAY_MIN = -180
-	self.NOTE_REMOVE_TIME = -300
+	self.NOTE_OKAY_MAX = 124.5
+	self.NOTE_GOOD_MAX = 100.5
+	self.NOTE_GREAT_MAX = 70.5
+	self.NOTE_PERFECT_MAX = 37.5
+	self.NOTE_MARVELOUS_MAX = 16.5
+	self.NOTE_MARVELOUS_MIN = -16.5
+	self.NOTE_PERFECT_MIN = -37.5
+	self.NOTE_GREAT_MIN = -70.5
+	self.NOTE_GOOD_MIN = -100.5
+	self.NOTE_OKAY_MIN = -124.5
+	self.NOTE_REMOVE_TIME = -250
 	
 	self.NOTE_COLORS = {}
 	self.NOTE_COLORS[1] = Color3.new(1.0,0.2,0.2) -- SNAPS
@@ -239,12 +238,6 @@ function AudioManager:new(game_element, specOffset, amods)
 			_last_note_time = last_hit_object.Time
 		end
 
-		local sfxg_id = self._current_audio_data.AudioHitSFXGroup
-		if sfxg_id == nil then
-			sfxg_id = 0
-		end
-		self._hit_sfx_group = HitSFXGroup:new(_game,sfxg_id)
-		self._hit_sfx_group:preload()
 
 		self._audio_time_offset = self._current_audio_data.AudioTimeOffset + audio_offset --/ song_rate
 

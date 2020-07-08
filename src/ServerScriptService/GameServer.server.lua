@@ -1,16 +1,26 @@
-pcall(function()
+local Chat = require(game.ReplicatedStorage.Helpers.Chat)
+local Permissions = require(game.ReplicatedStorage.Helpers.Permissions)
 
-local DataStoreService = game:GetService("DataStoreService")
-local Bans = DataStoreService:GetDataStore("Bans")
+--[[pcall(function()
+	local DataStoreService = game:GetService("DataStoreService")
+	local Bans = DataStoreService:GetDataStore("Bans")
 
-game.Players.PlayerAdded:Connect(function(player)
-	local uid = tostring(player.UserId)
-	local get = Bans:GetAsync(uid)
-	if get ~= nil then
-		player:Kick(get)
+	game.Players.PlayerAdded:Connect(function(player)
+		local uid = tostring(player.UserId)
+		local get = Bans:GetAsync(uid)
+		if get ~= nil then
+			player:Kick(get)
+		end
+	end)
+end)]]--
+
+game.Players.PlayerAdded:Connect(function(player) --give out roles
+	local roleData = Permissions:GetUserRoleData(player.UserId)
+	if roleData then
+		Chat:GiveRolesToSpeaker(player.Name, {
+			Chat.role(roleData.Name, roleData.Color)
+		})
 	end
-end)
-
 end)
 
 --[[
