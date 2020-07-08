@@ -846,7 +846,7 @@ function self:DoResults(props, rate, song)
 		mapid = song:GetId();
 		mapname = song:GetDisplayName();
 	}
-	Online:SubmitScore(data)
+	Online:SubmitScore(pkg_data)
 end
 
 function self:Unmount()
