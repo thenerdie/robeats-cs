@@ -15,4 +15,8 @@ function Online:GetGlobalLeaderboard()
 	return m.GetGlobalLeaderboard:InvokeServer()
 end
 
+function Online:SubmitScore(sm_data)
+	
+end
+
 return Online
