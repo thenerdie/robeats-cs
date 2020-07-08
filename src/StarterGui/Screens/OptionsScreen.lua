@@ -116,6 +116,7 @@ local function NumberOption(name, bound, increment)
 	increment = increment or 1
 	local boundFire = "Update"..bound
 	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
+	optionNumber = optionNumber + 1
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(0.975,0,0.075,0);
 		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
@@ -226,7 +227,7 @@ local function KeybindOption(name, bound, numOfKeys)
 	optionNumber = optionNumber + 1
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(0.975,0,0.075,0);
-		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
+		Position = UDim2.new(0, 0, (optionNumber-2) / (maxOptionNumber * 2) + ((optionNumber - 2) / 100), 0);
 		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
 		BorderSizePixel = 0;
 	}, {
@@ -366,7 +367,7 @@ local function ColorOption(name, bound)
 
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(0.975,0,0.075,0);
-		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
+		Position = UDim2.new(0, 0, (optionNumber-2) / (maxOptionNumber * 2) + ((optionNumber - 2) / 100), 0);
 		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
 		BorderSizePixel = 0;
 	}, {
@@ -507,6 +508,7 @@ local function NewSection(name, children)
 			Size = UDim2.new(1,0,1/totalSections,0);
 			Position = UDim2.new(0,0,(tabNumber-1)/totalSections,0);
 			[Roact.Event.MouseButton1Click] = function(rbx)
+				optionNumber = 0
 				curSelected = name
 				self:Update()
 			end
@@ -524,7 +526,7 @@ local function NewSection(name, children)
 			});
 		});
 		OptionsList = Roact.createFragment(children);
-		Name=name;
+		Name = name;
 	}
 end
 
@@ -532,15 +534,16 @@ local function Sections()
 	tabNumber = 0
 	return {
 		[1] = NewSection("General", {
-			Keybind = KeybindOption("Gameplay keys", "Keybinds", 4);
-			NoteColor = ColorOption("Note Color", "NoteColor");
-		});
-		[2] = NewSection("Song", {
 			SongRate = NumberOption("Song Rate", "Rate", 0.05);
-		});
-		[3] = NewSection("Gameplay", {
 			ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
+		});
+		[2] = NewSection("Keybinds", {
+			Keybind = KeybindOption("Gameplay keys", "Keybinds", 4);
 			QuickExit = KeybindOption("Quick exit key", "QuickExitKeybind", 1);
+			HideGameplayUI = KeybindOption("Hide gameplay elements", "HideGameplayUI", 1);
+		});
+		[3] = NewSection("Customization", {
+			NoteColor = ColorOption("Note color", "NoteColor");
 			FOV = NumberOption("Field Of View", "FOV", 5);
 		});
 	}

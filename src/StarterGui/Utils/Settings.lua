@@ -6,8 +6,9 @@ local Settings = {}
 
 Settings.Options = {
 	ScrollSpeed = 20;
-	NoteColor = Color:newHSV();
+	NoteColor = Color:newHSV(0,0,255);
 	Rate = 1;
+	ShowGameplayUI = true;
 	Keybinds = {
 		[1] = Enum.KeyCode.Z;
 		[2] = Enum.KeyCode.X;
@@ -16,6 +17,9 @@ Settings.Options = {
 	};
 	QuickExitKeybind = {
 		[1] = Enum.KeyCode.Backspace;
+	};
+	HideGameplayUI = {
+		[1] = Enum.KeyCode.M;
 	};
 	ScorePos = UDim2.new(0.92,0,0.035,0);
 	AccuracyPos = UDim2.new(0.92,0,0.08,0);

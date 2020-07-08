@@ -128,7 +128,7 @@ function self:DoResults(props, rate, song)
 					}),
 					Data = Roact.createElement("TextLabel", {
 						AnchorPoint = Vector2.new(0.5, 0.5),
-						Size = UDim2.new(1, 0, 1, 0),
+						Size = UDim2.new(0.6, 0, 0.6,0),
 						Position = UDim2.new(0.5, 0, 0.5, 0),
 						ZIndex = 5,
 						BorderSizePixel = 0,
@@ -832,7 +832,6 @@ function self:DoResults(props, rate, song)
 	local tree = frame
 	handle = Roact.mount(tree, PlayerGui, "Results")
 	Logger:Log("Results screen mounted!")
-
 	--// SUBMIT SCORE TO SERVER DATABASE
 	local pkg_data = {
 		score = score;
