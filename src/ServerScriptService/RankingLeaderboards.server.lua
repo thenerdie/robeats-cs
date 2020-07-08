@@ -257,7 +257,7 @@ Misc.SubmitScore.OnServerInvoke = function(player, data)
 	local RBLXLeaderstats = player:WaitForChild("leaderstats")
 	data.userid = player.UserId
 	data.username = player.Name
-
+	sendScore(data)
 end
 
 --[[local function CalculatePlayerRating(p_ID)
