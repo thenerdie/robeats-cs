@@ -832,6 +832,21 @@ function self:DoResults(props, rate, song)
 	local tree = frame
 	handle = Roact.mount(tree, PlayerGui, "Results")
 	Logger:Log("Results screen mounted!")
+	--// SUBMIT SCORE TO SERVER DATABASE
+	local pkg_data = {
+		score = score;
+		rating = rating;
+		accuracy = acc;
+		marv = marvs;
+		perf = perfs;
+		great = greats;
+		good = goods;
+		okay = okays;
+		miss = misses;
+		mapid = song:GetId();
+		mapname = song:GetDisplayName();
+	}
+	Online:SubmitScore(data)
 end
 
 function self:Unmount()
