@@ -241,7 +241,7 @@ game.Players.PlayerRemoving:Connect(function(p)
 end)
 
 Misc.GetSongLeaderboard.OnServerInvoke = function(player, m_ID)
-	return getMapLeaderboard(m_ID)
+	return getMapLeaderboard(m_ID).content
 end
 
 Misc.GetTopPlays.OnServerInvoke = function(player)
