@@ -30,6 +30,7 @@ function self:DoResults(props, rate, song)
 	--_marv_count,_perfect_count,_great_count,_good_count,_ok_count,_miss_count,_total_count,self:get_acc(),self._score,self._chain,_max_chain
 	local localgame = props.localgame
 	local gamejoin = props.gamejoin
+	local gamelua = props.gamelua
 	
 	local audio_manager = localgame._audio_manager
 	
@@ -846,7 +847,10 @@ function self:DoResults(props, rate, song)
 		mapid = song:GetId();
 		mapname = song:GetDisplayName();
 	}
-	Online:SubmitScore(pkg_data)
+	if not gamelua.force_quit then
+		Logger:Log("Submitting score to database!")
+		Online:SubmitScore(pkg_data)
+	end
 end
 
 function self:Unmount()

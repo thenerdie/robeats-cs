@@ -448,6 +448,7 @@ local function Base()
 						Screens:FindScreen("ResultsScreen"):DoResults({
 							gamejoin=g._local_services._game_join;
 							localgame=g.local_game;
+							gamelua=g;
 						}, rate, self.curSelected)
 						g:DestroyStage()
 					end)
