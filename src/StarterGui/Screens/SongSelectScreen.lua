@@ -160,7 +160,7 @@ local function LeaderboardSlot(data,slotNum)
 		});
 		PlayerName = Roact.createElement("TextLabel", {
 			TextXAlignment = Enum.TextXAlignment.Left;
-			Text = data.PlayerName;
+			Text = data.username;
 			TextColor3 = Color3.new(1,1,1);
 			TextScaled = true;
 			BackgroundTransparency = 1;
@@ -170,7 +170,7 @@ local function LeaderboardSlot(data,slotNum)
 		});
 		PlayData=Roact.createElement("TextLabel", {
 			AnchorPoint = Vector2.new(0.5,0);
-			Text = "Rating: " .. Math.round(data.Rating,2) .. " | Score: " .. Math.round(data.Score) .. " | Accuracy: " .. Math.round(data.Accuracy,2) .. "%";
+			Text = "Rating: " .. Math.round(data.rating,2) .. " | Score: " .. Math.round(data.score) .. " | Accuracy: " .. Math.round(data.accuracy,2) .. "%";
 			TextXAlignment = Enum.TextXAlignment.Left;
 			TextColor3 = Color3.new(1,1,1);
 			TextScaled = true;
