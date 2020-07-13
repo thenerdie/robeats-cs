@@ -541,7 +541,7 @@ local function Sections()
 	tabNumber = 0
 	return {
 		[1] = NewSection("General", {
-			SongRate = NumberOption("Song Rate", "Rate", 0.05);
+			SongRate = NumberOption("Song Rate", "Rate", 0.05, {min=0.5, max=5});
 			ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
 		});
 		[2] = NewSection("Keybinds", {
