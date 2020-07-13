@@ -3,6 +3,7 @@ local Roact = require(ReplicatedStorage.Roact)
 local Rodux = require(ReplicatedStorage.Rodux)
 local RoactRodux = require(ReplicatedStorage.RoactRodux)
 local FastSpawn = require(game.ReplicatedStorage.FastSpawn)
+local DateTime = require(game.ReplicatedStorage.DateTime)
 local LocalPlayer = game.Players.LocalPlayer
 
 local Utils = script.Parent.Parent.Utils
@@ -55,12 +56,12 @@ local rateBinding, changeRateBinding = Roact.createBinding(Settings.Options.Rate
 
 local screenBinds = {
 	Keybind:listen(Enum.KeyCode.Equals, function()
-		Settings.Options.Rate = Settings.Options.Rate + 0.1
+		Settings.Options.Rate = Settings.Options.Rate + 0.05
 		changeRateBinding(Settings.Options.Rate)
 		self:Redraw()
 	end);
 	Keybind:listen(Enum.KeyCode.Minus, function()
-		Settings.Options.Rate = Settings.Options.Rate - 0.1
+		Settings.Options.Rate = Settings.Options.Rate - 0.05
 		changeRateBinding(Settings.Options.Rate)
 		self:Redraw()
 	end)
@@ -295,6 +296,21 @@ local function Base()
 						Size = UDim2.new(0.96,0,0.7,0);
 						Font = Enum.Font.GothamBlack;
 					});
+				}),
+				SongLen = Roact.createElement("TextLabel", {
+					Position = UDim2.new(0.9,0,0.6,0);
+					TextSize = 28;
+					AnchorPoint = Vector2.new(1,1);
+					BackgroundTransparency = 1;
+					TextStrokeTransparency = 0.75;
+					Font = Enum.Font.GothamBlack;
+					TextColor3 = Color3.fromRGB(255, 255, 255);
+					Text = rateBinding:map(function(rate)
+						local length = self.curSelected:GetLength()
+						local dtTime = DateTime:GetDateTime((length/1000)/rate)
+						local formatted = dtTime:format("Song Length: #m:#s")
+						return formatted
+					end);
 				}),
 				SongRate = Roact.createElement("TextLabel", {
 					Position = UDim2.new(0.9,0,0.845555,0);

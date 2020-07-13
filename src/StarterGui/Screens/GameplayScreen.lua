@@ -45,7 +45,7 @@ local function GetPlayers()
             BackgroundTransparency = 0.8;
             BackgroundColor3 = Color3.new(0.1,0.1,0.1);
         }, {
-            
+
         })
     end
     
@@ -81,7 +81,7 @@ local function DoBase(props)
 
     local timeLeftMs = songLen - curTime
     local timeLeftAlpha = curTime/songLen
-    local unformattedTL = DateTime:GetDateTime(timeLeftMs/1000)
+    local unformattedTL = DateTime:GetDateTime(timeLeftMs/1000/rate)
     local formattedTL = unformattedTL:format("#m:#s")
 
     local rating = Metrics:CalculateSR(rate or 1, song:GetDifficulty(), acc)
@@ -200,8 +200,8 @@ local function DoBase(props)
             AnchorPoint = Vector2.new(0,1);
             Position = UDim2.new(0.005,0,0.995,0);
             Font = Enum.Font.GothamBlack;
-			      BackgroundColor3 = Color3.fromRGB(122, 122, 122);
-			      Visible = Settings.Options.ShowGameplayUI;
+            BackgroundColor3 = Color3.fromRGB(122, 122, 122);
+            Visible = Settings.Options.ShowGameplayUI;
         });
     })
 end
