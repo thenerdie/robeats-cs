@@ -80,7 +80,6 @@ function Settings:Increment(key, value, clamp)
 	if typeof(Settings.Options[key]) == "number" then
 		local huge = math.huge
 		Settings.Options[key] = Settings.Options[key] + value
-		print(clamp.max)
 		Settings.Options[key] = math.clamp(Settings.Options[key], clamp.min or -huge, clamp.max or huge)
 		return Settings.Options[key]
 	end
