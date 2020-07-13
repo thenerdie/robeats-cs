@@ -112,7 +112,14 @@ local function getHue(clr)
 	return ColorSequence.new({white,color,black})
 end
 
-local function NumberOption(name, bound, increment)
+local function NumberOption(name, bound, increment, clamp)
+	local min = nil
+    local max = nil
+	if clamp ~= nil then
+		min = clamp.floor
+		max = clamp.ceiling
+	end
+
 	increment = increment or 1
 	local boundFire = "Update"..bound
 	self[bound], self[boundFire] = Roact.createBinding(Settings.Options[bound])
@@ -183,7 +190,7 @@ local function NumberOption(name, bound, increment)
 				TextWrapped = true,
 				TextColor3 = Color3.fromRGB(255, 255, 255),
 				[Roact.Event.MouseButton1Click] = function(rbx)
-					local optionValue = Settings:Increment(bound, increment)
+					local optionValue = Settings:Increment(bound, increment, clamp or {})
 					self[boundFire](optionValue)
 				end
 			})
@@ -212,7 +219,7 @@ local function NumberOption(name, bound, increment)
 				TextWrapped = true,
 				TextColor3 = Color3.fromRGB(255, 255, 255),
 				[Roact.Event.MouseButton1Click] = function(rbx)
-					local optionValue = Settings:Increment(bound, -increment)
+					local optionValue = Settings:Increment(bound, -increment, clamp or {})
 					self[boundFire](optionValue)
 				end
 			})
@@ -547,7 +554,7 @@ local function Sections()
 			FOV = NumberOption("Field Of View", "FOV", 5);
 		});
 		[4] = NewSection("Configuration", {
-			SongSelectRateIncrement = NumberOption("Song Select Rate Increment", "SongSelectRateIncrement", 0.05);
+			SongSelectRateIncrement = NumberOption("Song Select Rate Increment", "SongSelectRateIncrement", 0.05, {min=0.05, max=3});
 		})
 	}
 end
