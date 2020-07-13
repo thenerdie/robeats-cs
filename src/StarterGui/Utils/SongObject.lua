@@ -68,6 +68,12 @@ function SongObject:new(instance)
 		return self:GetData().AudioSongVersion or 1
 	end
 
+	function self:GetLength()
+		local hitObs = self:GetData().HitObjects
+		local lastHitOb = hitObs[#hitObs]
+		return lastHitOb.Time + (lastHitOb.Duration or 0)
+	end
+
 	function self:GetNpsGraph()
 		local points = {}
 		local lastMs = 0
