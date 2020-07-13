@@ -304,8 +304,10 @@ local function Base()
 					});
 				}),
 				SongLen = Roact.createElement("TextLabel", {
-					Position = UDim2.new(0.9,0,0.6,0);
-					TextSize = 28;
+					Position = UDim2.new(0.99,0,0.6,0);
+					Size = UDim2.new(0.3, 0, 0.245555, 0);
+					TextXAlignment = Enum.TextXAlignment.Right;
+					TextScaled = true;
 					AnchorPoint = Vector2.new(1,1);
 					BackgroundTransparency = 1;
 					TextStrokeTransparency = 0.75;
@@ -319,7 +321,9 @@ local function Base()
 					end);
 				}),
 				SongRate = Roact.createElement("TextLabel", {
-					Position = UDim2.new(0.9,0,0.845555,0);
+					Position = UDim2.new(0.99,0,0.845555,0);
+					Size = UDim2.new(0.3, 0, 0.245555, 0);
+					TextXAlignment = Enum.TextXAlignment.Right;
 					TextSize = 28;
 					AnchorPoint = Vector2.new(1,1);
 					BackgroundTransparency = 1;
@@ -467,10 +471,13 @@ local function Base()
 						local note_color_opt = Settings.Options.NoteColor
 						local noteColor = Color:convertHSV(note_color_opt)
 						g:StartGame(self.curSelected, rate, Settings.Options.Keybinds, noteColor, Settings.Options.ScrollSpeed)
+
+						local gamejoin=g._local_services._game_join;
+						local localgame=g.local_game;
+						local gamelua=g;
+						
 						Screens:FindScreen("ResultsScreen"):DoResults({
-							gamejoin=g._local_services._game_join;
-							localgame=g.local_game;
-							gamelua=g;
+							
 						}, rate, self.curSelected)
 						g:DestroyStage()
 					end)
