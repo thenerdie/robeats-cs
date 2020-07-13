@@ -45,6 +45,7 @@ local function GetPlayers()
             BackgroundTransparency = 0.8;
             BackgroundColor3 = Color3.new(0.1,0.1,0.1);
         }, {
+            
         })
     end
     
