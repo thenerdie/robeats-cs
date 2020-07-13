@@ -546,6 +546,9 @@ local function Sections()
 			NoteColor = ColorOption("Note color", "NoteColor");
 			FOV = NumberOption("Field Of View", "FOV", 5);
 		});
+		[4] = NewSection("Configuration", {
+			SongSelectRateIncrement = NumberOption("Song Select Rate Increment", "SongSelectRateIncrement", 0.05);
+		})
 	}
 end
 

@@ -56,12 +56,12 @@ local rateBinding, changeRateBinding = Roact.createBinding(Settings.Options.Rate
 
 local screenBinds = {
 	Keybind:listen(Enum.KeyCode.Equals, function()
-		Settings.Options.Rate = Settings.Options.Rate + 0.05
+		Settings.Options.Rate = Settings.Options.Rate + Settings.Options.SongSelectRateIncrement
 		changeRateBinding(Settings.Options.Rate)
 		self:Redraw()
 	end);
 	Keybind:listen(Enum.KeyCode.Minus, function()
-		Settings.Options.Rate = Settings.Options.Rate - 0.05
+		Settings.Options.Rate = Settings.Options.Rate - Settings.Options.SongSelectRateIncrement
 		changeRateBinding(Settings.Options.Rate)
 		self:Redraw()
 	end)
