@@ -55,7 +55,7 @@ function InputUtil:new(keys, disablePresses)
 		local userinput_service = game:GetService("UserInputService")
 		userinput_service.InputBegan:connect(function(input, gameProcessed)
 			if not disablePresses then
-				if input.UserInputType == Enum.UserInputType.Keyboard then
+				if input.UserInputType == Enum.UserInputType.Keyboard or input.UserInputType == Enum.UserInputType.Gamepad1 then
 					self:input_began(input.KeyCode)
 	
 				elseif input.UserInputType == Enum.UserInputType.MouseButton1 then
