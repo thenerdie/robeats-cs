@@ -846,6 +846,8 @@ function self:DoResults(props, rate, song)
 		miss = misses;
 		mapid = song:GetId();
 		mapname = song:GetDisplayName();
+		rate = Math.round(rate, 2);
+		combo = maxcombo;
 	}
 	if not gamelua.force_quit then
 		Logger:Log("Submitting score to database!")
