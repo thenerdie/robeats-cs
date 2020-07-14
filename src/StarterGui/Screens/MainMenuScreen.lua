@@ -62,23 +62,6 @@ local function GetUpdateNotes()
 	return notes
 end
 
-local function Option(props, optionNumber)
-	return Roact.createElement(UI.new("TextButton"), {
-		Size=UDim2.new(1,0,1/numNames,0);
-		Position=UDim2.new(0,0,(optionNumber-1)/numNames,0);
-		TextSize=18;
-		Text=props.Name;
-		OnClick = props.Click;
-	})
-	--[[Roact.createElement("TextButton", {
-		Size=UDim2.new(1,0,1/numNames,0);
-		Position=UDim2.new(0,0,(optionNumber-1)/numNames,0);
-		TextSize=18;
-		Text=props.Name;
-		[Roact.Event.MouseButton1Click] = props.Click
-	})]]--
-end
-
 function self:DoOptions(props)
 	Logger:Log("Main menu mounting...")
 	Logger:Log("Max options: " .. numNames)
