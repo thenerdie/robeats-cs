@@ -25,31 +25,40 @@ local self = {}
 local handle = {}
 
 
-function self:DoResults(props, rate, song)
+function self:DoResults(props, doSubmit)
 	Logger:Log("Results screen mounting...")
+
+	doSubmit = doSubmit or false
+
 	--_marv_count,_perfect_count,_great_count,_good_count,_ok_count,_miss_count,_total_count,self:get_acc(),self._score,self._chain,_max_chain
-	local localgame = props.localgame
-	local gamejoin = props.gamejoin
-	local gamelua = props.gamelua
 	
-	local audio_manager = localgame._audio_manager
+	--local audio_manager = localgame._audio_manager
 	
-	local songLen = gamejoin:get_songLength()/1000
-	
-	local data = gamejoin:get_data()
-	
-	local marvs = data[1]
-	local perfs = data[2]
-	local greats = data[3]
-	local goods = data[4]
-	local okays = data[5]
-	local misses = data[6]
-	local total = data[7]	
-	local acc = data[8]
-	local score = data[9]
-	local chain = data[10]
-	local maxcombo = data[11]
-	
+	local marvs = props.marv
+	local perfs = props.perf
+	local greats = props.great
+	local goods = props.good
+	local okays = props.okay
+	local misses = props.miss
+	local total = props.total	
+	local acc = props.acc
+	local score = props.score
+	local chain = props.chain
+	local maxcombo = props.maxcombo
+	local npsgraph = props.npsgraph
+	local song = props.song
+	local songLen = props.songlen
+	local rate = props.rate
+
+	print(marvs)
+	print(perfs)
+	print(score)
+
+	--[[
+	gamejoin:get_songLength()/1000
+	gamejoin:get_data()
+	]]--
+
 	local ratio = 0
 	
 	ratio = Math.round(marvs/perfs, 2)
@@ -70,15 +79,17 @@ function self:DoResults(props, rate, song)
 	graph.xfloor = 0
 	graph.xceiling = songLen
 	
-	graph.yfloor = Math.negative(audio_manager.NOTE_REMOVE_TIME)
-	graph.yceiling = math.abs(audio_manager.NOTE_REMOVE_TIME)
+	graph.yfloor = -250
+	graph.yceiling = 250
 	
-	for i, hit in pairs(gamejoin:GetMsDeviance()) do
-		local judgeNum = hit[3]
-		if judgeNum ~= 6 then
-			graph:AddObject(hit[1]*songLen, hit[2], Metrics:GetJudgementColor(judgeNum))
-		else
-			graph:AddBreak(hit[1]*songLen)
+	if npsgraph ~= nil then
+		for i, hit in pairs(npsgraph) do
+			local judgeNum = hit[3]
+			if judgeNum ~= 6 then
+				graph:AddObject(hit[1]*songLen, hit[2], Metrics:GetJudgementColor(judgeNum))
+			else
+				graph:AddBreak(hit[1]*songLen)
+			end
 		end
 	end
 
@@ -849,7 +860,7 @@ function self:DoResults(props, rate, song)
 		rate = Math.round(rate, 2);
 		combo = maxcombo;
 	}
-	if not gamelua.force_quit then
+	if doSubmit then
 		Logger:Log("Submitting score to database!")
 		Online:SubmitScore(pkg_data)
 	end

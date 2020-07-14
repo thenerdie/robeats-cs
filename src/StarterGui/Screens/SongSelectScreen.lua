@@ -472,13 +472,33 @@ local function Base()
 						local noteColor = Color:convertHSV(note_color_opt)
 						g:StartGame(self.curSelected, rate, Settings.Options.Keybinds, noteColor, Settings.Options.ScrollSpeed)
 
+
 						local gamejoin=g._local_services._game_join;
 						local localgame=g.local_game;
 						local gamelua=g;
+
+						local songlen = gamejoin:get_songLength()/1000
+						local data = gamejoin:get_data()
+
+						--_marv_count,_perfect_count,_great_count,_good_count,_ok_count,_miss_count,_total_count,self:get_acc(),self._score,self._chain,_max_chain
 						
 						Screens:FindScreen("ResultsScreen"):DoResults({
-							
-						}, rate, self.curSelected)
+							marv = data[1];
+							perf = data[2];
+							great = data[3];
+							good = data[4];
+							okay = data[5];
+							miss = data[6];
+							total = data[7];
+							acc = data[8];
+							score = data[9];
+							chain = data[10];
+							maxcombo = data[11];
+							npsgraph = gamejoin:GetMsDeviance();
+							song = self.curSelected;
+							songlen = songlen;
+							rate = rate;
+						})
 						g:DestroyStage()
 					end)
 				end;
