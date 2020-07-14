@@ -126,7 +126,7 @@ local function NumberOption(name, bound, increment, clamp)
 	optionNumber = optionNumber + 1
 	return Roact.createElement("Frame", {
 		Size = UDim2.new(0.975,0,0.075,0);
-		Position = UDim2.new(0, 0, (optionNumber-1) / (maxOptionNumber * 2) + ((optionNumber - 1) / 100), 0);
+		Position = UDim2.new(0, 0, (optionNumber-2) / (maxOptionNumber * 2) + ((optionNumber - 2) / 100), 0);
 		BackgroundColor3 = Color3.fromRGB(27, 27, 27);
 		BorderSizePixel = 0;
 	}, {
@@ -503,7 +503,7 @@ local totalSections = 5
 
 local function NewSection(name, children)
 	children = children or {}
-	optionNumber = #children+1
+	optionNumber = 0
 	tabNumber = tabNumber + 1
 	local isSelected = curSelected == name
 	return {
