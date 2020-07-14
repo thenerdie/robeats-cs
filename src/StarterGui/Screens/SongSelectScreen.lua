@@ -156,6 +156,7 @@ local function LeaderboardSlot(data,slotNum)
 		Position = UDim2.new(0,0,0,(slotNum-1)*72);
 		BorderSizePixel = 0;
 		[Roact.Event.MouseButton1Click] = function(rbx)
+			self:Unmount()
 			Screens:FindScreen("ResultsScreen"):DoResults({
 				marv = data.marv;
 				perf = data.perf;
