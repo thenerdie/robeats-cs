@@ -483,7 +483,7 @@ local function Base()
 					end)
 				end;
 			}, {
-				PlayButton = Roact.createElement("TextLabel", {
+				PlayButtonText = Roact.createElement("TextLabel", {
 					TextStrokeTransparency = 0.75;
 					AnchorPoint =  Vector2.new(0.5,0.5),
 					Text = "PLAY",
