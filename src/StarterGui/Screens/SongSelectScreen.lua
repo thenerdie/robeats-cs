@@ -22,7 +22,6 @@ local Keybind = require(Utils.Keybind)
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
 local Graph = require(Frameworks.Graph)
-local UI = require(Frameworks.UI)
 
 local songs = SongLibrary:GetAllSongs()
 

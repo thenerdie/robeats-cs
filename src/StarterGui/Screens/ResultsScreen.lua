@@ -16,7 +16,6 @@ local Logger = require(Utils.Logger):register(script)
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
 local Graph = require(Frameworks.Graph)
-local UI = require(Frameworks.UI)
 
 local DT = require(game.ReplicatedStorage.DateTime)
 

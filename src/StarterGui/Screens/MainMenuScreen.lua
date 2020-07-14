@@ -8,7 +8,6 @@ local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
-local UI = require(Frameworks.UI)
 
 local UpdateNotes = require(workspace:WaitForChild("UpdateNotes"))
 
