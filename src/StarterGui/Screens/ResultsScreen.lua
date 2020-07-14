@@ -49,10 +49,8 @@ function self:DoResults(props, doSubmit)
 	local song = props.song
 	local songLen = props.songlen
 	local rate = props.rate
-
-	print(marvs)
-	print(perfs)
-	print(score)
+	local playername = props.playername
+	local playerid = props.playerid
 
 	--[[
 	gamejoin:get_songLength()/1000
@@ -198,7 +196,7 @@ function self:DoResults(props, doSubmit)
 							ZIndex = 7,
 							BorderSizePixel = 0,
 							BackgroundTransparency = 1,
-							Text = LocalPlayer.Name,
+							Text = playername,
 							Font = Enum.Font.GothamBlack,
 							TextScaled = true,
 							TextWrapped = true,
@@ -265,7 +263,7 @@ function self:DoResults(props, doSubmit)
 						BorderSizePixel = 0,
 						BackgroundTransparency = 1,
 						ScaleType = Enum.ScaleType.Fit,
-						Image = "https://www.roblox.com/headshot-thumbnail/image?userId="..LocalPlayer.UserId.."&width=420&height=420&format=png",
+						Image = "https://www.roblox.com/headshot-thumbnail/image?userId="..playerid.."&width=420&height=420&format=png",
 					})
 				}),
 				Song = Roact.createElement("ImageLabel", {

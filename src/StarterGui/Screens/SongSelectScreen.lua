@@ -150,11 +150,31 @@ local function getNPSGraph(props)
 end
 
 local function LeaderboardSlot(data,slotNum)
-	return Roact.createElement("Frame", {
+	return Roact.createElement("ImageButton", {
 		Size = UDim2.new(0.96,0,0,70);
 		BackgroundColor3 = Color3.fromRGB(17, 17, 17);
 		Position = UDim2.new(0,0,0,(slotNum-1)*72);
 		BorderSizePixel = 0;
+		[Roact.Event.MouseButton1Click] = function(rbx)
+			Screens:FindScreen("ResultsScreen"):DoResults({
+				marv = data.marv;
+				perf = data.perf;
+				great = data.great;
+				good = data.good;
+				okay = data.okay;
+				miss = data.miss;
+				total = #self.curSelected:GetData().HitObjects;
+				acc = data.accuracy;
+				score = data.score;
+				chain = 0;
+				maxcombo = data.combo;
+				playername = data.username;
+				playerid = data.userid;
+				song = self.curSelected;
+				songlen = 100;
+				rate = data.rate;
+			})
+		end
 	}, {
 		SlotNumber = Roact.createElement("TextLabel", {
 			Text = tostring(slotNum)..".";
@@ -495,10 +515,12 @@ local function Base()
 							chain = data[10];
 							maxcombo = data[11];
 							npsgraph = gamejoin:GetMsDeviance();
+							playername = LocalPlayer.Name;
+							playerid = LocalPlayer.UserId;
 							song = self.curSelected;
 							songlen = songlen;
 							rate = rate;
-						})
+						}, not g.force_quit)
 						g:DestroyStage()
 					end)
 				end;
