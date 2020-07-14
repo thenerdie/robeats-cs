@@ -546,7 +546,7 @@ local function Sections()
 			BoolOption("Show Marvs", "ShowMarvs");
 			BoolOption("Show Perfs", "ShowPerfs");
 			BoolOption("Show Greats", "ShowGreats");
-			BoolOption("Show Okays", "ShowOkays");
+			BoolOption("Show Goods", "ShowGoods");
 			BoolOption("Show Bads", "ShowBads");
 			BoolOption("Show Misses", "ShowMisses");
 		});

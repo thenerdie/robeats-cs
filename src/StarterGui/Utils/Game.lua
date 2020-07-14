@@ -67,7 +67,6 @@ function Game:new()
 			{
 				Settings:GetOption("ShowMisses");
 				Settings:GetOption("ShowBads");
-				Settings:GetOption("ShowOkays");
 				Settings:GetOption("ShowGoods");
 				Settings:GetOption("ShowGreats");
 				Settings:GetOption("ShowPerfs");

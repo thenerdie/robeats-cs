@@ -32,7 +32,7 @@ Settings.Options = {
 	ShowMarvs = true;
 	ShowPerfs = true;
 	ShowGreats = true;
-	ShowOkays = true;
+	ShowGoods = true;
 	ShowBads = true;
 	ShowMisses = true;
 }

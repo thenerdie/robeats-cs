@@ -164,7 +164,7 @@ local function LeaderboardSlot(data,slotNum)
 				good = data.good;
 				okay = data.okay;
 				miss = data.miss;
-				total = #self.curSelected:GetData().HitObjects;
+				total = self.curSelected:GetObjectNumber();
 				acc = data.accuracy;
 				score = data.score;
 				chain = 0;
@@ -172,7 +172,7 @@ local function LeaderboardSlot(data,slotNum)
 				playername = data.username;
 				playerid = data.userid;
 				song = self.curSelected;
-				songlen = 100;
+				songlen = self.curSelected:GetLength();
 				rate = data.rate;
 			})
 		end

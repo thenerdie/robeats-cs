@@ -74,6 +74,15 @@ function SongObject:new(instance)
 		return lastHitOb.Time + (lastHitOb.Duration or 0)
 	end
 
+	function self:GetObjectNumber()
+		local hitObs = self:GetData().HitObjects
+		local num = 0
+		for i, v in pairs(hitObs) do
+			num = num + v.Type
+		end
+		return num
+	end
+
 	function self:GetNpsGraph()
 		local points = {}
 		local lastMs = 0
