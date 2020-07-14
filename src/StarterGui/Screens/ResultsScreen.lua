@@ -50,6 +50,7 @@ function self:DoResults(props, doSubmit)
 	local rate = props.rate
 	local playername = props.playername
 	local playerid = props.playerid
+	local now = props.datetime or DT:GetDateTime()
 
 	--[[
 	gamejoin:get_songLength()/1000
@@ -91,8 +92,6 @@ function self:DoResults(props, doSubmit)
 	end
 
 	Logger:Log("Graph generated successfully!")
-	
-	local now = DT:GetDateTime()
 	
 	local frame = Roact.createElement("ScreenGui", {
 		ResetOnSpawn = false,

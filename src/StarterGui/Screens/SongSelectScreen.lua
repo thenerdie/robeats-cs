@@ -171,8 +171,9 @@ local function LeaderboardSlot(data,slotNum)
 				playername = data.username;
 				playerid = data.userid;
 				song = self.curSelected;
-				songlen = self.curSelected:GetLength();
+				songlen = self.curSelected:GetLength()/1000;
 				rate = data.rate;
+				datetime = DateTime:GetDateTime(DateTime:GetTickFromISO(data.updatedAt));
 			})
 		end
 	}, {

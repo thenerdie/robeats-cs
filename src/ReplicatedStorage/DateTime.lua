@@ -57,6 +57,13 @@
 
 local dt = {}
 
+function dt:GetTickFromISO(iso)
+	--2020-07-13T02:40:23.647Z
+	local datetime = DateTime.fromIsoDate(iso):ToLocalTime()
+	print(datetime.Hour)
+	return os.time({year=datetime.Year, month=datetime.Month, day=datetime.Day, hour=datetime.Hour, min=datetime.Minute, sec=datetime.Second})
+end
+
 function dt:GetDateTime(t_)
 	local date = {}
 	local months = {
