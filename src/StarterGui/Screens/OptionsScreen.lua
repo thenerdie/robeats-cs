@@ -556,7 +556,7 @@ local function Sections()
 		});
 		NewSection("Customization", {
 			ColorOption("Note color", "NoteColor");
-			NumberOption("Field Of View", "FOV", 5);
+			NumberOption("Field Of View", "FOV", 5, {min=15, max=90});
 		});
 		NewSection("Configuration", {
 			NumberOption("Song Select Rate Increment", "SongSelectRateIncrement", 0.05, {min=0.05, max=2});
