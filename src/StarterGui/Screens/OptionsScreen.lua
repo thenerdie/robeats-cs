@@ -540,22 +540,28 @@ end
 local function Sections()
 	tabNumber = 0
 	return {
-		[1] = NewSection("General", {
-			SongRate = NumberOption("Song Rate", "Rate", 0.05, {min=0.5, max=5});
-			ScrollSpeed = NumberOption("Scroll Speed", "ScrollSpeed");
+		NewSection("General", {
+			NumberOption("Song Rate", "Rate", 0.05, {min=0.5, max=5});
+			NumberOption("Scroll Speed", "ScrollSpeed");
+			BoolOption("Show Marvs", "ShowMarvs");
+			BoolOption("Show Perfs", "ShowPerfs");
+			BoolOption("Show Greats", "ShowGreats");
+			BoolOption("Show Okays", "ShowOkays");
+			BoolOption("Show Bads", "ShowBads");
+			BoolOption("Show Misses", "ShowMisses");
 		});
-		[2] = NewSection("Keybinds", {
-			Keybind = KeybindOption("Gameplay keys", "Keybinds", 4);
-			QuickExit = KeybindOption("Quick exit key", "QuickExitKeybind", 1);
-			HideGameplayUI = KeybindOption("Hide gameplay elements", "HideGameplayUI", 1);
+		NewSection("Keybinds", {
+			KeybindOption("Gameplay keys", "Keybinds", 4);
+			KeybindOption("Quick exit key", "QuickExitKeybind", 1);
+			KeybindOption("Hide gameplay elements", "HideGameplayUI", 1);
 		});
-		[3] = NewSection("Customization", {
-			NoteColor = ColorOption("Note color", "NoteColor");
-			FOV = NumberOption("Field Of View", "FOV", 5);
+		NewSection("Customization", {
+			ColorOption("Note color", "NoteColor");
+			NumberOption("Field Of View", "FOV", 5);
 		});
-		[4] = NewSection("Configuration", {
-			SongSelectRateIncrement = NumberOption("Song Select Rate Increment", "SongSelectRateIncrement", 0.05, {min=0.05, max=2});
-		})
+		NewSection("Configuration", {
+			NumberOption("Song Select Rate Increment", "SongSelectRateIncrement", 0.05, {min=0.05, max=2});
+		});
 	}
 end
 

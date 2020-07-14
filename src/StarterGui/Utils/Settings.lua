@@ -29,6 +29,12 @@ Settings.Options = {
 	BackButtonPos = UDim2.new(0.923,0,0.955,0);
 	FOV = 70;
 	SongSelectRateIncrement = 0.05;
+	ShowMarvs = true;
+	ShowPerfs = true;
+	ShowGreats = true;
+	ShowOkays = true;
+	ShowBads = true;
+	ShowMisses = true;
 }
 
 Settings.DefaultUIPos = { -- Used to reset to default, wip

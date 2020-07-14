@@ -33,7 +33,7 @@ function Game:new()
 	g._local_services = {}
 	g.local_game = {}
 	g.force_quit = false
-	function g:StartGame(song, rate, keys, note_color, scroll_speed,combo)
+	function g:StartGame(song, rate, keys, note_color, scroll_speed, combo)
 		local fov = Settings.Options.FOV
 		Logger:Log("Current FOV: " .. fov .. ", applying...")
 		CurrentCamera.FieldOfView = fov
@@ -64,7 +64,15 @@ function Game:new()
 			note_color,
 			0, 
 			0,
-			{},
+			{
+				Settings:GetOption("ShowMisses");
+				Settings:GetOption("ShowBads");
+				Settings:GetOption("ShowOkays");
+				Settings:GetOption("ShowGoods");
+				Settings:GetOption("ShowGreats");
+				Settings:GetOption("ShowPerfs");
+				Settings:GetOption("ShowMarvs");
+			},
 			nil,
 			ModManager:GetActivatedMods() or {},
 			combo
