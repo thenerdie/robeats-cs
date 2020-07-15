@@ -500,7 +500,10 @@ end
 
 local totalSections = 5
 
-local function NewSection(name, children)
+local function NewSection(name, children, default)
+	if default and curSelected == "" then
+		curSelected = name
+	end
 	children = children or {}
 	optionNumber = 0
 	tabNumber = tabNumber + 1
@@ -548,7 +551,7 @@ local function Sections()
 			BoolOption("Show Goods", "ShowGoods");
 			BoolOption("Show Bads", "ShowBads");
 			BoolOption("Show Misses", "ShowMisses");
-		});
+		}, true);
 		NewSection("Keybinds", {
 			KeybindOption("Gameplay keys", "Keybinds", 4);
 			KeybindOption("Quick exit key", "QuickExitKeybind", 1);
