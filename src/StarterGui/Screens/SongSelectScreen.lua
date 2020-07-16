@@ -523,6 +523,7 @@ local function Base()
 							rate = rate;
 						}, not g.force_quit)
 						g:DestroyStage()
+						g:DestroyGame()
 					end)
 				end;
 			}, {

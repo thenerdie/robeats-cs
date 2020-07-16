@@ -208,6 +208,9 @@ function Game:new()
 		end
 		Logger:Log("Stage destroyed successfully!")
 	end
+	function g:DestroyGame()
+		g = nil
+	end
 	function g:GetGame()
 		return g.local_game
 	end
