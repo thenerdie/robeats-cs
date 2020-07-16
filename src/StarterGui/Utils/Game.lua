@@ -11,7 +11,7 @@ local GameJoin = require(dir.Local.GameJoin)
 local SPUISystem = require(dir.Shared.SPUISystem)
 local EnqueueFn = require(dir.Shared.EnqueueFn)
 local HitCache = require(dir.Local.HitCache)
-local ModManager = require(dir.ModManager)
+local ModManager = require(game.ReplicatedStorage.ModManager)
 
 local Utils = script.Parent
 local Settings = require(Utils.Settings)
