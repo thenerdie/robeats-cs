@@ -173,7 +173,7 @@ local function LeaderboardSlot(data,slotNum)
 				song = self.curSelected;
 				songlen = self.curSelected:GetLength()/1000;
 				rate = data.rate;
-				datetime = DateTime:GetDateTime(DateTime:GetTickFromISO(data.updatedAt));
+				datetime = DateTime:GetDateTime(data.epochtime);
 			})
 		end
 	}, {
@@ -523,6 +523,7 @@ local function Base()
 							rate = rate;
 						}, not g.force_quit)
 						g:DestroyStage()
+						g:DestroyGame()
 					end)
 				end;
 			}, {
