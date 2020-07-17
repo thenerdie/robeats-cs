@@ -1,5 +1,8 @@
 -- TODO: make this module rate limit itself so it doesnt like spam the database or anything like that
 
+local Utils = script.Parent
+local Logger = require(Utils.Logger):register(script)
+
 local r = game.ReplicatedStorage
 local m = r:WaitForChild("Misc")
 
@@ -31,6 +34,9 @@ function Online:GetMapLeaderboard(m_ID)
 			t = tick();
 		}
 	end
+
+	Logger:Log(retrieveNew and "Retrieving new leaderboard from the web server..." or "Using cache...")
+
 	return r
 end
 
