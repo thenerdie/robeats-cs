@@ -135,7 +135,7 @@ local function getNPSGraph(props)
 		local n = c:GetNpsGraph()
 		local r = Settings.Options.Rate or 1
 		graph.xfloor = 0
-		graph.xceiling = #n
+		graph.xceiling = math.floor(c:GetLength()/1000)/r
 		graph.xinterval = 30
 		graph.yceiling = (Math.findMax(n)+5)*r
 		graph.yfloor = 0
