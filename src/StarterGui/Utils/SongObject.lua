@@ -51,6 +51,18 @@ function SongObject:new(instance)
 		
 		return str
 	end
+
+	function self:ConcatMetadata()
+		return string.format("%s %s %s %s %s %s %s", 
+			self:GetId(),
+			self:GetDifficultyName(),
+			self:GetDifficulty(),
+			self:GetArtist(),
+			self:GetCreator(),
+			self:GetSongName(),
+			self:GetName()
+		)
+	end
 	
 	function self:GetButtonColor()
 		return self:GetData().AudioButtonColor or Color3.new(0.4,0.4,0.4)
