@@ -3,15 +3,35 @@
 local r = game.ReplicatedStorage
 local m = r:WaitForChild("Misc")
 
+local _mcache = {}
 local _curSelected = nil
 
 local Online = {}
 
 function Online:GetMapLeaderboard(m_ID)
 	_curSelected = m_ID
-	wait(0.3)
+	wait(0.55)
 	if m_ID ~= _curSelected then return {} end
-	return m.GetSongLeaderboard:InvokeServer(m_ID)
+
+	local retrieveNew = false
+
+	local o = _mcache[m_ID]
+
+	if o ~= nil then
+		if tick() - o.t > 15 then
+			retrieveNew = true
+		end
+	else
+		retrieveNew = true
+	end
+	local r = retrieveNew and m.GetSongLeaderboard:InvokeServer(m_ID) or _mcache[m_ID].lb
+	if retrieveNew then
+		_mcache[m_ID] = {
+			lb = r;
+			t = tick();
+		}
+	end
+	return r
 end
 
 function Online:GetPlayerPlays()
