@@ -2,7 +2,7 @@ local HTTP = game:GetService("HttpService")
 local LOCA = game:GetService("LocalizationService")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Anticheat = require(ReplicatedStorage.Shared.Anticheat)
+--local Anticheat = require(ReplicatedStorage.Anticheat)
 local Misc = ReplicatedStorage:WaitForChild("Misc")
 
 local baseUrl = "robeatscsgame.com/api/"

@@ -213,7 +213,7 @@ end
 local function SongButtons(props)
 	local bttns = {}	
 	for i, song in pairs(props.songs) do
-		local doAdd = Search:find(song.instance.Name, props.search)
+		local doAdd = Search:find(song:ConcatMetadata(), props.search)
 		if doAdd then bttns[#bttns+1] = SongButton(song.instance, song, i) end
 	end
 	return Roact.createFragment(bttns), #bttns
