@@ -113,7 +113,13 @@ function SongObject:new(instance)
 	end
 	
 	function self:GetId()
-		return self:GetData().AudioId
+		local ho = self:GetData().HitObjects
+		local id = 0
+		for i, obj in pairs(ho) do
+			math.randomseed((obj.Time or 0) + (obj.Track or 0) + (obj.Type or 0) + (obj.Duration or 0))
+			id = id + math.floor(math.random()*100)
+		end
+		return id
 	end
 	
 	function self:GetDifficultyName()
