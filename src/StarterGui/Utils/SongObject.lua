@@ -5,8 +5,10 @@ local SongObject = {}
 
 function SongObject:new(instance)
 	local self = {}
-	local cachedRating = 0
-	local hasCalced = false
+	local cachedId = nil
+	local cachedRating = nil
+	local cachedObNum = nil
+	local cachedNpsGraph = nil
 
 	self.instance = instance
 	
@@ -69,8 +71,7 @@ function SongObject:new(instance)
 	end
 	
 	function self:GetDifficulty()
-		if not hasCalced then
-			hasCalced = true
+		if cachedRating = nil then
 			cachedRating = self:GetData().AudioDifficulty or CSCalc:DoRating(self)
 		end
 		return cachedRating
@@ -87,39 +88,48 @@ function SongObject:new(instance)
 	end
 
 	function self:GetObjectNumber()
-		local hitObs = self:GetData().HitObjects
-		local num = 0
-		for i, v in pairs(hitObs) do
-			num = num + v.Type
+		if cachedObNum == nil then
+			local hitObs = self:GetData().HitObjects
+			local num = 0
+			for i, v in pairs(hitObs) do
+				num = num + v.Type
+			end
+			cachedObNum = num
 		end
-		return num
+		return cachedObNum
 	end
 
 	function self:GetNpsGraph()
-		local points = {}
-		local lastMs = 0
-		local objects = self:GetData().HitObjects
-		local curNps = 0
-		for i, object in pairs(objects) do
-			local curTime = object.Time
-			if curTime - lastMs > 1000 then
-				lastMs = curTime
-				points[#points+1] = curNps
-				curNps = 0
+		if cachedNpsGraph == nil then
+			local points = {}
+			local lastMs = 0
+			local objects = self:GetData().HitObjects
+			local curNps = 0
+			for i, object in pairs(objects) do
+				local curTime = object.Time
+				if curTime - lastMs > 1000 then
+					lastMs = curTime
+					points[#points+1] = curNps
+					curNps = 0
+				end
+				curNps = curNps + 1
 			end
-			curNps = curNps + 1
+			cachedNpsGraph = points
 		end
-		return points
+		return cachedNpsGraph
 	end
 	
 	function self:GetId()
-		local ho = self:GetData().HitObjects
-		local id = 0
-		for i, obj in pairs(ho) do
-			math.randomseed((obj.Time or 0) + (obj.Track or 0) + (obj.Type or 0) + (obj.Duration or 0))
-			id = id + math.floor(math.random()*100)
+		if cachedId == nil then
+			local ho = self:GetData().HitObjects
+			local id = 0
+			for i, obj in pairs(ho) do
+				math.randomseed((obj.Time or 0) + (obj.Track or 0) + (obj.Type or 0) + (obj.Duration or 0))
+				id = id + math.floor(math.random()*100)
+			end
+			cachedId = id
 		end
-		return id
+		return cachedId
 	end
 	
 	function self:GetDifficultyName()
