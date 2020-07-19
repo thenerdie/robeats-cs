@@ -21,6 +21,7 @@ function Boundary.Client:Listen(name, callback)
     end
     return nil
 end
+
 --// SERVER METHODS:
 
 function Boundary.Server:Register(name, callback)
