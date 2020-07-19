@@ -1,5 +1,8 @@
 -- TODO: make this module rate limit itself so it doesnt like spam the database or anything like that
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Boundary  = require(ReplicatedStorage.Frameworks.Boundary)
+
 local Utils = script.Parent
 local Logger = require(Utils.Logger):register(script)
 
@@ -27,7 +30,7 @@ function Online:GetMapLeaderboard(m_ID)
 	else
 		retrieveNew = true
 	end
-	local r = retrieveNew and m.GetSongLeaderboard:InvokeServer(m_ID) or _mcache[m_ID].lb
+	local r = retrieveNew and Boundary.Client:Execute("GetMapLB", m_ID) or _mcache[m_ID].lb
 	if retrieveNew then
 		_mcache[m_ID] = {
 			lb = r;
