@@ -6,9 +6,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Boundary = require(ReplicatedStorage.Frameworks.Boundary)
 
 --local Anticheat = require(ReplicatedStorage.Anticheat)
-local Misc = ReplicatedStorage:WaitForChild("Misc")
 
-local baseUrl = "robeatscsgame.com/api/"
+local baseUrl = "robeatscsgame.com/api"
 
 baseUrl = "https://" .. baseUrl
 
@@ -243,25 +242,21 @@ game.Players.PlayerRemoving:Connect(function(p)
 	-- idk bye i guess
 end)
 
-Misc.GetSongLeaderboard.OnServerInvoke = function(player, m_ID)
-	return getMapLeaderboard(m_ID)
-end
-
-Misc.GetTopPlays.OnServerInvoke = function(player)
-	local p_ID = "P" .. tostring(player.UserId)
-	return getPlays(p_ID)
-end
-
-Misc.GetGlobalLeaderboard.OnServerInvoke = function()
-	return getGlobalLeaderboard()
-end
-
-Misc.SubmitScore.OnServerInvoke = function(player, data)
+Boundary.Server:Register("SubmitScore", function(player, data)
 	local RBLXLeaderstats = player:WaitForChild("leaderstats")
 	data.userid = player.UserId
 	data.username = player.Name
 	sendScore(data)
-end
+end)
+
+Boundary.Server:Register("GetMapLB", function(player, m_ID)
+	return getMapLeaderboard(m_ID)
+end)
+
+Boundary.Server:Register("GetUserPlays", function(player, data)
+	local p_ID = tostring(player.UserId)
+	return getPlays(p_ID)
+end)
 
 --[[local function CalculatePlayerRating(p_ID)
 	local maps = game.ReplicatedStorage:WaitForChild("Songs")
