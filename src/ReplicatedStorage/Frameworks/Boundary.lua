@@ -32,5 +32,11 @@ function Boundary.Server:Register(name, callback)
 end
 
 function Boundary.Server:Execute(name, plr, ...)
+    local r = script:WaitForChild(name, 5)
+    if r ~= nil then
+        return r:InvokeClient(plr, ...)
+    end
+    return nil
+end
 
 return Boundary
