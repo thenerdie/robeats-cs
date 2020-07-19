@@ -20,6 +20,11 @@ local function makeRequest(url, method, body, headers, onError)
         onError(err)
         return nil
     end
+    local headers = res.Headers
+    
+    if string.find(headers["content-type"], "application/json") ~= nil then
+        res.DecodedBody = Http:Deserialize(res.Body)
+    end
 	return res
 end
 
@@ -39,7 +44,11 @@ function Http:Request(url, method, headers, onError)
 end
 
 function Http:Serialize(tab)
-    return H
+    return HttpService:JSONEncode(tab)
+end
+
+function Http:Deserialize(str)
+    return HttpService:JSONDecode(str)
 end
 
 return Http
