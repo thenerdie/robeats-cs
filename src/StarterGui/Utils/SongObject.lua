@@ -1,3 +1,5 @@
+local Players = game:GetService("Players")
+
 local Metrics = require(script.Parent.Metrics)
 local CSCalc = require(script.Parent.CSCalc)
 
@@ -11,28 +13,6 @@ function SongObject:new(instance)
 	local cachedNpsGraph = nil
 
 	self.instance = instance
-	
-	local function itrString(str, clb)
-		for char in string.gmatch(self.instance.Name, ".") do
-			if clb then
-				local ret = clb(char)
-				if ret == -1 then
-					break
-				end
-			end
-		end
-	end
-	
-	local function isWhiteSpace(str)
-		local i = 0
-		itrString(str, function(char)
-			if char == "" or " " then i = i + 1 end
-		end)
-		if i == str:len() then
-			return true
-		end
-		return false
-	end
 	
 	function self:GetData()
 		return require(self.instance)
@@ -71,7 +51,7 @@ function SongObject:new(instance)
 	end
 	
 	function self:GetDifficulty()
-		if cachedRating = nil then
+		if cachedRating == nil then
 			cachedRating = self:GetData().AudioDifficulty or CSCalc:DoRating(self)
 		end
 		return cachedRating
