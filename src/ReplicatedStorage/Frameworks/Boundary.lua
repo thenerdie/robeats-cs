@@ -14,6 +14,13 @@ function Boundary.Client:Execute(name, ...)
     return nil
 end
 
+function Boundary.Client:Listen(name, callback)
+    local r = script:WaitForChild(name)
+    if r ~= nil then
+        r.OnClientInvoke = callback
+    end
+    return nil
+end
 --// SERVER METHODS:
 
 function Boundary.Server:Register(name, callback)
