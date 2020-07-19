@@ -30,6 +30,6 @@ function Boundary.Server:Register(name, callback)
     rf.Parent = script
 end
 
-
+function Boundary.Server:Execute(name, plr, ...)
 
 return Boundary
