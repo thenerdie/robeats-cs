@@ -32,4 +32,5 @@
 		--spectator
 		--multiplayer [done]
 		--background decal customization (dock)
+	test
 --]]
