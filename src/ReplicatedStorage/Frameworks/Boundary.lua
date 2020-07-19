@@ -26,7 +26,7 @@ end
 function Boundary.Server:Register(name, callback)
     local rf = Instance.new("RemoteFunction")
     rf.Name = name
-    rf.OnServerInvoke = callback
+    rf.OnServerInvoke = callback or (function()end)
     rf.Parent = script
 end
 
