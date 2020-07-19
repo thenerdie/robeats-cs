@@ -2,6 +2,9 @@ local HTTP = game:GetService("HttpService")
 local LOCA = game:GetService("LocalizationService")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local Boundary = require(ReplicatedStorage.Frameworks.Boundary)
+
 --local Anticheat = require(ReplicatedStorage.Anticheat)
 local Misc = ReplicatedStorage:WaitForChild("Misc")
 
