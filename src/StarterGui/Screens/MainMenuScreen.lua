@@ -245,7 +245,7 @@ function self:DoOptions(props)
 					ZIndex = 6,
 					BorderSizePixel = 0,
 					BackgroundTransparency = 1,
-					Text = "Music Player (wip)",
+					Text = "RoBeats CS",
 					Font = Enum.Font.GothamBlack,
 					TextScaled = true,
 					TextWrapped = true,
