@@ -7,7 +7,16 @@ function TableQuery.query(tab)
         table = tab;
     }
 
+    local function len(t)
+        local l = 0
+        for i, v in pairs(t) do
+            l = l + 1
+        end
+        return l
+    end
+
     function q:select(k, v)
+        self.selects = {}
         self.selects[k] = v
     end
 
@@ -28,7 +37,7 @@ function TableQuery.query(tab)
                         matches = matches + 1
                     end
                 end
-                add = matches == #self.selects
+                add = matches == len(self.selects)
             end
             if add then
                 found[k] = v
