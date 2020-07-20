@@ -24,6 +24,4 @@ end
 
 ScreenUtil:FindScreen("MainMenuScreen"):DoOptions()
 
-print("mnjmdfm")
-
 --local Utils = game:GetService("StarterGui").Utils  local SongObject = require(Utils.SongObject)  local song = SongObject:new(game.ReplicatedStorage:WaitForChild("Songs"):WaitForChild("[396] Camellia - PLANET SHAPER (Evening)"))  print(require(Utils.CSCalc):DoRating(song))
