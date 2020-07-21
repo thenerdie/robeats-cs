@@ -29,7 +29,7 @@ function MultiplayerRoom:new()
     end
 
     function room:AddPlayer(plr)
-        room[#room+1] = plr
+        add(room.players, plr)
     end
 
     function room:RemovePlayer(plr)
