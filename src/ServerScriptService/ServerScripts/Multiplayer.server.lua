@@ -46,8 +46,14 @@ BoundaryServer:Register("JoinRoom", function(player, gameid)
     end
 end)
 
-BoundaryServer:Register("LeaveRoom", function(player)
-
+BoundaryServer:Register("LeaveRoom", function(player, gameid)
+    local query = TableQuery.query(Games)
+    query:select("id", gameid)
+    local roomsFound = query:find()
+    if #roomsFound > 0 then
+        local room = roomsFound[1]
+        room:RemovePlayer(player)
+    end
 end)
 
 BoundaryServer:Register("DestroyRoom", function(player, roomid)
