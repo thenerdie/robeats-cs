@@ -1,9 +1,11 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Roact = require(ReplicatedStorage.Roact)
+local Boundary = require(ReplicatedStorage.Frameworks.Boundary)
 local LocalPlayer = game.Players.LocalPlayer
 
 local Utils = script.Parent.Parent.Utils
 local Screens = require(Utils.ScreenUtil) 
+local Sorts = require(Utils.Sorts)
 local Logger = require(Utils.Logger):register(script)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
@@ -17,6 +19,12 @@ local handle = {}
 
 local options = {}
 local numNames = 6
+
+local function GetUserStats()
+	local stats = Boundary.Client:Execute("GetUserPlays")
+	table.sort(stats, Sorts.Leaderboard)
+	return stats
+end
 
 local function GetUpdateNotes()
 	local notes = {}
