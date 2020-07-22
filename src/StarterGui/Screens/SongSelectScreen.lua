@@ -18,6 +18,7 @@ local Search = require(Utils.Search)
 local Logger = require(Utils.Logger):register(script)
 local Color = require(Utils.Color)
 local Keybind = require(Utils.Keybind)
+local Sorts = require(Utils.Sorts)
 
 local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local Frameworks = PlayerGui.Frameworks
@@ -135,7 +136,7 @@ local function getNPSGraph(props)
 		local n = c:GetNpsGraph()
 		local r = Settings.Options.Rate or 1
 		graph.xfloor = 0
-		graph.xceiling = #n
+		graph.xceiling = math.floor(c:GetLength()/1000)/r
 		graph.xinterval = 30
 		graph.yceiling = (Math.findMax(n)+5)*r
 		graph.yfloor = 0
@@ -173,7 +174,7 @@ local function LeaderboardSlot(data,slotNum)
 				song = self.curSelected;
 				songlen = self.curSelected:GetLength()/1000;
 				rate = data.rate;
-				datetime = DateTime:GetDateTime(DateTime:GetTickFromISO(data.updatedAt));
+				datetime = DateTime:GetDateTime(data.epochtime);
 			})
 		end
 	}, {
@@ -213,13 +214,15 @@ end
 local function SongButtons(props)
 	local bttns = {}	
 	for i, song in pairs(props.songs) do
-		local doAdd = Search:find(song.instance.Name, props.search)
+		local doAdd = Search:find(song:ConcatMetadata(), props.search)
 		if doAdd then bttns[#bttns+1] = SongButton(song.instance, song, i) end
 	end
 	return Roact.createFragment(bttns), #bttns
 end
 
 local function Leaderboard()
+	table.sort(lb, Sorts.Leaderboard)
+
 	local lb_gui = {}
 	for i, slot in pairs(lb) do
 		if i > maxSlots then break end
@@ -523,6 +526,7 @@ local function Base()
 							rate = rate;
 						}, not g.force_quit)
 						g:DestroyStage()
+						g:DestroyGame()
 					end)
 				end;
 			}, {
