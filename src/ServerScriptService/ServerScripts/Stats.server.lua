@@ -38,7 +38,6 @@ function round(num, numDecimalPlaces)
 end
 
 Boundary.Server:Register("SubmitScore", function(player, data)
-	local RBLXLeaderstats = player:WaitForChild("leaderstats")
 	data.userid = player.UserId
 	data.username = player.Name
 	return Api:Request("/score", "POST", Http:Serialize(data), {
