@@ -6,9 +6,6 @@ local Boundary  = require(ReplicatedStorage.Frameworks.Boundary)
 local Utils = script.Parent
 local Logger = require(Utils.Logger):register(script)
 
-local r = game.ReplicatedStorage
-local m = r:WaitForChild("Misc")
-
 local _mcache = {}
 local _curSelected = nil
 
@@ -44,15 +41,15 @@ function Online:GetMapLeaderboard(m_ID)
 end
 
 function Online:GetPlayerPlays()
-	return m.GetTopPlays:InvokeServer()
+	return {}
 end
 
 function Online:GetGlobalLeaderboard()
-	return m.GetGlobalLeaderboard:InvokeServer()
+	return {}
 end
 
 function Online:SubmitScore(pkg_data)
-	m.SubmitScore:InvokeServer(pkg_data)
+	return Boundary.Client:Execute("SubmitScore", pkg_data)
 end
 
 return Online
